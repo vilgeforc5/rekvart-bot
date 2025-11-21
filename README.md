@@ -8,6 +8,7 @@ A monorepo containing the backend and frontend applications for Recvart.
 - **Backend**: NestJS (TypeScript)
 - **Frontend**: React + Vite (TypeScript)
 - **Database**: PostgreSQL 18
+- **Telegram Bot**: nestjs-telegraf
 
 ## Prerequisites
 
@@ -31,14 +32,26 @@ Copy the example environment file and configure your database settings:
 cp .env.example .env
 ```
 
-Edit `.env` with your PostgreSQL configuration:
+Edit `.env` with your configuration:
 
 ```env
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
 POSTGRES_DB=recvart
 POSTGRES_PORT=5432
+TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
 ```
+
+### 2.1. Telegram Bot Setup
+
+To set up the Telegram bot:
+
+1. Create a new bot by messaging [@BotFather](https://t.me/botfather) on Telegram
+2. Use the `/newbot` command and follow the instructions
+3. Copy the bot token provided by BotFather
+4. Add the token to your `.env` file as `TELEGRAM_BOT_TOKEN`
+
+The bot will respond to `/ping` with `pong` when the backend is running.
 
 Start the PostgreSQL database:
 
@@ -130,6 +143,7 @@ Create a `.env` file in the root directory based on `.env.example`:
 - `POSTGRES_PASSWORD` - PostgreSQL password
 - `POSTGRES_DB` - PostgreSQL database name
 - `POSTGRES_PORT` - PostgreSQL port (default: 5432)
+- `TELEGRAM_BOT_TOKEN` - Telegram bot token from BotFather
 
 ## License
 

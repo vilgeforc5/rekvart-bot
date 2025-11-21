@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TelegrafModule } from 'nestjs-telegraf';
+import { PrismaService } from '../prisma.service';
+import { BotCommandService } from './bot-command.service';
+import { TelegramBotService } from './telegram-bot.service';
 import { TelegramController } from './telegram.controller';
 
 @Module({
@@ -11,6 +14,12 @@ import { TelegramController } from './telegram.controller';
       inject: [],
     }),
   ],
-  providers: [TelegramController],
+  providers: [
+    TelegramController,
+    BotCommandService,
+    PrismaService,
+    TelegramBotService,
+  ],
+  exports: [BotCommandService, TelegramBotService],
 })
 export class TelegramModule {}
