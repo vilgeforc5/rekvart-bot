@@ -1,28 +1,40 @@
+import { chunk } from 'es-toolkit';
 import { Command, Ctx, Update } from 'nestjs-telegraf';
+import { BotCommandService } from 'src/command/commands.service';
+import { StartContentService } from 'src/start-content/start-content.service';
 import { Context } from 'telegraf';
 
 @Update()
 export class TelegramController {
-  constructor() {}
+  constructor(
+    private botCommandService: BotCommandService,
+    private startContentService: StartContentService,
+  ) {}
 
   @Command('start')
   async onStart(@Ctx() ctx: Context) {
-    await ctx.reply(
-      `
-      🏠 Добро пожаловать в бот компании Рекварт
+    const startContent = await this.startContentService.get();
 
-Ремонт квартир и домов в Москве и области.
+    if (!startContent) {
+      return;
+    }
 
-Мы занимаемся строительством загородных домов и их отделкой уже 15 лет. Мы создаём дома под ключ, продумывая каждый этап, чтобы интерьер был таким же качественным и надёжным, как сам дом.
+    const commands = await this.botCommandService.findAll();
 
-Этот опыт мы переносим и в городскую среду путем создания эксклюзивного интерьера в габаритах квартиры, тк все-таки большее время семья с детьми проводит в городе и есть простор, где мы можем приложить свои знания и опыт
+    const chunkedCommands = chunk(commands, 2);
 
-Глубокий опыт в строительстве
+    const keyboard = {
+      inline_keyboard: chunkedCommands.map((chunk) =>
+        chunk.map((cmd) => ({
+          text: cmd.title,
+          callback_data: cmd.command,
+        })),
+      ),
+    };
 
-Мы знаем о ремонте не только на уровне отделки, но и изнутри\.
-
-Выберите действие из меню ниже:
-      `,
-    );
+    await ctx.reply(startContent.content, {
+      reply_markup: keyboard,
+      parse_mode: 'HTML',
+    });
   }
 }

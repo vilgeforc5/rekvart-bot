@@ -51,7 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Command: 'Command'
+  Command: 'Command',
+  StartContent: 'StartContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -73,13 +74,24 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const CommandScalarFieldEnum = {
   id: 'id',
   command: 'command',
+  title: 'title',
   description: 'description',
-  enabled: 'enabled',
+  index: 'index',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type CommandScalarFieldEnum = (typeof CommandScalarFieldEnum)[keyof typeof CommandScalarFieldEnum]
+
+
+export const StartContentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StartContentScalarFieldEnum = (typeof StartContentScalarFieldEnum)[keyof typeof StartContentScalarFieldEnum]
 
 
 export const SortOrder = {

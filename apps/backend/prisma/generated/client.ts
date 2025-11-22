@@ -42,3 +42,8 @@ export { Prisma }
  * 
  */
 export type Command = Prisma.CommandModel
+/**
+ * Model StartContent
+ * 
+ */
+export type StartContent = Prisma.StartContentModel

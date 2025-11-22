@@ -1,4 +1,9 @@
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import type { Command as PrismaCommand } from '../../prisma/generated/client';
 
 export type Command = PrismaCommand;
@@ -10,11 +15,15 @@ export class CreateCommandDto {
 
   @IsString()
   @IsNotEmpty()
+  title: string;
+
+  @IsString()
+  @IsNotEmpty()
   description: string;
 
-  @IsBoolean()
+  @IsInt()
   @IsOptional()
-  enabled?: boolean;
+  index?: number;
 }
 
 export class UpdateCommandDto {
@@ -24,9 +33,13 @@ export class UpdateCommandDto {
 
   @IsString()
   @IsOptional()
+  title?: string;
+
+  @IsString()
+  @IsOptional()
   description?: string;
 
-  @IsBoolean()
+  @IsInt()
   @IsOptional()
-  enabled?: boolean;
+  index?: number;
 }

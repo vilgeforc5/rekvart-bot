@@ -16,7 +16,7 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<Commands />} />
-              <Route path="/command" element={<Navigate to="/" replace />} />
+              <Route path="/start" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
           <HealthBadge />

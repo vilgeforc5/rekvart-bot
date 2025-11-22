@@ -9,14 +9,7 @@ export class BotCommandService {
 
   async findAll(): Promise<Command[]> {
     return this.prisma.command.findMany({
-      orderBy: { command: 'asc' },
-    });
-  }
-
-  async findEnabled(): Promise<Command[]> {
-    return this.prisma.command.findMany({
-      where: { enabled: true },
-      orderBy: { command: 'asc' },
+      orderBy: { index: 'asc' },
     });
   }
 
@@ -36,8 +29,9 @@ export class BotCommandService {
     return this.prisma.command.create({
       data: {
         command: data.command,
+        title: data.title,
         description: data.description,
-        enabled: data.enabled ?? true,
+        index: data.index ?? 0,
       },
     });
   }
@@ -53,13 +47,15 @@ export class BotCommandService {
     return this.prisma.command.upsert({
       where: { command: data.command },
       update: {
+        title: data.title,
         description: data.description,
-        enabled: data.enabled ?? true,
+        index: data.index ?? 0,
       },
       create: {
         command: data.command,
+        title: data.title,
         description: data.description,
-        enabled: data.enabled ?? true,
+        index: data.index ?? 0,
       },
     });
   }

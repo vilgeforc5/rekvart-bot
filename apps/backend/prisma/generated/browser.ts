@@ -22,3 +22,8 @@ export * from './enums.js';
  * 
  */
 export type Command = Prisma.CommandModel
+/**
+ * Model StartContent
+ * 
+ */
+export type StartContent = Prisma.StartContentModel

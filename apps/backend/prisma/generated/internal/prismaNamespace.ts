@@ -384,7 +384,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  Command: 'Command'
+  Command: 'Command',
+  StartContent: 'StartContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +401,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command"
+    modelProps: "command" | "startContent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StartContent: {
+      payload: Prisma.$StartContentPayload<ExtArgs>
+      fields: Prisma.StartContentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StartContentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StartContentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload>
+        }
+        findFirst: {
+          args: Prisma.StartContentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StartContentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload>
+        }
+        findMany: {
+          args: Prisma.StartContentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload>[]
+        }
+        create: {
+          args: Prisma.StartContentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload>
+        }
+        createMany: {
+          args: Prisma.StartContentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StartContentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload>[]
+        }
+        delete: {
+          args: Prisma.StartContentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload>
+        }
+        update: {
+          args: Prisma.StartContentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload>
+        }
+        deleteMany: {
+          args: Prisma.StartContentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StartContentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StartContentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload>[]
+        }
+        upsert: {
+          args: Prisma.StartContentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StartContentPayload>
+        }
+        aggregate: {
+          args: Prisma.StartContentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStartContent>
+        }
+        groupBy: {
+          args: Prisma.StartContentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StartContentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StartContentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StartContentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -520,13 +595,24 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const CommandScalarFieldEnum = {
   id: 'id',
   command: 'command',
+  title: 'title',
   description: 'description',
-  enabled: 'enabled',
+  index: 'index',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type CommandScalarFieldEnum = (typeof CommandScalarFieldEnum)[keyof typeof CommandScalarFieldEnum]
+
+
+export const StartContentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StartContentScalarFieldEnum = (typeof StartContentScalarFieldEnum)[keyof typeof StartContentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -576,13 +662,6 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -693,6 +772,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   command?: Prisma.CommandOmit
+  startContent?: Prisma.StartContentOmit
 }
 
 /* Types for Logging */

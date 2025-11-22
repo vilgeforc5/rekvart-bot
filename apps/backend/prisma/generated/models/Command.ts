@@ -28,17 +28,20 @@ export type AggregateCommand = {
 
 export type CommandAvgAggregateOutputType = {
   id: number | null
+  index: number | null
 }
 
 export type CommandSumAggregateOutputType = {
   id: number | null
+  index: number | null
 }
 
 export type CommandMinAggregateOutputType = {
   id: number | null
   command: string | null
+  title: string | null
   description: string | null
-  enabled: boolean | null
+  index: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,8 +49,9 @@ export type CommandMinAggregateOutputType = {
 export type CommandMaxAggregateOutputType = {
   id: number | null
   command: string | null
+  title: string | null
   description: string | null
-  enabled: boolean | null
+  index: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -55,8 +59,9 @@ export type CommandMaxAggregateOutputType = {
 export type CommandCountAggregateOutputType = {
   id: number
   command: number
+  title: number
   description: number
-  enabled: number
+  index: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -65,17 +70,20 @@ export type CommandCountAggregateOutputType = {
 
 export type CommandAvgAggregateInputType = {
   id?: true
+  index?: true
 }
 
 export type CommandSumAggregateInputType = {
   id?: true
+  index?: true
 }
 
 export type CommandMinAggregateInputType = {
   id?: true
   command?: true
+  title?: true
   description?: true
-  enabled?: true
+  index?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -83,8 +91,9 @@ export type CommandMinAggregateInputType = {
 export type CommandMaxAggregateInputType = {
   id?: true
   command?: true
+  title?: true
   description?: true
-  enabled?: true
+  index?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -92,8 +101,9 @@ export type CommandMaxAggregateInputType = {
 export type CommandCountAggregateInputType = {
   id?: true
   command?: true
+  title?: true
   description?: true
-  enabled?: true
+  index?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -188,8 +198,9 @@ export type CommandGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type CommandGroupByOutputType = {
   id: number
   command: string
+  title: string
   description: string
-  enabled: boolean
+  index: number
   createdAt: Date
   updatedAt: Date
   _count: CommandCountAggregateOutputType | null
@@ -220,8 +231,9 @@ export type CommandWhereInput = {
   NOT?: Prisma.CommandWhereInput | Prisma.CommandWhereInput[]
   id?: Prisma.IntFilter<"Command"> | number
   command?: Prisma.StringFilter<"Command"> | string
+  title?: Prisma.StringFilter<"Command"> | string
   description?: Prisma.StringFilter<"Command"> | string
-  enabled?: Prisma.BoolFilter<"Command"> | boolean
+  index?: Prisma.IntFilter<"Command"> | number
   createdAt?: Prisma.DateTimeFilter<"Command"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Command"> | Date | string
 }
@@ -229,8 +241,9 @@ export type CommandWhereInput = {
 export type CommandOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   command?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
+  index?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -241,8 +254,9 @@ export type CommandWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.CommandWhereInput | Prisma.CommandWhereInput[]
   OR?: Prisma.CommandWhereInput[]
   NOT?: Prisma.CommandWhereInput | Prisma.CommandWhereInput[]
+  title?: Prisma.StringFilter<"Command"> | string
   description?: Prisma.StringFilter<"Command"> | string
-  enabled?: Prisma.BoolFilter<"Command"> | boolean
+  index?: Prisma.IntFilter<"Command"> | number
   createdAt?: Prisma.DateTimeFilter<"Command"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Command"> | Date | string
 }, "id" | "command">
@@ -250,8 +264,9 @@ export type CommandWhereUniqueInput = Prisma.AtLeast<{
 export type CommandOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   command?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
+  index?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CommandCountOrderByAggregateInput
@@ -267,16 +282,18 @@ export type CommandScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CommandScalarWhereWithAggregatesInput | Prisma.CommandScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Command"> | number
   command?: Prisma.StringWithAggregatesFilter<"Command"> | string
+  title?: Prisma.StringWithAggregatesFilter<"Command"> | string
   description?: Prisma.StringWithAggregatesFilter<"Command"> | string
-  enabled?: Prisma.BoolWithAggregatesFilter<"Command"> | boolean
+  index?: Prisma.IntWithAggregatesFilter<"Command"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Command"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Command"> | Date | string
 }
 
 export type CommandCreateInput = {
   command: string
+  title: string
   description: string
-  enabled?: boolean
+  index?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -284,16 +301,18 @@ export type CommandCreateInput = {
 export type CommandUncheckedCreateInput = {
   id?: number
   command: string
+  title: string
   description: string
-  enabled?: boolean
+  index?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CommandUpdateInput = {
   command?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  index?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -301,8 +320,9 @@ export type CommandUpdateInput = {
 export type CommandUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   command?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  index?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -310,16 +330,18 @@ export type CommandUncheckedUpdateInput = {
 export type CommandCreateManyInput = {
   id?: number
   command: string
+  title: string
   description: string
-  enabled?: boolean
+  index?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type CommandUpdateManyMutationInput = {
   command?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  index?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -327,8 +349,9 @@ export type CommandUpdateManyMutationInput = {
 export type CommandUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   command?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  enabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  index?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -336,21 +359,24 @@ export type CommandUncheckedUpdateManyInput = {
 export type CommandCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   command?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
+  index?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CommandAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  index?: Prisma.SortOrder
 }
 
 export type CommandMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   command?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
+  index?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -358,26 +384,20 @@ export type CommandMaxOrderByAggregateInput = {
 export type CommandMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   command?: Prisma.SortOrder
+  title?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  enabled?: Prisma.SortOrder
+  index?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type CommandSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  index?: Prisma.SortOrder
 }
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -388,13 +408,18 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 
 
 export type CommandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   command?: boolean
+  title?: boolean
   description?: boolean
-  enabled?: boolean
+  index?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["command"]>
@@ -402,8 +427,9 @@ export type CommandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type CommandSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   command?: boolean
+  title?: boolean
   description?: boolean
-  enabled?: boolean
+  index?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["command"]>
@@ -411,8 +437,9 @@ export type CommandSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type CommandSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   command?: boolean
+  title?: boolean
   description?: boolean
-  enabled?: boolean
+  index?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["command"]>
@@ -420,13 +447,14 @@ export type CommandSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type CommandSelectScalar = {
   id?: boolean
   command?: boolean
+  title?: boolean
   description?: boolean
-  enabled?: boolean
+  index?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CommandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "command" | "description" | "enabled" | "createdAt" | "updatedAt", ExtArgs["result"]["command"]>
+export type CommandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "command" | "title" | "description" | "index" | "createdAt" | "updatedAt", ExtArgs["result"]["command"]>
 
 export type $CommandPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Command"
@@ -434,8 +462,9 @@ export type $CommandPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     command: string
+    title: string
     description: string
-    enabled: boolean
+    index: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["command"]>
@@ -863,8 +892,9 @@ export interface Prisma__CommandClient<T, Null = never, ExtArgs extends runtime.
 export interface CommandFieldRefs {
   readonly id: Prisma.FieldRef<"Command", 'Int'>
   readonly command: Prisma.FieldRef<"Command", 'String'>
+  readonly title: Prisma.FieldRef<"Command", 'String'>
   readonly description: Prisma.FieldRef<"Command", 'String'>
-  readonly enabled: Prisma.FieldRef<"Command", 'Boolean'>
+  readonly index: Prisma.FieldRef<"Command", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Command", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Command", 'DateTime'>
 }

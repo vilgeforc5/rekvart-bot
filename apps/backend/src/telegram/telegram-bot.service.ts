@@ -15,7 +15,7 @@ export class TelegramBotService implements OnModuleInit {
   }
 
   async setBotCommands() {
-    const commands = await this.botCommandService.findEnabled();
+    const commands = await this.botCommandService.findAll();
     const botCommands = commands
       .filter(
         (cmd) => cmd.description != null && cmd.description.trim().length > 0,

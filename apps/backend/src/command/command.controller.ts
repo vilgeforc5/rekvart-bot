@@ -24,11 +24,6 @@ export class CommandController {
     return this.botCommandService.findAll();
   }
 
-  @Get('enabled')
-  async getEnabled() {
-    return this.botCommandService.findEnabled();
-  }
-
   @Get(':id')
   async getOne(@Param('id', ParseIntPipe) id: number) {
     return this.botCommandService.findOne(id);
