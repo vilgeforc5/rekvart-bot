@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 import { Header } from "./components/Header";
 import { HealthBadge } from "./components/HealthBadge";
@@ -20,7 +20,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <BrowserRouter>
+        <HashRouter>
           <div className="min-h-screen bg-gray-50">
             <Routes>
               <Route path="/login" element={<Login />} />
@@ -54,7 +54,7 @@ function App() {
             </Routes>
             <Toaster position="top-right" richColors />
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </AuthProvider>
     </QueryClientProvider>
   );
