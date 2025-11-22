@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import { Header } from "./components/Header";
 import { HealthBadge } from "./components/HealthBadge";
 import { Commands } from "./pages/Commands";
+import { Zamer } from "./pages/Zamer";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Commands />} />
               <Route path="/start" element={<Navigate to="/" replace />} />
+              <Route path="/zamer" element={<Zamer />} />
             </Routes>
           </main>
           <HealthBadge />

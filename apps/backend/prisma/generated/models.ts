@@ -10,4 +10,7 @@
  */
 export type * from './models/Command.js'
 export type * from './models/StartContent.js'
+export type * from './models/ZamerQuestion.js'
+export type * from './models/ZamerVariant.js'
+export type * from './models/ZamerSummary.js'
 export type * from './commonInputTypes.js'

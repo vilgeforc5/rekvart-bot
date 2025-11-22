@@ -1,30 +1,11 @@
 import { Action, Command, Ctx, On, Update } from 'nestjs-telegraf';
 import { Context } from 'telegraf';
-
-const remont_variants = [
-  'Квартира под ключ',
-  'Загородный дом под ключ',
-  'Танхаус под ключ',
-  'Частичный ремонт (1-2 комнаты)',
-  'Саунузел',
-];
-
-const location_variants = [
-  'Внутри МКАД',
-  'До 20 км',
-  '20-40 км',
-  'Дальше 40 км',
-];
-
-const contact_variants = ['Telegram', 'WhatsApp', 'Звонок по телефону'];
+import { ZamerService } from './zamer.service';
 
 interface SessionData {
   step?: string;
-  remontType?: string;
-  location?: string;
-  area?: string;
-  contact?: string;
-  phone?: string;
+  answers?: { [key: number]: string };
+  currentQuestionOrder?: number;
 }
 
 interface MyContext extends Context {
@@ -33,113 +14,99 @@ interface MyContext extends Context {
 
 @Update()
 export class ZamerCommand {
-  constructor() {}
+  constructor(private readonly zamerService: ZamerService) {}
 
   private async sendSummary(ctx: MyContext, includePhone: boolean = false) {
-    await ctx.reply('✅ Спасибо! Мы свяжемся с вами в ближайшее время', {
+    const summaryMessage = await this.zamerService.getSummary();
+    await ctx.reply(summaryMessage, {
       reply_markup: includePhone ? { remove_keyboard: true } : undefined,
     });
+
+    console.log(ctx.session.answers);
 
     ctx.session = {};
   }
 
   @Command('zamer')
   async onZamer(@Ctx() ctx: MyContext) {
-    ctx.session.step = 'select_remont_type';
     await this.start(ctx);
   }
 
   @Action('zamer')
   async onZamerAction(@Ctx() ctx: MyContext) {
-    ctx.session.step = 'select_remont_type';
     await this.start(ctx);
     await ctx.answerCbQuery();
   }
 
-  private async start(ctx: Context) {
-    await ctx.reply('Где планируется ремонт?', {
-      reply_markup: {
-        inline_keyboard: remont_variants.map((variant, index) => [
-          {
-            text: variant,
-            callback_data: `zamer_step2:${index}`,
-          },
-        ]),
-      },
-    });
+  private async start(ctx: MyContext) {
+    ctx.session = {
+      currentQuestionOrder: 1,
+      answers: {},
+    };
+    await this.askQuestion(ctx, 1);
   }
 
-  @Action(/zamer_step2:(.+)/)
-  async onZamerStep2(@Ctx() ctx: MyContext & { match: RegExpMatchArray }) {
-    const idx = parseInt(ctx.match[1]);
-    ctx.session.remontType = remont_variants[idx];
-    ctx.session.step = 'select_location';
+  private async askQuestion(ctx: MyContext, order: number) {
+    const question = await this.zamerService.getQuestion(order);
 
-    await ctx.answerCbQuery();
-    await ctx.reply(`Где находится ваш объект?`, {
-      reply_markup: {
-        inline_keyboard: location_variants.map((variant, index) => [
-          {
-            text: variant,
-            callback_data: `zamer_step3:${index}`,
-          },
-        ]),
-      },
-    });
-  }
+    if (!question) {
+      await this.sendSummary(ctx);
+      return;
+    }
 
-  @Action(/zamer_step3:(.+)/)
-  async onZamerStep3(@Ctx() ctx: MyContext & { match: RegExpMatchArray }) {
-    const idx = parseInt(ctx.match[1]);
-    ctx.session.location = location_variants[idx];
-    ctx.session.step = 'waiting_for_area';
+    ctx.session.currentQuestionOrder = order;
 
-    await ctx.answerCbQuery();
-    await ctx.reply(`Метраж помещения (м2)?\n\nПожалуйста, введите число.`);
-  }
-
-  @On('text')
-  async onText(@Ctx() ctx: MyContext) {
-    if (!ctx.message || !('text' in ctx.message)) return;
-
-    const text = ctx.message.text;
-
-    if (ctx.session.step === 'waiting_for_area') {
-      const area = parseFloat(text.replace(',', '.'));
-
-      if (isNaN(area) || area <= 0) {
-        await ctx.reply(
-          'Пожалуйста, введите корректное число.\n\nНапример: 50 или 75.5',
-        );
-        return;
-      }
-
-      ctx.session.area = area.toString();
-
-      await ctx.reply('Выберите предпочитаемый способ связи', {
+    if (question.type === 'select' && question.variants.length > 0) {
+      ctx.session.step = `waiting_select_${order}`;
+      await ctx.reply(question.text, {
         reply_markup: {
-          inline_keyboard: contact_variants.map((variant, index) => [
+          inline_keyboard: question.variants.map((variant) => [
             {
-              text: variant,
-              callback_data: `zamer_step4:${index}`,
+              text: variant.text,
+              callback_data: `zamer_answer:${order}:${variant.id}`,
             },
           ]),
+        },
+      });
+    } else if (question.type === 'text') {
+      ctx.session.step = `waiting_text_${order}`;
+      await ctx.reply(question.text);
+    } else if (question.type === 'phone') {
+      ctx.session.step = `waiting_phone_${order}`;
+      await ctx.reply(question.text, {
+        reply_markup: {
+          keyboard: [
+            [
+              {
+                text: '📱 Поделиться номером телефона',
+                request_contact: true,
+              },
+            ],
+          ],
+          resize_keyboard: true,
+          one_time_keyboard: true,
         },
       });
     }
   }
 
-  @Action(/zamer_step4:(.+)/)
-  async onZamerStep4(@Ctx() ctx: MyContext & { match: RegExpMatchArray }) {
-    const idx = parseInt(ctx.match[1]);
-    ctx.session.contact = contact_variants[idx];
+  @Action(/zamer_answer:(\d+):(\d+)/)
+  async onAnswer(@Ctx() ctx: MyContext & { match: RegExpMatchArray }) {
+    const questionOrder = parseInt(ctx.match[1]);
+    const variantId = parseInt(ctx.match[2]);
 
     await ctx.answerCbQuery();
 
-    if (
-      ctx.session.contact === 'Звонок по телефону' ||
-      ctx.session.contact === 'WhatsApp'
-    ) {
+    const question = await this.zamerService.getQuestion(questionOrder);
+    if (!question) return;
+
+    const variant = question.variants.find((v) => v.id === variantId);
+    if (!variant) return;
+
+    if (!ctx.session.answers) ctx.session.answers = {};
+    ctx.session.answers[questionOrder] = variant.text;
+
+    if (variant.needsPhone) {
       ctx.session.step = 'waiting_for_phone';
       await ctx.reply(
         'Отправьте свой номер телефона и мы свяжемся с вами в ближайшее время',
@@ -158,9 +125,30 @@ export class ZamerCommand {
           },
         },
       );
-    } else {
-      await this.sendSummary(ctx);
+      return;
     }
+
+    const nextOrder = questionOrder + 1;
+    await this.askQuestion(ctx, nextOrder);
+  }
+
+  @On('text')
+  async onText(@Ctx() ctx: MyContext) {
+    if (!ctx.message || !('text' in ctx.message)) return;
+
+    const text = ctx.message.text;
+    const currentOrder = ctx.session.currentQuestionOrder;
+
+    if (!currentOrder || !ctx.session.step?.startsWith('waiting_text_')) return;
+
+    const question = await this.zamerService.getQuestion(currentOrder);
+    if (!question || question.type !== 'text') return;
+
+    if (!ctx.session.answers) ctx.session.answers = {};
+    ctx.session.answers[currentOrder] = text;
+
+    const nextOrder = currentOrder + 1;
+    await this.askQuestion(ctx, nextOrder);
   }
 
   @On('contact')
@@ -169,7 +157,10 @@ export class ZamerCommand {
 
     if (ctx.session.step === 'waiting_for_phone') {
       const contact = ctx.message.contact;
-      ctx.session.phone = contact.phone_number;
+      const phone = contact.phone_number;
+
+      if (!ctx.session.answers) ctx.session.answers = {};
+      ctx.session.answers[-1] = phone;
 
       await this.sendSummary(ctx, true);
     }

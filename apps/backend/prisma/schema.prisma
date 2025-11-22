@@ -30,3 +30,33 @@ model StartContent {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model ZamerQuestion {
+  id        Int            @id @default(autoincrement())
+  text      String
+  type      String
+  order     Int            @unique
+  variants  ZamerVariant[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model ZamerVariant {
+  id         Int           @id @default(autoincrement())
+  text       String
+  order      Int
+  needsPhone Boolean       @default(false)
+  questionId Int
+  question   ZamerQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@unique([questionId, order])
+}
+
+model ZamerSummary {
+  id        Int      @id @default(1)
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

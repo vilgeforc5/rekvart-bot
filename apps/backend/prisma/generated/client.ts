@@ -47,3 +47,18 @@ export type Command = Prisma.CommandModel
  * 
  */
 export type StartContent = Prisma.StartContentModel
+/**
+ * Model ZamerQuestion
+ * 
+ */
+export type ZamerQuestion = Prisma.ZamerQuestionModel
+/**
+ * Model ZamerVariant
+ * 
+ */
+export type ZamerVariant = Prisma.ZamerVariantModel
+/**
+ * Model ZamerSummary
+ * 
+ */
+export type ZamerSummary = Prisma.ZamerSummaryModel
