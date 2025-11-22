@@ -30,6 +30,7 @@ export class ZamerCommand {
     await this.formSubmissionService.handleSubmission(
       'zamer',
       ctx.session.answers || {},
+      ctx.from?.id.toString(),
     );
 
     ctx.session = {};

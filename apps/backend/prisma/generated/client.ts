@@ -82,3 +82,13 @@ export type ZamerSummary = Prisma.ZamerSummaryModel
  * 
  */
 export type DizaynContent = Prisma.DizaynContentModel
+/**
+ * Model TelegramUser
+ * 
+ */
+export type TelegramUser = Prisma.TelegramUserModel
+/**
+ * Model FormSubmission
+ * 
+ */
+export type FormSubmission = Prisma.FormSubmissionModel

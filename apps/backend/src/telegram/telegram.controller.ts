@@ -2,6 +2,7 @@ import { chunk } from 'es-toolkit';
 import { Command, Ctx, On, Update } from 'nestjs-telegraf';
 import { BotCommandService } from 'src/command/commands.service';
 import { StartContentService } from 'src/start-content/start-content.service';
+import { TelegramUsersService } from 'src/telegram-users/telegram-users.service';
 import { CalculateCommand } from 'src/telegram/calculate/calculate.command';
 import { ConsultacyaCommand } from 'src/telegram/consultacya/consultacya.command';
 import { ZamerCommand } from 'src/telegram/zamer/zamer.command';
@@ -38,10 +39,25 @@ export class TelegramController {
     private portfolioCommand: PortfolioCommand,
     private pingCommand: PingCommand,
     private dizaynCommand: DizaynCommand,
+    private telegramUsersService: TelegramUsersService,
   ) {}
+
+  private async saveUser(ctx: Context) {
+    const from = ctx.from;
+    if (!from) return;
+
+    await this.telegramUsersService.upsertUser({
+      chatId: from.id.toString(),
+      username: from.username,
+      firstName: from.first_name,
+      lastName: from.last_name,
+    });
+  }
 
   @Command('start')
   async onStart(@Ctx() ctx: Context) {
+    await this.saveUser(ctx);
+
     const startContent = await this.startContentService.get();
 
     if (!startContent) {
@@ -78,6 +94,8 @@ export class TelegramController {
   @On('text')
   async onText(@Ctx() ctx: MyContext) {
     if (!ctx.message || !('text' in ctx.message)) return;
+
+    await this.saveUser(ctx);
 
     const text = ctx.message.text;
 
@@ -195,6 +213,21 @@ export class TelegramController {
 
   @On('contact')
   async onContact(@Ctx() ctx: MyContext) {
+    await this.saveUser(ctx);
+
+    if (ctx.message && 'contact' in ctx.message) {
+      const contact = ctx.message.contact;
+      if (contact && contact.phone_number) {
+        await this.telegramUsersService.upsertUser({
+          chatId: ctx.from!.id.toString(),
+          username: ctx.from?.username,
+          firstName: ctx.from?.first_name,
+          lastName: ctx.from?.last_name,
+          phone: contact.phone_number,
+        });
+      }
+    }
+
     const activeForm = ctx.session.activeForm;
     if (!activeForm) return;
 

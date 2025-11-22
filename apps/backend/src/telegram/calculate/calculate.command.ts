@@ -30,6 +30,7 @@ export class CalculateCommand {
     await this.formSubmissionService.handleSubmission(
       'calculate',
       ctx.session.answers || {},
+      ctx.from?.id.toString(),
     );
 
     ctx.session = {};

@@ -12,6 +12,8 @@ import { PortfolioController } from './portfolio/portfolio.controller';
 import { PortfolioService } from './portfolio/portfolio.service';
 import { StartContentController } from './start-content/start-content.controller';
 import { StartContentService } from './start-content/start-content.service';
+import { TelegramUsersController } from './telegram-users/telegram-users.controller';
+import { TelegramUsersService } from './telegram-users/telegram-users.service';
 import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
@@ -21,6 +23,7 @@ import { TelegramModule } from './telegram/telegram.module';
     StartContentController,
     PortfolioController,
     DizaynController,
+    TelegramUsersController,
   ],
   providers: [
     PrismaService,
@@ -28,10 +31,12 @@ import { TelegramModule } from './telegram/telegram.module';
     StartContentService,
     PortfolioService,
     DizaynService,
+    TelegramUsersService,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
   ],
+  exports: [TelegramUsersService],
 })
 export class AppModule {}

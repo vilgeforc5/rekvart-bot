@@ -30,6 +30,7 @@ export class ConsultacyaCommand {
     await this.formSubmissionService.handleSubmission(
       'consultacya',
       ctx.session.answers || {},
+      ctx.from?.id.toString(),
     );
 
     ctx.session = {};

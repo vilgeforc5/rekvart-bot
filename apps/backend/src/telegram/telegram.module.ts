@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { HealthModule } from 'src/health/health.module';
+import { TelegramUsersService } from 'src/telegram-users/telegram-users.service';
 import { FormSubmissionService } from 'src/telegram/form-submission.service';
 import { PingCommand } from 'src/telegram/ping/ping.command';
 import { PingModule } from 'src/telegram/ping/ping.module';
@@ -45,6 +46,7 @@ import { ZamerModule } from './zamer/zamer.module';
     PortfolioCommand,
     PortfolioTelegramService,
     PingCommand,
+    TelegramUsersService,
   ],
   exports: [BotCommandService, TelegramBotService],
 })

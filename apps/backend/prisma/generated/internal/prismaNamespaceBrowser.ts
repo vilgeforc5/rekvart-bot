@@ -59,7 +59,9 @@ export const ModelName = {
   Portfolio: 'Portfolio',
   ConsultacyaSummary: 'ConsultacyaSummary',
   ZamerSummary: 'ZamerSummary',
-  DizaynContent: 'DizaynContent'
+  DizaynContent: 'DizaynContent',
+  TelegramUser: 'TelegramUser',
+  FormSubmission: 'FormSubmission'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -183,12 +185,44 @@ export const DizaynContentScalarFieldEnum = {
 export type DizaynContentScalarFieldEnum = (typeof DizaynContentScalarFieldEnum)[keyof typeof DizaynContentScalarFieldEnum]
 
 
+export const TelegramUserScalarFieldEnum = {
+  id: 'id',
+  chatId: 'chatId',
+  username: 'username',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  phone: 'phone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TelegramUserScalarFieldEnum = (typeof TelegramUserScalarFieldEnum)[keyof typeof TelegramUserScalarFieldEnum]
+
+
+export const FormSubmissionScalarFieldEnum = {
+  id: 'id',
+  commandName: 'commandName',
+  data: 'data',
+  telegramUserId: 'telegramUserId',
+  createdAt: 'createdAt'
+} as const
+
+export type FormSubmissionScalarFieldEnum = (typeof FormSubmissionScalarFieldEnum)[keyof typeof FormSubmissionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -205,4 +239,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull',
+  AnyNull: 'AnyNull'
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
