@@ -94,6 +94,53 @@ async function main() {
   });
   console.log('✓ ZamerSummary seeded');
 
+  await prisma.consultacyaSummary.upsert({
+    where: { id: 1 },
+    create: {
+      id: 1,
+      message: '✅ Спасибо! Мы свяжемся с вами в ближайшее время',
+    },
+    update: {},
+  });
+  console.log('✓ ConsultacyaSummary seeded');
+
+  const existingConsultacyaQuestions = await prisma.consultacyaQuestion.count();
+
+  if (existingConsultacyaQuestions === 0) {
+    const consultacyaQuestion = await prisma.consultacyaQuestion.create({
+      data: {
+        text: 'Выберите предпочитаемый способ связи',
+        order: 1,
+      },
+    });
+
+    await prisma.consultacyaVariant.createMany({
+      data: [
+        {
+          text: 'Telegram',
+          order: 1,
+          needsPhone: false,
+          questionId: consultacyaQuestion.id,
+        },
+        {
+          text: 'WhatsApp',
+          order: 2,
+          needsPhone: true,
+          questionId: consultacyaQuestion.id,
+        },
+        {
+          text: 'Звонок на мобильный',
+          order: 3,
+          needsPhone: true,
+          questionId: consultacyaQuestion.id,
+        },
+      ],
+    });
+    console.log('✓ ConsultacyaQuestions seeded');
+  } else {
+    console.log('✓ ConsultacyaQuestions already exist, skipping');
+  }
+
   const existingQuestions = await prisma.zamerQuestion.count();
 
   if (existingQuestions === 0) {

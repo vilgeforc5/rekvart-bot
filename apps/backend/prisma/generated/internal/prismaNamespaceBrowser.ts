@@ -56,7 +56,10 @@ export const ModelName = {
   ZamerQuestion: 'ZamerQuestion',
   ZamerVariant: 'ZamerVariant',
   ZamerSummary: 'ZamerSummary',
-  Portfolio: 'Portfolio'
+  Portfolio: 'Portfolio',
+  ConsultacyaQuestion: 'ConsultacyaQuestion',
+  ConsultacyaVariant: 'ConsultacyaVariant',
+  ConsultacyaSummary: 'ConsultacyaSummary'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -143,6 +146,40 @@ export const PortfolioScalarFieldEnum = {
 } as const
 
 export type PortfolioScalarFieldEnum = (typeof PortfolioScalarFieldEnum)[keyof typeof PortfolioScalarFieldEnum]
+
+
+export const ConsultacyaQuestionScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConsultacyaQuestionScalarFieldEnum = (typeof ConsultacyaQuestionScalarFieldEnum)[keyof typeof ConsultacyaQuestionScalarFieldEnum]
+
+
+export const ConsultacyaVariantScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  order: 'order',
+  needsPhone: 'needsPhone',
+  questionId: 'questionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConsultacyaVariantScalarFieldEnum = (typeof ConsultacyaVariantScalarFieldEnum)[keyof typeof ConsultacyaVariantScalarFieldEnum]
+
+
+export const ConsultacyaSummaryScalarFieldEnum = {
+  id: 'id',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConsultacyaSummaryScalarFieldEnum = (typeof ConsultacyaSummaryScalarFieldEnum)[keyof typeof ConsultacyaSummaryScalarFieldEnum]
 
 
 export const SortOrder = {

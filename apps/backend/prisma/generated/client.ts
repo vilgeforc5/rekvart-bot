@@ -67,3 +67,18 @@ export type ZamerSummary = Prisma.ZamerSummaryModel
  * 
  */
 export type Portfolio = Prisma.PortfolioModel
+/**
+ * Model ConsultacyaQuestion
+ * 
+ */
+export type ConsultacyaQuestion = Prisma.ConsultacyaQuestionModel
+/**
+ * Model ConsultacyaVariant
+ * 
+ */
+export type ConsultacyaVariant = Prisma.ConsultacyaVariantModel
+/**
+ * Model ConsultacyaSummary
+ * 
+ */
+export type ConsultacyaSummary = Prisma.ConsultacyaSummaryModel

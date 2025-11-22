@@ -389,7 +389,10 @@ export const ModelName = {
   ZamerQuestion: 'ZamerQuestion',
   ZamerVariant: 'ZamerVariant',
   ZamerSummary: 'ZamerSummary',
-  Portfolio: 'Portfolio'
+  Portfolio: 'Portfolio',
+  ConsultacyaQuestion: 'ConsultacyaQuestion',
+  ConsultacyaVariant: 'ConsultacyaVariant',
+  ConsultacyaSummary: 'ConsultacyaSummary'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command" | "startContent" | "zamerQuestion" | "zamerVariant" | "zamerSummary" | "portfolio"
+    modelProps: "command" | "startContent" | "zamerQuestion" | "zamerVariant" | "zamerSummary" | "portfolio" | "consultacyaQuestion" | "consultacyaVariant" | "consultacyaSummary"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +856,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ConsultacyaQuestion: {
+      payload: Prisma.$ConsultacyaQuestionPayload<ExtArgs>
+      fields: Prisma.ConsultacyaQuestionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ConsultacyaQuestionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ConsultacyaQuestionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
+        }
+        findFirst: {
+          args: Prisma.ConsultacyaQuestionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ConsultacyaQuestionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
+        }
+        findMany: {
+          args: Prisma.ConsultacyaQuestionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>[]
+        }
+        create: {
+          args: Prisma.ConsultacyaQuestionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
+        }
+        createMany: {
+          args: Prisma.ConsultacyaQuestionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ConsultacyaQuestionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>[]
+        }
+        delete: {
+          args: Prisma.ConsultacyaQuestionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
+        }
+        update: {
+          args: Prisma.ConsultacyaQuestionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ConsultacyaQuestionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ConsultacyaQuestionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ConsultacyaQuestionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ConsultacyaQuestionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
+        }
+        aggregate: {
+          args: Prisma.ConsultacyaQuestionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateConsultacyaQuestion>
+        }
+        groupBy: {
+          args: Prisma.ConsultacyaQuestionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaQuestionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ConsultacyaQuestionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaQuestionCountAggregateOutputType> | number
+        }
+      }
+    }
+    ConsultacyaVariant: {
+      payload: Prisma.$ConsultacyaVariantPayload<ExtArgs>
+      fields: Prisma.ConsultacyaVariantFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ConsultacyaVariantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ConsultacyaVariantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
+        }
+        findFirst: {
+          args: Prisma.ConsultacyaVariantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ConsultacyaVariantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
+        }
+        findMany: {
+          args: Prisma.ConsultacyaVariantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>[]
+        }
+        create: {
+          args: Prisma.ConsultacyaVariantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
+        }
+        createMany: {
+          args: Prisma.ConsultacyaVariantCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ConsultacyaVariantCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>[]
+        }
+        delete: {
+          args: Prisma.ConsultacyaVariantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
+        }
+        update: {
+          args: Prisma.ConsultacyaVariantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
+        }
+        deleteMany: {
+          args: Prisma.ConsultacyaVariantDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ConsultacyaVariantUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ConsultacyaVariantUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>[]
+        }
+        upsert: {
+          args: Prisma.ConsultacyaVariantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
+        }
+        aggregate: {
+          args: Prisma.ConsultacyaVariantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateConsultacyaVariant>
+        }
+        groupBy: {
+          args: Prisma.ConsultacyaVariantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaVariantGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ConsultacyaVariantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaVariantCountAggregateOutputType> | number
+        }
+      }
+    }
+    ConsultacyaSummary: {
+      payload: Prisma.$ConsultacyaSummaryPayload<ExtArgs>
+      fields: Prisma.ConsultacyaSummaryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ConsultacyaSummaryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ConsultacyaSummaryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload>
+        }
+        findFirst: {
+          args: Prisma.ConsultacyaSummaryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ConsultacyaSummaryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload>
+        }
+        findMany: {
+          args: Prisma.ConsultacyaSummaryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload>[]
+        }
+        create: {
+          args: Prisma.ConsultacyaSummaryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload>
+        }
+        createMany: {
+          args: Prisma.ConsultacyaSummaryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ConsultacyaSummaryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload>[]
+        }
+        delete: {
+          args: Prisma.ConsultacyaSummaryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload>
+        }
+        update: {
+          args: Prisma.ConsultacyaSummaryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload>
+        }
+        deleteMany: {
+          args: Prisma.ConsultacyaSummaryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ConsultacyaSummaryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ConsultacyaSummaryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload>[]
+        }
+        upsert: {
+          args: Prisma.ConsultacyaSummaryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaSummaryPayload>
+        }
+        aggregate: {
+          args: Prisma.ConsultacyaSummaryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateConsultacyaSummary>
+        }
+        groupBy: {
+          args: Prisma.ConsultacyaSummaryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaSummaryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ConsultacyaSummaryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaSummaryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -960,6 +1185,40 @@ export const PortfolioScalarFieldEnum = {
 } as const
 
 export type PortfolioScalarFieldEnum = (typeof PortfolioScalarFieldEnum)[keyof typeof PortfolioScalarFieldEnum]
+
+
+export const ConsultacyaQuestionScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConsultacyaQuestionScalarFieldEnum = (typeof ConsultacyaQuestionScalarFieldEnum)[keyof typeof ConsultacyaQuestionScalarFieldEnum]
+
+
+export const ConsultacyaVariantScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  order: 'order',
+  needsPhone: 'needsPhone',
+  questionId: 'questionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConsultacyaVariantScalarFieldEnum = (typeof ConsultacyaVariantScalarFieldEnum)[keyof typeof ConsultacyaVariantScalarFieldEnum]
+
+
+export const ConsultacyaSummaryScalarFieldEnum = {
+  id: 'id',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConsultacyaSummaryScalarFieldEnum = (typeof ConsultacyaSummaryScalarFieldEnum)[keyof typeof ConsultacyaSummaryScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1139,6 +1398,9 @@ export type GlobalOmitConfig = {
   zamerVariant?: Prisma.ZamerVariantOmit
   zamerSummary?: Prisma.ZamerSummaryOmit
   portfolio?: Prisma.PortfolioOmit
+  consultacyaQuestion?: Prisma.ConsultacyaQuestionOmit
+  consultacyaVariant?: Prisma.ConsultacyaVariantOmit
+  consultacyaSummary?: Prisma.ConsultacyaSummaryOmit
 }
 
 /* Types for Logging */

@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import { Header } from "./components/Header";
 import { HealthBadge } from "./components/HealthBadge";
 import { Commands } from "./pages/Commands";
+import { Consultacya } from "./pages/Consultacya";
 import { PortfolioPage } from "./pages/Portfolio";
 import { Zamer } from "./pages/Zamer";
 
@@ -21,6 +22,7 @@ function App() {
               <Route path="/start" element={<Navigate to="/" replace />} />
               <Route path="/zamer" element={<Zamer />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/consultacya" element={<Consultacya />} />
             </Routes>
           </main>
           <HealthBadge />
