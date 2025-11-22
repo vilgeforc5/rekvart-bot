@@ -57,3 +57,8 @@ export type ConsultacyaSummary = Prisma.ConsultacyaSummaryModel
  * 
  */
 export type ZamerSummary = Prisma.ZamerSummaryModel
+/**
+ * Model DizaynContent
+ * 
+ */
+export type DizaynContent = Prisma.DizaynContentModel

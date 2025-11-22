@@ -58,7 +58,8 @@ export const ModelName = {
   CalculateSummary: 'CalculateSummary',
   Portfolio: 'Portfolio',
   ConsultacyaSummary: 'ConsultacyaSummary',
-  ZamerSummary: 'ZamerSummary'
+  ZamerSummary: 'ZamerSummary',
+  DizaynContent: 'DizaynContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -166,6 +167,20 @@ export const ZamerSummaryScalarFieldEnum = {
 } as const
 
 export type ZamerSummaryScalarFieldEnum = (typeof ZamerSummaryScalarFieldEnum)[keyof typeof ZamerSummaryScalarFieldEnum]
+
+
+export const DizaynContentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  telegramUrl: 'telegramUrl',
+  whatsappUrl: 'whatsappUrl',
+  email: 'email',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DizaynContentScalarFieldEnum = (typeof DizaynContentScalarFieldEnum)[keyof typeof DizaynContentScalarFieldEnum]
 
 
 export const SortOrder = {

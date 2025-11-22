@@ -8,6 +8,7 @@ import { ZamerCommand } from 'src/telegram/zamer/zamer.command';
 import { Context } from 'telegraf';
 import { CalculateService } from './calculate/calculate.service';
 import { ConsultacyaService } from './consultacya/consultacya.service';
+import { DizaynCommand } from './dizayn/dizayn.command';
 import { PingCommand } from './ping/ping.command';
 import { PortfolioCommand } from './portfolio/portfolio.command';
 import { ZamerService } from './zamer/zamer.service';
@@ -36,6 +37,7 @@ export class TelegramController {
     private consultacyaService: ConsultacyaService,
     private portfolioCommand: PortfolioCommand,
     private pingCommand: PingCommand,
+    private dizaynCommand: DizaynCommand,
   ) {}
 
   @Command('start')
@@ -114,6 +116,9 @@ export class TelegramController {
           break;
         case 'ping':
           await this.pingCommand.onPing(ctx);
+          break;
+        case 'dizayn':
+          await this.dizaynCommand.onDizayn(ctx);
           break;
       }
       return;

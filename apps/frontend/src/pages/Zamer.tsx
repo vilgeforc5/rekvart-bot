@@ -46,6 +46,7 @@ export function Zamer() {
       onUpdateSummary={handleUpdateSummary}
       updateSummaryMutation={updateSummaryMutation}
       updateQuestionMutation={updateQuestionMutation}
+      disableDragAndDrop={true}
     />
   );
 }

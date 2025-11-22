@@ -6,6 +6,7 @@ import { HealthBadge } from "./components/HealthBadge";
 import { Calculate } from "./pages/Calculate";
 import { Commands } from "./pages/Commands";
 import { Consultacya } from "./pages/Consultacya";
+import { Dizayn } from "./pages/Dizayn";
 import { PortfolioPage } from "./pages/Portfolio";
 import { Zamer } from "./pages/Zamer";
 
@@ -25,6 +26,7 @@ function App() {
               <Route path="/portfolio" element={<PortfolioPage />} />
               <Route path="/consultacya" element={<Consultacya />} />
               <Route path="/zamer" element={<Zamer />} />
+              <Route path="/dizayn" element={<Dizayn />} />
             </Routes>
           </main>
           <HealthBadge />

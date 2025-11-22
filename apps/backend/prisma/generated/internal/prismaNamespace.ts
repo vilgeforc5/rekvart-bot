@@ -391,7 +391,8 @@ export const ModelName = {
   CalculateSummary: 'CalculateSummary',
   Portfolio: 'Portfolio',
   ConsultacyaSummary: 'ConsultacyaSummary',
-  ZamerSummary: 'ZamerSummary'
+  ZamerSummary: 'ZamerSummary',
+  DizaynContent: 'DizaynContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command" | "startContent" | "question" | "questionVariant" | "calculateSummary" | "portfolio" | "consultacyaSummary" | "zamerSummary"
+    modelProps: "command" | "startContent" | "question" | "questionVariant" | "calculateSummary" | "portfolio" | "consultacyaSummary" | "zamerSummary" | "dizaynContent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1003,6 +1004,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DizaynContent: {
+      payload: Prisma.$DizaynContentPayload<ExtArgs>
+      fields: Prisma.DizaynContentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DizaynContentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DizaynContentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload>
+        }
+        findFirst: {
+          args: Prisma.DizaynContentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DizaynContentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload>
+        }
+        findMany: {
+          args: Prisma.DizaynContentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload>[]
+        }
+        create: {
+          args: Prisma.DizaynContentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload>
+        }
+        createMany: {
+          args: Prisma.DizaynContentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DizaynContentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload>[]
+        }
+        delete: {
+          args: Prisma.DizaynContentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload>
+        }
+        update: {
+          args: Prisma.DizaynContentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload>
+        }
+        deleteMany: {
+          args: Prisma.DizaynContentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DizaynContentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DizaynContentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload>[]
+        }
+        upsert: {
+          args: Prisma.DizaynContentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DizaynContentPayload>
+        }
+        aggregate: {
+          args: Prisma.DizaynContentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDizaynContent>
+        }
+        groupBy: {
+          args: Prisma.DizaynContentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DizaynContentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DizaynContentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DizaynContentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1131,6 +1206,20 @@ export const ZamerSummaryScalarFieldEnum = {
 } as const
 
 export type ZamerSummaryScalarFieldEnum = (typeof ZamerSummaryScalarFieldEnum)[keyof typeof ZamerSummaryScalarFieldEnum]
+
+
+export const DizaynContentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  telegramUrl: 'telegramUrl',
+  whatsappUrl: 'whatsappUrl',
+  email: 'email',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DizaynContentScalarFieldEnum = (typeof DizaynContentScalarFieldEnum)[keyof typeof DizaynContentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1326,6 +1415,7 @@ export type GlobalOmitConfig = {
   portfolio?: Prisma.PortfolioOmit
   consultacyaSummary?: Prisma.ConsultacyaSummaryOmit
   zamerSummary?: Prisma.ZamerSummaryOmit
+  dizaynContent?: Prisma.DizaynContentOmit
 }
 
 /* Types for Logging */

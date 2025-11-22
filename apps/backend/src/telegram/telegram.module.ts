@@ -12,6 +12,7 @@ import { PrismaService } from '../prisma.service';
 import { StartContentService } from '../start-content/start-content.service';
 import { CalculateModule } from './calculate/calculate.module';
 import { ConsultacyaModule } from './consultacya/consultacya.module';
+import { DizaynModule } from './dizayn/dizayn.module';
 import { PortfolioModule } from './portfolio/portfolio.module';
 import { TelegramBotService } from './telegram-bot.service';
 import { TelegramController } from './telegram.controller';
@@ -32,6 +33,7 @@ import { ZamerModule } from './zamer/zamer.module';
     ConsultacyaModule,
     ZamerModule,
     CalculateModule,
+    DizaynModule,
   ],
   providers: [
     TelegramController,

@@ -63,6 +63,7 @@ interface QuestionFormManagerProps {
   updateQuestionMutation: {
     isPending: boolean;
   };
+  disableDragAndDrop?: boolean;
 }
 
 export function QuestionFormManager({
@@ -74,6 +75,7 @@ export function QuestionFormManager({
   onUpdateSummary,
   updateSummaryMutation,
   updateQuestionMutation,
+  disableDragAndDrop = false,
 }: QuestionFormManagerProps) {
   const [editingQuestionId, setEditingQuestionId] = useState<number | null>(
     null
@@ -406,34 +408,51 @@ export function QuestionFormManager({
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Существующие вопросы
         </h3>
-        <p className="text-sm text-gray-500 mb-4">
-          Перетащите вопросы для изменения порядка
-        </p>
+        {!disableDragAndDrop && (
+          <p className="text-sm text-gray-500 mb-4">
+            Перетащите вопросы для изменения порядка
+          </p>
+        )}
         <div className="max-w-5xl">
           {isLoading ? (
             <div className="text-center py-8 text-gray-500">Загрузка...</div>
           ) : config && config.questions.length > 0 ? (
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEndQuestions}
-            >
-              <SortableContext
-                items={config.questions.map((q) => q.id)}
-                strategy={verticalListSortingStrategy}
+            disableDragAndDrop ? (
+              <div className="space-y-4">
+                {config.questions.map((question) => (
+                  <SortableQuestionItem
+                    key={question.id}
+                    question={question}
+                    onEdit={handleEditQuestion}
+                    onDragEndVariants={handleDragEndVariants}
+                    disableDragAndDrop={disableDragAndDrop}
+                  />
+                ))}
+              </div>
+            ) : (
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEndQuestions}
               >
-                <div className="space-y-4">
-                  {config.questions.map((question) => (
-                    <SortableQuestionItem
-                      key={question.id}
-                      question={question}
-                      onEdit={handleEditQuestion}
-                      onDragEndVariants={handleDragEndVariants}
-                    />
-                  ))}
-                </div>
-              </SortableContext>
-            </DndContext>
+                <SortableContext
+                  items={config.questions.map((q) => q.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  <div className="space-y-4">
+                    {config.questions.map((question) => (
+                      <SortableQuestionItem
+                        key={question.id}
+                        question={question}
+                        onEdit={handleEditQuestion}
+                        onDragEndVariants={handleDragEndVariants}
+                        disableDragAndDrop={disableDragAndDrop}
+                      />
+                    ))}
+                  </div>
+                </SortableContext>
+              </DndContext>
+            )
           ) : (
             <div className="text-center py-8 text-gray-500">
               Вопросы не найдены
@@ -449,13 +468,15 @@ function SortableQuestionItem({
   question,
   onEdit,
   onDragEndVariants,
+  disableDragAndDrop = false,
 }: {
   question: Question;
   onEdit: (question: Question) => void;
   onDragEndVariants: (event: DragEndEvent, questionId: number) => void;
+  disableDragAndDrop?: boolean;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: question.id });
+    useSortable({ id: question.id, disabled: disableDragAndDrop });
 
   const style = {
     transform: CSS.Translate.toString(transform),
@@ -476,13 +497,15 @@ function SortableQuestionItem({
       className="bg-white shadow rounded-lg p-4 border-l-4 border-blue-500"
     >
       <div className="flex gap-3">
-        <div
-          {...attributes}
-          {...listeners}
-          className="cursor-grab active:cursor-grabbing shrink-0 text-gray-400 hover:text-gray-600"
-        >
-          <GripVertical className="w-5 h-5" />
-        </div>
+        {!disableDragAndDrop && (
+          <div
+            {...attributes}
+            {...listeners}
+            className="cursor-grab active:cursor-grabbing shrink-0 text-gray-400 hover:text-gray-600"
+          >
+            <GripVertical className="w-5 h-5" />
+          </div>
+        )}
         <div className="flex-1">
           <div className="flex justify-between items-start mb-2">
             <div className="flex-1">
@@ -503,22 +526,38 @@ function SortableQuestionItem({
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase">
                 Варианты ответа
               </p>
-              <DndContext
-                sensors={sensors}
-                collisionDetection={closestCenter}
-                onDragEnd={(event) => onDragEndVariants(event, question.id)}
-              >
-                <SortableContext
-                  items={question.variants.map((v) => v.id)}
-                  strategy={verticalListSortingStrategy}
+              {disableDragAndDrop ? (
+                <div className="space-y-2">
+                  {question.variants.map((variant) => (
+                    <SortableVariantItem
+                      key={variant.id}
+                      variant={variant}
+                      disableDragAndDrop={disableDragAndDrop}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <DndContext
+                  sensors={sensors}
+                  collisionDetection={closestCenter}
+                  onDragEnd={(event) => onDragEndVariants(event, question.id)}
                 >
-                  <div className="space-y-2">
-                    {question.variants.map((variant) => (
-                      <SortableVariantItem key={variant.id} variant={variant} />
-                    ))}
-                  </div>
-                </SortableContext>
-              </DndContext>
+                  <SortableContext
+                    items={question.variants.map((v) => v.id)}
+                    strategy={verticalListSortingStrategy}
+                  >
+                    <div className="space-y-2">
+                      {question.variants.map((variant) => (
+                        <SortableVariantItem
+                          key={variant.id}
+                          variant={variant}
+                          disableDragAndDrop={disableDragAndDrop}
+                        />
+                      ))}
+                    </div>
+                  </SortableContext>
+                </DndContext>
+              )}
             </div>
           )}
 
@@ -536,9 +575,15 @@ function SortableQuestionItem({
   );
 }
 
-function SortableVariantItem({ variant }: { variant: Variant }) {
+function SortableVariantItem({
+  variant,
+  disableDragAndDrop = false,
+}: {
+  variant: Variant;
+  disableDragAndDrop?: boolean;
+}) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: variant.id });
+    useSortable({ id: variant.id, disabled: disableDragAndDrop });
 
   const style = {
     transform: CSS.Translate.toString(transform),
@@ -551,13 +596,15 @@ function SortableVariantItem({ variant }: { variant: Variant }) {
       style={style}
       className="bg-gray-50 rounded p-2 flex items-center gap-2 text-sm"
     >
-      <div
-        {...attributes}
-        {...listeners}
-        className="cursor-grab active:cursor-grabbing shrink-0 text-gray-400 hover:text-gray-600"
-      >
-        <GripVertical className="w-4 h-4" />
-      </div>
+      {!disableDragAndDrop && (
+        <div
+          {...attributes}
+          {...listeners}
+          className="cursor-grab active:cursor-grabbing shrink-0 text-gray-400 hover:text-gray-600"
+        >
+          <GripVertical className="w-4 h-4" />
+        </div>
+      )}
       <div className="flex-1">
         <span className="text-gray-700">{variant.text}</span>
         {variant.needsPhone && (
