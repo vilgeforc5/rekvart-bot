@@ -55,7 +55,8 @@ export const ModelName = {
   StartContent: 'StartContent',
   ZamerQuestion: 'ZamerQuestion',
   ZamerVariant: 'ZamerVariant',
-  ZamerSummary: 'ZamerSummary'
+  ZamerSummary: 'ZamerSummary',
+  Portfolio: 'Portfolio'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -132,6 +133,18 @@ export const ZamerSummaryScalarFieldEnum = {
 export type ZamerSummaryScalarFieldEnum = (typeof ZamerSummaryScalarFieldEnum)[keyof typeof ZamerSummaryScalarFieldEnum]
 
 
+export const PortfolioScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  imgSrc: 'imgSrc',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PortfolioScalarFieldEnum = (typeof PortfolioScalarFieldEnum)[keyof typeof PortfolioScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -146,4 +159,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

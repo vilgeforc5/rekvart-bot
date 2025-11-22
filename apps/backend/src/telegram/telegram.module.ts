@@ -5,6 +5,7 @@ import { session } from 'telegraf';
 import { BotCommandService } from '../command/commands.service';
 import { PrismaService } from '../prisma.service';
 import { StartContentService } from '../start-content/start-content.service';
+import { PortfolioModule } from './portfolio/portfolio.module';
 import { TelegramBotService } from './telegram-bot.service';
 import { TelegramController } from './telegram.controller';
 import { ZamerModule } from './zamer/zamer.module';
@@ -19,6 +20,7 @@ import { ZamerModule } from './zamer/zamer.module';
       inject: [],
     }),
     PingModule,
+    PortfolioModule,
     ZamerModule,
   ],
   providers: [

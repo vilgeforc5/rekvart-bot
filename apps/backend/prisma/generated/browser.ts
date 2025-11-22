@@ -42,3 +42,8 @@ export type ZamerVariant = Prisma.ZamerVariantModel
  * 
  */
 export type ZamerSummary = Prisma.ZamerSummaryModel
+/**
+ * Model Portfolio
+ * 
+ */
+export type Portfolio = Prisma.PortfolioModel

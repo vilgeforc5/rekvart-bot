@@ -388,7 +388,8 @@ export const ModelName = {
   StartContent: 'StartContent',
   ZamerQuestion: 'ZamerQuestion',
   ZamerVariant: 'ZamerVariant',
-  ZamerSummary: 'ZamerSummary'
+  ZamerSummary: 'ZamerSummary',
+  Portfolio: 'Portfolio'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command" | "startContent" | "zamerQuestion" | "zamerVariant" | "zamerSummary"
+    modelProps: "command" | "startContent" | "zamerQuestion" | "zamerVariant" | "zamerSummary" | "portfolio"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Portfolio: {
+      payload: Prisma.$PortfolioPayload<ExtArgs>
+      fields: Prisma.PortfolioFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PortfolioFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PortfolioFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>
+        }
+        findFirst: {
+          args: Prisma.PortfolioFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PortfolioFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>
+        }
+        findMany: {
+          args: Prisma.PortfolioFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>[]
+        }
+        create: {
+          args: Prisma.PortfolioCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>
+        }
+        createMany: {
+          args: Prisma.PortfolioCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PortfolioCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>[]
+        }
+        delete: {
+          args: Prisma.PortfolioDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>
+        }
+        update: {
+          args: Prisma.PortfolioUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>
+        }
+        deleteMany: {
+          args: Prisma.PortfolioDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PortfolioUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PortfolioUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>[]
+        }
+        upsert: {
+          args: Prisma.PortfolioUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>
+        }
+        aggregate: {
+          args: Prisma.PortfolioAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePortfolio>
+        }
+        groupBy: {
+          args: Prisma.PortfolioGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PortfolioCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -875,6 +950,18 @@ export const ZamerSummaryScalarFieldEnum = {
 export type ZamerSummaryScalarFieldEnum = (typeof ZamerSummaryScalarFieldEnum)[keyof typeof ZamerSummaryScalarFieldEnum]
 
 
+export const PortfolioScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  imgSrc: 'imgSrc',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PortfolioScalarFieldEnum = (typeof PortfolioScalarFieldEnum)[keyof typeof PortfolioScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -889,6 +976,14 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -1043,6 +1138,7 @@ export type GlobalOmitConfig = {
   zamerQuestion?: Prisma.ZamerQuestionOmit
   zamerVariant?: Prisma.ZamerVariantOmit
   zamerSummary?: Prisma.ZamerSummaryOmit
+  portfolio?: Prisma.PortfolioOmit
 }
 
 /* Types for Logging */

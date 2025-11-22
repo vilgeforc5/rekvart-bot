@@ -134,9 +134,13 @@ export class ZamerCommand {
 
   @On('text')
   async onText(@Ctx() ctx: MyContext) {
+    console.log(ctx.message);
     if (!ctx.message || !('text' in ctx.message)) return;
 
     const text = ctx.message.text;
+
+    if (text.startsWith('/')) return;
+
     const currentOrder = ctx.session.currentQuestionOrder;
 
     if (!currentOrder || !ctx.session.step?.startsWith('waiting_text_')) return;

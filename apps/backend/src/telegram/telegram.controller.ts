@@ -32,9 +32,17 @@ export class TelegramController {
       ),
     };
 
-    await ctx.reply(startContent.content, {
+    const message = await ctx.reply(startContent.content, {
       reply_markup: keyboard,
       parse_mode: 'HTML',
     });
+
+    try {
+      await ctx.pinChatMessage(message.message_id, {
+        disable_notification: true,
+      });
+    } catch (error) {
+      console.error('Failed to pin message:', error);
+    }
   }
 }
