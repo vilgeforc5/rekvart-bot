@@ -8,9 +8,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { BotCommandService } from '../telegram/bot-command.service';
 import { TelegramBotService } from '../telegram/telegram-bot.service';
 import { CreateCommandDto, UpdateCommandDto } from './command.dto';
+import { BotCommandService } from './commands.service';
 
 @Controller('command')
 export class CommandController {

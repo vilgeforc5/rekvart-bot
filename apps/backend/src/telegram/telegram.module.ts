@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TelegrafModule } from 'nestjs-telegraf';
+import { PingModule } from 'src/telegram/ping/ping.module';
+import { BotCommandService } from '../command/commands.service';
 import { PrismaService } from '../prisma.service';
-import { BotCommandService } from './bot-command.service';
 import { TelegramBotService } from './telegram-bot.service';
 import { TelegramController } from './telegram.controller';
 
@@ -13,6 +14,7 @@ import { TelegramController } from './telegram.controller';
       }),
       inject: [],
     }),
+    PingModule,
   ],
   providers: [
     TelegramController,

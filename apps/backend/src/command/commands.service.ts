@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Command } from '../../prisma/generated/client';
-import { CreateCommandDto, UpdateCommandDto } from '../command/command.dto';
 import { PrismaService } from '../prisma.service';
+import { CreateCommandDto, UpdateCommandDto } from './command.dto';
 
 @Injectable()
 export class BotCommandService {

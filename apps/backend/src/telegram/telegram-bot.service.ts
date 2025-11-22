@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectBot } from 'nestjs-telegraf';
 import { Telegraf } from 'telegraf';
-import { BotCommandService } from './bot-command.service';
+import { BotCommandService } from '../command/commands.service';
 
 @Injectable()
 export class TelegramBotService implements OnModuleInit {
