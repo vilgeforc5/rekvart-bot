@@ -6,9 +6,11 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
+import { Protected } from 'src/auth/protected.decorator';
 import { StartContent, UpsertStartContentDto } from './start-content.dto';
 import { StartContentService } from './start-content.service';
 
+@Protected()
 @Controller('api/start-content')
 export class StartContentController {
   constructor(private readonly startContentService: StartContentService) {}

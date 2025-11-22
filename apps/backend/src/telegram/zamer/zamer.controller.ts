@@ -7,6 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Protected } from 'src/auth/protected.decorator';
 import {
   CreateZamerQuestionDto,
   UpdateZamerQuestionDto,
@@ -15,6 +16,7 @@ import {
 } from './zamer.dto';
 import { ZamerService } from './zamer.service';
 
+@Protected()
 @Controller('zamer')
 export class ZamerController {
   constructor(private readonly zamerService: ZamerService) {}

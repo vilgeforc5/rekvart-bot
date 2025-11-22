@@ -54,6 +54,7 @@ export function Consultacya() {
       onUpdateSummary={handleUpdateSummary}
       updateSummaryMutation={updateSummaryMutation}
       updateQuestionMutation={updateQuestionMutation}
+      disableDragAndDrop={true}
     />
   );
 }

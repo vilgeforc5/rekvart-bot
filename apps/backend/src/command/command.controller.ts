@@ -8,10 +8,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Protected } from 'src/auth/protected.decorator';
 import { TelegramBotService } from '../telegram/telegram-bot.service';
 import { CreateCommandDto, UpdateCommandDto } from './command.dto';
 import { BotCommandService } from './commands.service';
 
+@Protected()
 @Controller('command')
 export class CommandController {
   constructor(

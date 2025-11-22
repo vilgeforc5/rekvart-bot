@@ -7,6 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Protected } from 'src/auth/protected.decorator';
 import {
   CalculateConfigDto,
   CreateCalculateQuestionDto,
@@ -15,6 +16,7 @@ import {
 } from './calculate.dto';
 import { CalculateService } from './calculate.service';
 
+@Protected()
 @Controller('calculate')
 export class CalculateController {
   constructor(private readonly calculateService: CalculateService) {}

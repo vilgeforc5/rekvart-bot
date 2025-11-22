@@ -7,6 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Protected } from 'src/auth/protected.decorator';
 import {
   ConsultacyaConfigDto,
   CreateConsultacyaQuestionDto,
@@ -15,6 +16,7 @@ import {
 } from './consultacya.dto';
 import { ConsultacyaService } from './consultacya.service';
 
+@Protected()
 @Controller('consultacya')
 export class ConsultacyaController {
   constructor(private readonly consultacyaService: ConsultacyaService) {}

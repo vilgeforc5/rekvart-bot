@@ -8,9 +8,11 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Protected } from 'src/auth/protected.decorator';
 import { CreatePortfolioDto, UpdatePortfolioDto } from './portfolio.dto';
 import { PortfolioService } from './portfolio.service';
 
+@Protected()
 @Controller('portfolio')
 export class PortfolioController {
   constructor(private readonly portfolioService: PortfolioService) {}

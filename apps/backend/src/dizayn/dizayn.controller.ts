@@ -6,9 +6,11 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
+import { Protected } from 'src/auth/protected.decorator';
 import { DizaynContent, UpsertDizaynContentDto } from './dizayn.dto';
 import { DizaynService } from './dizayn.service';
 
+@Protected()
 @Controller('api/dizayn')
 export class DizaynController {
   constructor(private readonly dizaynService: DizaynService) {}

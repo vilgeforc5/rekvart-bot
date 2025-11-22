@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { PrismaService } from 'src/prisma.service';
+import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { CommandController } from './command/command.controller';
 import { BotCommandService } from './command/commands.service';
 import { DizaynController } from './dizayn/dizayn.controller';
@@ -12,7 +15,7 @@ import { StartContentService } from './start-content/start-content.service';
 import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
-  imports: [TelegramModule, HealthModule],
+  imports: [AuthModule, TelegramModule, HealthModule],
   controllers: [
     CommandController,
     StartContentController,
@@ -25,6 +28,10 @@ import { TelegramModule } from './telegram/telegram.module';
     StartContentService,
     PortfolioService,
     DizaynService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
   ],
 })
 export class AppModule {}

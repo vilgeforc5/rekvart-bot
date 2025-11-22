@@ -1,7 +1,15 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
+
+if (!API_URL) {
+  throw new Error("VITE_API_URL environment variable is not set");
+}
 
 export interface FetchOptions extends RequestInit {
   token?: string;
+}
+
+function getStoredToken(): string | null {
+  return localStorage.getItem("auth_token");
 }
 
 export async function fetcher<T>(
@@ -15,8 +23,9 @@ export async function fetcher<T>(
     ...(fetchOptions.headers as Record<string, string>),
   };
 
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
+  const authToken = token || getStoredToken();
+  if (authToken) {
+    headers.Authorization = `Bearer ${authToken}`;
   }
 
   const response = await fetch(`${API_URL}${endpoint}`, {
