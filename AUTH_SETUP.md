@@ -15,7 +15,7 @@ AUTH_PASSWORD="your_secure_password_here"
 JWT_SECRET="your_jwt_secret_key_change_this_in_production"
 JWT_EXPIRES_IN="7d"
 
-VITE_API_URL="http://localhost:3000"
+VITE_API_BASE_URL="http://localhost:3000"
 ```
 
 ### Required Variables for Auth
@@ -24,7 +24,7 @@ VITE_API_URL="http://localhost:3000"
 - `AUTH_PASSWORD`: The password for login (hardcoded)
 - `JWT_SECRET`: Secret key for signing JWT tokens (must be a long random string)
 - `JWT_EXPIRES_IN`: Token expiration time (default: "7d")
-- `VITE_API_URL`: Backend API URL for frontend (no fallback - must be set)
+- `VITE_API_BASE_URL`: Backend API URL for frontend (no fallback - must be set)
 
 ## How It Works
 
