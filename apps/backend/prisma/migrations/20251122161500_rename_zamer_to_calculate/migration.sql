@@ -1,4 +1,0 @@
-ALTER TYPE "FormType" RENAME VALUE 'ZAMER' TO 'CALCULATE';
-
-ALTER TABLE "ZamerSummary" RENAME TO "CalculateSummary";
-
