@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 import { Header } from "./components/Header";
 import { HealthBadge } from "./components/HealthBadge";
+import { Calculate } from "./pages/Calculate";
 import { Commands } from "./pages/Commands";
 import { Consultacya } from "./pages/Consultacya";
 import { PortfolioPage } from "./pages/Portfolio";
@@ -20,9 +21,10 @@ function App() {
             <Routes>
               <Route path="/" element={<Commands />} />
               <Route path="/start" element={<Navigate to="/" replace />} />
-              <Route path="/zamer" element={<Zamer />} />
+              <Route path="/calculate" element={<Calculate />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
               <Route path="/consultacya" element={<Consultacya />} />
+              <Route path="/zamer" element={<Zamer />} />
             </Routes>
           </main>
           <HealthBadge />

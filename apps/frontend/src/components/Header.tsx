@@ -14,10 +14,10 @@ export function Header() {
               /start
             </Link>
             <Link
-              to="/zamer"
+              to="/calculate"
               className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
             >
-              /zamer
+              /calculate
             </Link>
             <Link
               to="/portfolio"
@@ -30,6 +30,12 @@ export function Header() {
               className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
             >
               /consultacya
+            </Link>
+            <Link
+              to="/zamer"
+              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+            >
+              /zamer
             </Link>
           </nav>
         </div>

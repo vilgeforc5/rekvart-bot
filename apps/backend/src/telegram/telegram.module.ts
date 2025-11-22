@@ -1,10 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TelegrafModule } from 'nestjs-telegraf';
+import { HealthModule } from 'src/health/health.module';
+import { FormSubmissionService } from 'src/telegram/form-submission.service';
+import { PingCommand } from 'src/telegram/ping/ping.command';
 import { PingModule } from 'src/telegram/ping/ping.module';
+import { PortfolioCommand } from 'src/telegram/portfolio/portfolio.command';
+import { PortfolioTelegramService } from 'src/telegram/portfolio/portfolio.service';
 import { session } from 'telegraf';
 import { BotCommandService } from '../command/commands.service';
 import { PrismaService } from '../prisma.service';
 import { StartContentService } from '../start-content/start-content.service';
+import { CalculateModule } from './calculate/calculate.module';
 import { ConsultacyaModule } from './consultacya/consultacya.module';
 import { PortfolioModule } from './portfolio/portfolio.module';
 import { TelegramBotService } from './telegram-bot.service';
@@ -20,10 +26,12 @@ import { ZamerModule } from './zamer/zamer.module';
       }),
       inject: [],
     }),
+    HealthModule,
     PingModule,
     PortfolioModule,
     ConsultacyaModule,
     ZamerModule,
+    CalculateModule,
   ],
   providers: [
     TelegramController,
@@ -31,6 +39,10 @@ import { ZamerModule } from './zamer/zamer.module';
     StartContentService,
     PrismaService,
     TelegramBotService,
+    FormSubmissionService,
+    PortfolioCommand,
+    PortfolioTelegramService,
+    PingCommand,
   ],
   exports: [BotCommandService, TelegramBotService],
 })

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
 
-export interface ConsultacyaQuestionWithVariants {
+export interface CalculateQuestionWithVariants {
   id: number;
   text: string;
-  type?: string | null;
+  type: string;
   order: number;
   variants: {
     id: number;
@@ -15,28 +15,28 @@ export interface ConsultacyaQuestionWithVariants {
 }
 
 @Injectable()
-export class ConsultacyaService {
+export class CalculateService {
   constructor(private prisma: PrismaService) {}
 
-  async getAllQuestions(): Promise<ConsultacyaQuestionWithVariants[]> {
+  async getAllQuestions(): Promise<CalculateQuestionWithVariants[]> {
     return this.prisma.question.findMany({
-      where: { formType: 'CONSULTACYA' },
+      where: { formType: 'CALCULATE' },
       include: {
         variants: {
           orderBy: { order: 'asc' },
         },
       },
       orderBy: { order: 'asc' },
-    }) as unknown as ConsultacyaQuestionWithVariants[];
+    }) as unknown as CalculateQuestionWithVariants[];
   }
 
   async getQuestion(
     order: number,
-  ): Promise<ConsultacyaQuestionWithVariants | null> {
+  ): Promise<CalculateQuestionWithVariants | null> {
     return this.prisma.question.findUnique({
       where: {
         formType_order: {
-          formType: 'CONSULTACYA',
+          formType: 'CALCULATE',
           order: order,
         },
       },
@@ -45,19 +45,21 @@ export class ConsultacyaService {
           orderBy: { order: 'asc' },
         },
       },
-    }) as unknown as ConsultacyaQuestionWithVariants | null;
+    }) as unknown as CalculateQuestionWithVariants | null;
   }
 
   async createQuestion(data: {
     text: string;
+    type: string;
     order: number;
     variants?: { text: string; order: number; needsPhone?: boolean }[];
-  }): Promise<ConsultacyaQuestionWithVariants> {
+  }): Promise<CalculateQuestionWithVariants> {
     return this.prisma.question.create({
       data: {
         text: data.text,
+        type: data.type,
         order: data.order,
-        formType: 'CONSULTACYA',
+        formType: 'CALCULATE',
         variants: data.variants
           ? {
               create: data.variants,
@@ -69,13 +71,14 @@ export class ConsultacyaService {
           orderBy: { order: 'asc' },
         },
       },
-    }) as unknown as ConsultacyaQuestionWithVariants;
+    }) as unknown as CalculateQuestionWithVariants;
   }
 
   async updateQuestion(
     id: number,
     data: {
       text?: string;
+      type?: string;
       order?: number;
       variants?: {
         id?: number;
@@ -84,12 +87,12 @@ export class ConsultacyaService {
         needsPhone?: boolean;
       }[];
     },
-  ): Promise<ConsultacyaQuestionWithVariants> {
+  ): Promise<CalculateQuestionWithVariants> {
     const currentQuestion = await this.prisma.question.findUnique({
       where: { id },
     });
 
-    if (!currentQuestion || currentQuestion.formType !== 'CONSULTACYA') {
+    if (!currentQuestion || currentQuestion.formType !== 'CALCULATE') {
       throw new Error('Question not found');
     }
 
@@ -106,7 +109,7 @@ export class ConsultacyaService {
         if (newOrder < oldOrder) {
           await tx.question.updateMany({
             where: {
-              formType: 'CONSULTACYA',
+              formType: 'CALCULATE',
               order: {
                 gte: newOrder,
                 lt: oldOrder,
@@ -121,7 +124,7 @@ export class ConsultacyaService {
         } else {
           await tx.question.updateMany({
             where: {
-              formType: 'CONSULTACYA',
+              formType: 'CALCULATE',
               order: {
                 gt: oldOrder,
                 lte: newOrder,
@@ -146,6 +149,7 @@ export class ConsultacyaService {
         where: { id },
         data: {
           text: data.text,
+          type: data.type,
           order: data.order,
           variants: data.variants
             ? {
@@ -158,7 +162,7 @@ export class ConsultacyaService {
             orderBy: { order: 'asc' },
           },
         },
-      }) as unknown as ConsultacyaQuestionWithVariants;
+      }) as unknown as CalculateQuestionWithVariants;
     });
   }
 
@@ -167,7 +171,7 @@ export class ConsultacyaService {
       where: { id },
     });
 
-    if (!question || question.formType !== 'CONSULTACYA') {
+    if (!question || question.formType !== 'CALCULATE') {
       return;
     }
 
@@ -177,7 +181,7 @@ export class ConsultacyaService {
 
     const questionsToUpdate = await this.prisma.question.findMany({
       where: {
-        formType: 'CONSULTACYA',
+        formType: 'CALCULATE',
         order: {
           gt: question.order,
         },
@@ -193,7 +197,7 @@ export class ConsultacyaService {
   }
 
   async getSummary(): Promise<string> {
-    const summary = await this.prisma.consultacyaSummary.findUnique({
+    const summary = await this.prisma.calculateSummary.findUnique({
       where: { id: 1 },
     });
     return (
@@ -202,7 +206,7 @@ export class ConsultacyaService {
   }
 
   async updateSummary(message: string): Promise<void> {
-    await this.prisma.consultacyaSummary.upsert({
+    await this.prisma.calculateSummary.upsert({
       where: { id: 1 },
       create: { message },
       update: { message },

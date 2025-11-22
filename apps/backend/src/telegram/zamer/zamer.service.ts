@@ -4,7 +4,7 @@ import { PrismaService } from '../../prisma.service';
 export interface ZamerQuestionWithVariants {
   id: number;
   text: string;
-  type: string;
+  type?: string | null;
   order: number;
   variants: {
     id: number;
@@ -19,7 +19,8 @@ export class ZamerService {
   constructor(private prisma: PrismaService) {}
 
   async getAllQuestions(): Promise<ZamerQuestionWithVariants[]> {
-    return this.prisma.zamerQuestion.findMany({
+    return this.prisma.question.findMany({
+      where: { formType: 'ZAMER' },
       include: {
         variants: {
           orderBy: { order: 'asc' },
@@ -30,8 +31,13 @@ export class ZamerService {
   }
 
   async getQuestion(order: number): Promise<ZamerQuestionWithVariants | null> {
-    return this.prisma.zamerQuestion.findUnique({
-      where: { order },
+    return this.prisma.question.findUnique({
+      where: {
+        formType_order: {
+          formType: 'ZAMER',
+          order: order,
+        },
+      },
       include: {
         variants: {
           orderBy: { order: 'asc' },
@@ -42,15 +48,14 @@ export class ZamerService {
 
   async createQuestion(data: {
     text: string;
-    type: string;
     order: number;
     variants?: { text: string; order: number; needsPhone?: boolean }[];
   }): Promise<ZamerQuestionWithVariants> {
-    return this.prisma.zamerQuestion.create({
+    return this.prisma.question.create({
       data: {
         text: data.text,
-        type: data.type,
         order: data.order,
+        formType: 'ZAMER',
         variants: data.variants
           ? {
               create: data.variants,
@@ -69,7 +74,6 @@ export class ZamerService {
     id: number,
     data: {
       text?: string;
-      type?: string;
       order?: number;
       variants?: {
         id?: number;
@@ -79,47 +83,99 @@ export class ZamerService {
       }[];
     },
   ): Promise<ZamerQuestionWithVariants> {
-    if (data.variants) {
-      await this.prisma.zamerVariant.deleteMany({
-        where: { questionId: id },
-      });
+    const currentQuestion = await this.prisma.question.findUnique({
+      where: { id },
+    });
+
+    if (!currentQuestion || currentQuestion.formType !== 'ZAMER') {
+      throw new Error('Question not found');
     }
 
-    return this.prisma.zamerQuestion.update({
-      where: { id },
-      data: {
-        text: data.text,
-        type: data.type,
-        order: data.order,
-        variants: data.variants
-          ? {
-              create: data.variants,
-            }
-          : undefined,
-      },
-      include: {
-        variants: {
-          orderBy: { order: 'asc' },
+    return await this.prisma.$transaction(async (tx) => {
+      if (data.order !== undefined && data.order !== currentQuestion.order) {
+        const oldOrder = currentQuestion.order;
+        const newOrder = data.order;
+
+        await tx.question.update({
+          where: { id },
+          data: { order: -1 },
+        });
+
+        if (newOrder < oldOrder) {
+          await tx.question.updateMany({
+            where: {
+              formType: 'ZAMER',
+              order: {
+                gte: newOrder,
+                lt: oldOrder,
+              },
+            },
+            data: {
+              order: {
+                increment: 1,
+              },
+            },
+          });
+        } else {
+          await tx.question.updateMany({
+            where: {
+              formType: 'ZAMER',
+              order: {
+                gt: oldOrder,
+                lte: newOrder,
+              },
+            },
+            data: {
+              order: {
+                decrement: 1,
+              },
+            },
+          });
+        }
+      }
+
+      if (data.variants) {
+        await tx.questionVariant.deleteMany({
+          where: { questionId: id },
+        });
+      }
+
+      return tx.question.update({
+        where: { id },
+        data: {
+          text: data.text,
+          order: data.order,
+          variants: data.variants
+            ? {
+                create: data.variants,
+              }
+            : undefined,
         },
-      },
-    }) as unknown as ZamerQuestionWithVariants;
+        include: {
+          variants: {
+            orderBy: { order: 'asc' },
+          },
+        },
+      }) as unknown as ZamerQuestionWithVariants;
+    });
   }
 
   async deleteQuestion(id: number): Promise<void> {
-    const question = await this.prisma.zamerQuestion.findUnique({
+    const question = await this.prisma.question.findUnique({
       where: { id },
     });
 
-    if (!question) {
+    if (!question || question.formType !== 'ZAMER') {
       return;
     }
 
-    await this.prisma.zamerQuestion.delete({
+    await this.prisma.question.delete({
       where: { id },
     });
 
-    const questionsToUpdate = await this.prisma.zamerQuestion.findMany({
+    const questionsToUpdate = await this.prisma.question.findMany({
       where: {
+        formType: 'ZAMER',
         order: {
           gt: question.order,
         },
@@ -127,7 +183,7 @@ export class ZamerService {
     });
 
     for (const q of questionsToUpdate) {
-      await this.prisma.zamerQuestion.update({
+      await this.prisma.question.update({
         where: { id: q.id },
         data: { order: q.order - 1 },
       });

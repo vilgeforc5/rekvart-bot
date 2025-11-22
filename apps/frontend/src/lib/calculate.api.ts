@@ -1,85 +1,82 @@
 import { toast } from "sonner";
 import { fetcher, type FetchOptions } from "./api";
 
-export interface ConsultacyaVariant {
+export interface CalculateVariant {
   id: number;
   text: string;
   order: number;
   needsPhone: boolean;
 }
 
-export interface ConsultacyaQuestion {
+export interface CalculateQuestion {
   id: number;
   text: string;
-  type?: string | null;
+  type: "select" | "text" | "phone";
   order: number;
-  variants: ConsultacyaVariant[];
+  variants: CalculateVariant[];
 }
 
-export interface ConsultacyaConfig {
-  questions: ConsultacyaQuestion[];
+export interface CalculateConfig {
+  questions: CalculateQuestion[];
   summary: string;
 }
 
-export interface CreateConsultacyaVariantDto {
+export interface CreateCalculateVariantDto {
   text: string;
   order: number;
   needsPhone?: boolean;
 }
 
-export interface UpdateConsultacyaVariantDto {
+export interface UpdateCalculateVariantDto {
   id?: number;
   text: string;
   order: number;
   needsPhone?: boolean;
 }
 
-export interface CreateConsultacyaQuestionDto {
+export interface CreateCalculateQuestionDto {
   text: string;
-  type?: string;
+  type: string;
   order: number;
-  variants?: CreateConsultacyaVariantDto[];
+  variants?: CreateCalculateVariantDto[];
 }
 
-export interface UpdateConsultacyaQuestionDto {
+export interface UpdateCalculateQuestionDto {
   text?: string;
   type?: string;
   order?: number;
-  variants?: UpdateConsultacyaVariantDto[];
+  variants?: UpdateCalculateVariantDto[];
 }
 
-export const consultacyaApi = {
+export const calculateApi = {
   getConfig: (options?: FetchOptions) =>
-    fetcher<ConsultacyaConfig>("/consultacya/config", {
+    fetcher<CalculateConfig>("/calculate/config", {
       ...options,
       method: "GET",
     }),
 
   getAllQuestions: (options?: FetchOptions) =>
-    fetcher<ConsultacyaQuestion[]>("/consultacya/questions", {
+    fetcher<CalculateQuestion[]>("/calculate/questions", {
       ...options,
       method: "GET",
     }),
 
   getQuestion: (id: number, options?: FetchOptions) =>
-    fetcher<ConsultacyaQuestion>(`/consultacya/questions/${id}`, {
+    fetcher<CalculateQuestion>(`/calculate/questions/${id}`, {
       ...options,
       method: "GET",
     }),
 
   createQuestion: async (
-    data: CreateConsultacyaQuestionDto,
+    data: CreateCalculateQuestionDto,
     options?: FetchOptions
   ) => {
     try {
-      const result = await fetcher<ConsultacyaQuestion>(
-        "/consultacya/questions",
-        {
-          ...options,
-          method: "POST",
-          body: JSON.stringify(data),
-        }
-      );
+      const result = await fetcher<CalculateQuestion>("/calculate/questions", {
+        ...options,
+        method: "POST",
+        body: JSON.stringify(data),
+      });
       toast.success("Вопрос успешно создан");
       return result;
     } catch (error) {
@@ -94,12 +91,12 @@ export const consultacyaApi = {
 
   updateQuestion: async (
     id: number,
-    data: UpdateConsultacyaQuestionDto,
+    data: UpdateCalculateQuestionDto,
     options?: FetchOptions
   ) => {
     try {
-      const result = await fetcher<ConsultacyaQuestion>(
-        `/consultacya/questions/${id}`,
+      const result = await fetcher<CalculateQuestion>(
+        `/calculate/questions/${id}`,
         {
           ...options,
           method: "PUT",
@@ -120,7 +117,7 @@ export const consultacyaApi = {
 
   deleteQuestion: async (id: number, options?: FetchOptions) => {
     try {
-      await fetcher<{ success: boolean }>(`/consultacya/questions/${id}`, {
+      await fetcher<{ success: boolean }>(`/calculate/questions/${id}`, {
         ...options,
         method: "DELETE",
       });
@@ -136,14 +133,14 @@ export const consultacyaApi = {
   },
 
   getSummary: (options?: FetchOptions) =>
-    fetcher<{ message: string }>("/consultacya/summary", {
+    fetcher<{ message: string }>("/calculate/summary", {
       ...options,
       method: "GET",
     }),
 
   updateSummary: async (message: string, options?: FetchOptions) => {
     try {
-      await fetcher<{ success: boolean }>("/consultacya/summary", {
+      await fetcher<{ success: boolean }>("/calculate/summary", {
         ...options,
         method: "PUT",
         body: JSON.stringify({ message }),

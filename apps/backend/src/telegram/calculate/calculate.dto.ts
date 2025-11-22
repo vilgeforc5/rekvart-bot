@@ -8,7 +8,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-export class CreateZamerVariantDto {
+export class CreateCalculateVariantDto {
   @IsString()
   text: string;
 
@@ -20,7 +20,7 @@ export class CreateZamerVariantDto {
   needsPhone?: boolean;
 }
 
-export class UpdateZamerVariantDto {
+export class UpdateCalculateVariantDto {
   @IsOptional()
   @IsInt()
   id?: number;
@@ -36,13 +36,12 @@ export class UpdateZamerVariantDto {
   needsPhone?: boolean;
 }
 
-export class CreateZamerQuestionDto {
+export class CreateCalculateQuestionDto {
   @IsString()
   text: string;
 
-  @IsOptional()
   @IsString()
-  type?: string;
+  type: string;
 
   @IsInt()
   order: number;
@@ -50,11 +49,11 @@ export class CreateZamerQuestionDto {
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => CreateZamerVariantDto)
-  variants?: CreateZamerVariantDto[];
+  @Type(() => CreateCalculateVariantDto)
+  variants?: CreateCalculateVariantDto[];
 }
 
-export class UpdateZamerQuestionDto {
+export class UpdateCalculateQuestionDto {
   @IsOptional()
   @IsString()
   text?: string;
@@ -70,20 +69,20 @@ export class UpdateZamerQuestionDto {
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => UpdateZamerVariantDto)
-  variants?: UpdateZamerVariantDto[];
+  @Type(() => UpdateCalculateVariantDto)
+  variants?: UpdateCalculateVariantDto[];
 }
 
-export class UpdateZamerSummaryDto {
+export class UpdateCalculateSummaryDto {
   @IsString()
   message: string;
 }
 
-export class ZamerConfigDto {
+export class CalculateConfigDto {
   questions: {
     id: number;
     text: string;
-    type?: string | null;
+    type: string;
     order: number;
     variants: {
       id: number;

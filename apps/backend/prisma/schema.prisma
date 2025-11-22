@@ -31,30 +31,39 @@ model StartContent {
   updatedAt DateTime @updatedAt
 }
 
-model ZamerQuestion {
-  id        Int            @id @default(autoincrement())
-  text      String
-  type      String
-  order     Int            @unique
-  variants  ZamerVariant[]
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+enum FormType {
+  CALCULATE
+  CONSULTACYA
+  ZAMER
 }
 
-model ZamerVariant {
-  id         Int           @id @default(autoincrement())
+model Question {
+  id        Int               @id @default(autoincrement())
+  text      String
+  type      String?
+  order     Int
+  formType  FormType
+  variants  QuestionVariant[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  @@unique([formType, order])
+}
+
+model QuestionVariant {
+  id         Int      @id @default(autoincrement())
   text       String
   order      Int
-  needsPhone Boolean       @default(false)
+  needsPhone Boolean  @default(false)
   questionId Int
-  question   ZamerQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@unique([questionId, order])
 }
 
-model ZamerSummary {
+model CalculateSummary {
   id        Int      @id @default(1)
   message   String
   createdAt DateTime @default(now())
@@ -70,29 +79,14 @@ model Portfolio {
   updatedAt   DateTime @updatedAt
 }
 
-model ConsultacyaQuestion {
-  id        Int                  @id @default(autoincrement())
-  text      String
-  order     Int                  @unique
-  variants  ConsultacyaVariant[]
-  createdAt DateTime             @default(now())
-  updatedAt DateTime             @updatedAt
-}
-
-model ConsultacyaVariant {
-  id         Int                 @id @default(autoincrement())
-  text       String
-  order      Int
-  needsPhone Boolean             @default(false)
-  questionId Int
-  question   ConsultacyaQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  createdAt  DateTime            @default(now())
-  updatedAt  DateTime            @updatedAt
-
-  @@unique([questionId, order])
-}
-
 model ConsultacyaSummary {
+  id        Int      @id @default(1)
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ZamerSummary {
   id        Int      @id @default(1)
   message   String
   createdAt DateTime @default(now())

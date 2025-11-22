@@ -386,13 +386,12 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Command: 'Command',
   StartContent: 'StartContent',
-  ZamerQuestion: 'ZamerQuestion',
-  ZamerVariant: 'ZamerVariant',
-  ZamerSummary: 'ZamerSummary',
+  Question: 'Question',
+  QuestionVariant: 'QuestionVariant',
+  CalculateSummary: 'CalculateSummary',
   Portfolio: 'Portfolio',
-  ConsultacyaQuestion: 'ConsultacyaQuestion',
-  ConsultacyaVariant: 'ConsultacyaVariant',
-  ConsultacyaSummary: 'ConsultacyaSummary'
+  ConsultacyaSummary: 'ConsultacyaSummary',
+  ZamerSummary: 'ZamerSummary'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command" | "startContent" | "zamerQuestion" | "zamerVariant" | "zamerSummary" | "portfolio" | "consultacyaQuestion" | "consultacyaVariant" | "consultacyaSummary"
+    modelProps: "command" | "startContent" | "question" | "questionVariant" | "calculateSummary" | "portfolio" | "consultacyaSummary" | "zamerSummary"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -560,225 +559,225 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ZamerQuestion: {
-      payload: Prisma.$ZamerQuestionPayload<ExtArgs>
-      fields: Prisma.ZamerQuestionFieldRefs
+    Question: {
+      payload: Prisma.$QuestionPayload<ExtArgs>
+      fields: Prisma.QuestionFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ZamerQuestionFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload> | null
+          args: Prisma.QuestionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ZamerQuestionFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload>
+          args: Prisma.QuestionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
         }
         findFirst: {
-          args: Prisma.ZamerQuestionFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload> | null
+          args: Prisma.QuestionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ZamerQuestionFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload>
+          args: Prisma.QuestionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
         }
         findMany: {
-          args: Prisma.ZamerQuestionFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload>[]
+          args: Prisma.QuestionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>[]
         }
         create: {
-          args: Prisma.ZamerQuestionCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload>
+          args: Prisma.QuestionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
         }
         createMany: {
-          args: Prisma.ZamerQuestionCreateManyArgs<ExtArgs>
+          args: Prisma.QuestionCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ZamerQuestionCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload>[]
+          args: Prisma.QuestionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>[]
         }
         delete: {
-          args: Prisma.ZamerQuestionDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload>
+          args: Prisma.QuestionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
         }
         update: {
-          args: Prisma.ZamerQuestionUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload>
+          args: Prisma.QuestionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
         }
         deleteMany: {
-          args: Prisma.ZamerQuestionDeleteManyArgs<ExtArgs>
+          args: Prisma.QuestionDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ZamerQuestionUpdateManyArgs<ExtArgs>
+          args: Prisma.QuestionUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ZamerQuestionUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload>[]
+          args: Prisma.QuestionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>[]
         }
         upsert: {
-          args: Prisma.ZamerQuestionUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerQuestionPayload>
+          args: Prisma.QuestionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionPayload>
         }
         aggregate: {
-          args: Prisma.ZamerQuestionAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateZamerQuestion>
+          args: Prisma.QuestionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuestion>
         }
         groupBy: {
-          args: Prisma.ZamerQuestionGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ZamerQuestionGroupByOutputType>[]
+          args: Prisma.QuestionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ZamerQuestionCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ZamerQuestionCountAggregateOutputType> | number
+          args: Prisma.QuestionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionCountAggregateOutputType> | number
         }
       }
     }
-    ZamerVariant: {
-      payload: Prisma.$ZamerVariantPayload<ExtArgs>
-      fields: Prisma.ZamerVariantFieldRefs
+    QuestionVariant: {
+      payload: Prisma.$QuestionVariantPayload<ExtArgs>
+      fields: Prisma.QuestionVariantFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ZamerVariantFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload> | null
+          args: Prisma.QuestionVariantFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ZamerVariantFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload>
+          args: Prisma.QuestionVariantFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload>
         }
         findFirst: {
-          args: Prisma.ZamerVariantFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload> | null
+          args: Prisma.QuestionVariantFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ZamerVariantFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload>
+          args: Prisma.QuestionVariantFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload>
         }
         findMany: {
-          args: Prisma.ZamerVariantFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload>[]
+          args: Prisma.QuestionVariantFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload>[]
         }
         create: {
-          args: Prisma.ZamerVariantCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload>
+          args: Prisma.QuestionVariantCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload>
         }
         createMany: {
-          args: Prisma.ZamerVariantCreateManyArgs<ExtArgs>
+          args: Prisma.QuestionVariantCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ZamerVariantCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload>[]
+          args: Prisma.QuestionVariantCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload>[]
         }
         delete: {
-          args: Prisma.ZamerVariantDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload>
+          args: Prisma.QuestionVariantDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload>
         }
         update: {
-          args: Prisma.ZamerVariantUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload>
+          args: Prisma.QuestionVariantUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload>
         }
         deleteMany: {
-          args: Prisma.ZamerVariantDeleteManyArgs<ExtArgs>
+          args: Prisma.QuestionVariantDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ZamerVariantUpdateManyArgs<ExtArgs>
+          args: Prisma.QuestionVariantUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ZamerVariantUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload>[]
+          args: Prisma.QuestionVariantUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload>[]
         }
         upsert: {
-          args: Prisma.ZamerVariantUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerVariantPayload>
+          args: Prisma.QuestionVariantUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuestionVariantPayload>
         }
         aggregate: {
-          args: Prisma.ZamerVariantAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateZamerVariant>
+          args: Prisma.QuestionVariantAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuestionVariant>
         }
         groupBy: {
-          args: Prisma.ZamerVariantGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ZamerVariantGroupByOutputType>[]
+          args: Prisma.QuestionVariantGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionVariantGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ZamerVariantCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ZamerVariantCountAggregateOutputType> | number
+          args: Prisma.QuestionVariantCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuestionVariantCountAggregateOutputType> | number
         }
       }
     }
-    ZamerSummary: {
-      payload: Prisma.$ZamerSummaryPayload<ExtArgs>
-      fields: Prisma.ZamerSummaryFieldRefs
+    CalculateSummary: {
+      payload: Prisma.$CalculateSummaryPayload<ExtArgs>
+      fields: Prisma.CalculateSummaryFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ZamerSummaryFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload> | null
+          args: Prisma.CalculateSummaryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ZamerSummaryFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+          args: Prisma.CalculateSummaryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload>
         }
         findFirst: {
-          args: Prisma.ZamerSummaryFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload> | null
+          args: Prisma.CalculateSummaryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ZamerSummaryFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+          args: Prisma.CalculateSummaryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload>
         }
         findMany: {
-          args: Prisma.ZamerSummaryFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>[]
+          args: Prisma.CalculateSummaryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload>[]
         }
         create: {
-          args: Prisma.ZamerSummaryCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+          args: Prisma.CalculateSummaryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload>
         }
         createMany: {
-          args: Prisma.ZamerSummaryCreateManyArgs<ExtArgs>
+          args: Prisma.CalculateSummaryCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ZamerSummaryCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>[]
+          args: Prisma.CalculateSummaryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload>[]
         }
         delete: {
-          args: Prisma.ZamerSummaryDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+          args: Prisma.CalculateSummaryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload>
         }
         update: {
-          args: Prisma.ZamerSummaryUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+          args: Prisma.CalculateSummaryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload>
         }
         deleteMany: {
-          args: Prisma.ZamerSummaryDeleteManyArgs<ExtArgs>
+          args: Prisma.CalculateSummaryDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ZamerSummaryUpdateManyArgs<ExtArgs>
+          args: Prisma.CalculateSummaryUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ZamerSummaryUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>[]
+          args: Prisma.CalculateSummaryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload>[]
         }
         upsert: {
-          args: Prisma.ZamerSummaryUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+          args: Prisma.CalculateSummaryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CalculateSummaryPayload>
         }
         aggregate: {
-          args: Prisma.ZamerSummaryAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateZamerSummary>
+          args: Prisma.CalculateSummaryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCalculateSummary>
         }
         groupBy: {
-          args: Prisma.ZamerSummaryGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ZamerSummaryGroupByOutputType>[]
+          args: Prisma.CalculateSummaryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CalculateSummaryGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ZamerSummaryCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ZamerSummaryCountAggregateOutputType> | number
+          args: Prisma.CalculateSummaryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CalculateSummaryCountAggregateOutputType> | number
         }
       }
     }
@@ -856,154 +855,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ConsultacyaQuestion: {
-      payload: Prisma.$ConsultacyaQuestionPayload<ExtArgs>
-      fields: Prisma.ConsultacyaQuestionFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ConsultacyaQuestionFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ConsultacyaQuestionFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
-        }
-        findFirst: {
-          args: Prisma.ConsultacyaQuestionFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ConsultacyaQuestionFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
-        }
-        findMany: {
-          args: Prisma.ConsultacyaQuestionFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>[]
-        }
-        create: {
-          args: Prisma.ConsultacyaQuestionCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
-        }
-        createMany: {
-          args: Prisma.ConsultacyaQuestionCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ConsultacyaQuestionCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>[]
-        }
-        delete: {
-          args: Prisma.ConsultacyaQuestionDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
-        }
-        update: {
-          args: Prisma.ConsultacyaQuestionUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
-        }
-        deleteMany: {
-          args: Prisma.ConsultacyaQuestionDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ConsultacyaQuestionUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ConsultacyaQuestionUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>[]
-        }
-        upsert: {
-          args: Prisma.ConsultacyaQuestionUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaQuestionPayload>
-        }
-        aggregate: {
-          args: Prisma.ConsultacyaQuestionAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateConsultacyaQuestion>
-        }
-        groupBy: {
-          args: Prisma.ConsultacyaQuestionGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaQuestionGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ConsultacyaQuestionCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaQuestionCountAggregateOutputType> | number
-        }
-      }
-    }
-    ConsultacyaVariant: {
-      payload: Prisma.$ConsultacyaVariantPayload<ExtArgs>
-      fields: Prisma.ConsultacyaVariantFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ConsultacyaVariantFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ConsultacyaVariantFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
-        }
-        findFirst: {
-          args: Prisma.ConsultacyaVariantFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ConsultacyaVariantFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
-        }
-        findMany: {
-          args: Prisma.ConsultacyaVariantFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>[]
-        }
-        create: {
-          args: Prisma.ConsultacyaVariantCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
-        }
-        createMany: {
-          args: Prisma.ConsultacyaVariantCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ConsultacyaVariantCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>[]
-        }
-        delete: {
-          args: Prisma.ConsultacyaVariantDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
-        }
-        update: {
-          args: Prisma.ConsultacyaVariantUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
-        }
-        deleteMany: {
-          args: Prisma.ConsultacyaVariantDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ConsultacyaVariantUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ConsultacyaVariantUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>[]
-        }
-        upsert: {
-          args: Prisma.ConsultacyaVariantUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConsultacyaVariantPayload>
-        }
-        aggregate: {
-          args: Prisma.ConsultacyaVariantAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateConsultacyaVariant>
-        }
-        groupBy: {
-          args: Prisma.ConsultacyaVariantGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaVariantGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ConsultacyaVariantCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ConsultacyaVariantCountAggregateOutputType> | number
-        }
-      }
-    }
     ConsultacyaSummary: {
       payload: Prisma.$ConsultacyaSummaryPayload<ExtArgs>
       fields: Prisma.ConsultacyaSummaryFieldRefs
@@ -1078,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ZamerSummary: {
+      payload: Prisma.$ZamerSummaryPayload<ExtArgs>
+      fields: Prisma.ZamerSummaryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ZamerSummaryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ZamerSummaryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+        }
+        findFirst: {
+          args: Prisma.ZamerSummaryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ZamerSummaryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+        }
+        findMany: {
+          args: Prisma.ZamerSummaryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>[]
+        }
+        create: {
+          args: Prisma.ZamerSummaryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+        }
+        createMany: {
+          args: Prisma.ZamerSummaryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ZamerSummaryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>[]
+        }
+        delete: {
+          args: Prisma.ZamerSummaryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+        }
+        update: {
+          args: Prisma.ZamerSummaryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+        }
+        deleteMany: {
+          args: Prisma.ZamerSummaryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ZamerSummaryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ZamerSummaryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>[]
+        }
+        upsert: {
+          args: Prisma.ZamerSummaryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ZamerSummaryPayload>
+        }
+        aggregate: {
+          args: Prisma.ZamerSummaryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateZamerSummary>
+        }
+        groupBy: {
+          args: Prisma.ZamerSummaryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ZamerSummaryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ZamerSummaryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ZamerSummaryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1140,19 +1065,20 @@ export const StartContentScalarFieldEnum = {
 export type StartContentScalarFieldEnum = (typeof StartContentScalarFieldEnum)[keyof typeof StartContentScalarFieldEnum]
 
 
-export const ZamerQuestionScalarFieldEnum = {
+export const QuestionScalarFieldEnum = {
   id: 'id',
   text: 'text',
   type: 'type',
   order: 'order',
+  formType: 'formType',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type ZamerQuestionScalarFieldEnum = (typeof ZamerQuestionScalarFieldEnum)[keyof typeof ZamerQuestionScalarFieldEnum]
+export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
 
 
-export const ZamerVariantScalarFieldEnum = {
+export const QuestionVariantScalarFieldEnum = {
   id: 'id',
   text: 'text',
   order: 'order',
@@ -1162,17 +1088,17 @@ export const ZamerVariantScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type ZamerVariantScalarFieldEnum = (typeof ZamerVariantScalarFieldEnum)[keyof typeof ZamerVariantScalarFieldEnum]
+export type QuestionVariantScalarFieldEnum = (typeof QuestionVariantScalarFieldEnum)[keyof typeof QuestionVariantScalarFieldEnum]
 
 
-export const ZamerSummaryScalarFieldEnum = {
+export const CalculateSummaryScalarFieldEnum = {
   id: 'id',
   message: 'message',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type ZamerSummaryScalarFieldEnum = (typeof ZamerSummaryScalarFieldEnum)[keyof typeof ZamerSummaryScalarFieldEnum]
+export type CalculateSummaryScalarFieldEnum = (typeof CalculateSummaryScalarFieldEnum)[keyof typeof CalculateSummaryScalarFieldEnum]
 
 
 export const PortfolioScalarFieldEnum = {
@@ -1187,30 +1113,6 @@ export const PortfolioScalarFieldEnum = {
 export type PortfolioScalarFieldEnum = (typeof PortfolioScalarFieldEnum)[keyof typeof PortfolioScalarFieldEnum]
 
 
-export const ConsultacyaQuestionScalarFieldEnum = {
-  id: 'id',
-  text: 'text',
-  order: 'order',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ConsultacyaQuestionScalarFieldEnum = (typeof ConsultacyaQuestionScalarFieldEnum)[keyof typeof ConsultacyaQuestionScalarFieldEnum]
-
-
-export const ConsultacyaVariantScalarFieldEnum = {
-  id: 'id',
-  text: 'text',
-  order: 'order',
-  needsPhone: 'needsPhone',
-  questionId: 'questionId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ConsultacyaVariantScalarFieldEnum = (typeof ConsultacyaVariantScalarFieldEnum)[keyof typeof ConsultacyaVariantScalarFieldEnum]
-
-
 export const ConsultacyaSummaryScalarFieldEnum = {
   id: 'id',
   message: 'message',
@@ -1219,6 +1121,16 @@ export const ConsultacyaSummaryScalarFieldEnum = {
 } as const
 
 export type ConsultacyaSummaryScalarFieldEnum = (typeof ConsultacyaSummaryScalarFieldEnum)[keyof typeof ConsultacyaSummaryScalarFieldEnum]
+
+
+export const ZamerSummaryScalarFieldEnum = {
+  id: 'id',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ZamerSummaryScalarFieldEnum = (typeof ZamerSummaryScalarFieldEnum)[keyof typeof ZamerSummaryScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1290,6 +1202,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'FormType'
+ */
+export type EnumFormTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FormType'>
+    
+
+
+/**
+ * Reference to a field of type 'FormType[]'
+ */
+export type ListEnumFormTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FormType[]'>
     
 
 
@@ -1394,13 +1320,12 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   command?: Prisma.CommandOmit
   startContent?: Prisma.StartContentOmit
-  zamerQuestion?: Prisma.ZamerQuestionOmit
-  zamerVariant?: Prisma.ZamerVariantOmit
-  zamerSummary?: Prisma.ZamerSummaryOmit
+  question?: Prisma.QuestionOmit
+  questionVariant?: Prisma.QuestionVariantOmit
+  calculateSummary?: Prisma.CalculateSummaryOmit
   portfolio?: Prisma.PortfolioOmit
-  consultacyaQuestion?: Prisma.ConsultacyaQuestionOmit
-  consultacyaVariant?: Prisma.ConsultacyaVariantOmit
   consultacyaSummary?: Prisma.ConsultacyaSummaryOmit
+  zamerSummary?: Prisma.ZamerSummaryOmit
 }
 
 /* Types for Logging */

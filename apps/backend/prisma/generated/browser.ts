@@ -28,37 +28,32 @@ export type Command = Prisma.CommandModel
  */
 export type StartContent = Prisma.StartContentModel
 /**
- * Model ZamerQuestion
+ * Model Question
  * 
  */
-export type ZamerQuestion = Prisma.ZamerQuestionModel
+export type Question = Prisma.QuestionModel
 /**
- * Model ZamerVariant
+ * Model QuestionVariant
  * 
  */
-export type ZamerVariant = Prisma.ZamerVariantModel
+export type QuestionVariant = Prisma.QuestionVariantModel
 /**
- * Model ZamerSummary
+ * Model CalculateSummary
  * 
  */
-export type ZamerSummary = Prisma.ZamerSummaryModel
+export type CalculateSummary = Prisma.CalculateSummaryModel
 /**
  * Model Portfolio
  * 
  */
 export type Portfolio = Prisma.PortfolioModel
 /**
- * Model ConsultacyaQuestion
- * 
- */
-export type ConsultacyaQuestion = Prisma.ConsultacyaQuestionModel
-/**
- * Model ConsultacyaVariant
- * 
- */
-export type ConsultacyaVariant = Prisma.ConsultacyaVariantModel
-/**
  * Model ConsultacyaSummary
  * 
  */
 export type ConsultacyaSummary = Prisma.ConsultacyaSummaryModel
+/**
+ * Model ZamerSummary
+ * 
+ */
+export type ZamerSummary = Prisma.ZamerSummaryModel

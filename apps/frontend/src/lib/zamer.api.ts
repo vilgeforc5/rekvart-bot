@@ -11,7 +11,7 @@ export interface ZamerVariant {
 export interface ZamerQuestion {
   id: number;
   text: string;
-  type: "select" | "text" | "phone";
+  type?: string | null;
   order: number;
   variants: ZamerVariant[];
 }
@@ -36,7 +36,7 @@ export interface UpdateZamerVariantDto {
 
 export interface CreateZamerQuestionDto {
   text: string;
-  type: string;
+  type?: string;
   order: number;
   variants?: CreateZamerVariantDto[];
 }
@@ -50,10 +50,16 @@ export interface UpdateZamerQuestionDto {
 
 export const zamerApi = {
   getConfig: (options?: FetchOptions) =>
-    fetcher<ZamerConfig>("/zamer/config", { ...options, method: "GET" }),
+    fetcher<ZamerConfig>("/zamer/config", {
+      ...options,
+      method: "GET",
+    }),
 
   getAllQuestions: (options?: FetchOptions) =>
-    fetcher<ZamerQuestion[]>("/zamer/questions", { ...options, method: "GET" }),
+    fetcher<ZamerQuestion[]>("/zamer/questions", {
+      ...options,
+      method: "GET",
+    }),
 
   getQuestion: (id: number, options?: FetchOptions) =>
     fetcher<ZamerQuestion>(`/zamer/questions/${id}`, {

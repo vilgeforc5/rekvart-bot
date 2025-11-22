@@ -1,7 +1,7 @@
 import { Action, Ctx, Update } from 'nestjs-telegraf';
+import { FormSubmissionService } from 'src/telegram/form-submission.service';
 import { Context } from 'telegraf';
-import { FormSubmissionService } from '../form-submission.service';
-import { ZamerService } from './zamer.service';
+import { CalculateService } from './calculate.service';
 
 interface SessionData {
   step?: string;
@@ -15,39 +15,39 @@ interface MyContext extends Context {
 }
 
 @Update()
-export class ZamerCommand {
+export class CalculateCommand {
   constructor(
-    private readonly zamerService: ZamerService,
+    private readonly calculateService: CalculateService,
     private readonly formSubmissionService: FormSubmissionService,
   ) {}
 
   private async sendSummary(ctx: MyContext, includePhone: boolean = false) {
-    const summaryMessage = await this.zamerService.getSummary();
+    const summaryMessage = await this.calculateService.getSummary();
     await ctx.reply(summaryMessage, {
       reply_markup: includePhone ? { remove_keyboard: true } : undefined,
     });
 
     await this.formSubmissionService.handleSubmission(
-      'zamer',
+      'calculate',
       ctx.session.answers || {},
     );
 
     ctx.session = {};
   }
 
-  @Action('zamer')
-  async onZamerAction(@Ctx() ctx: MyContext) {
+  @Action('calculate')
+  async onCalculateAction(@Ctx() ctx: MyContext) {
     ctx.session = {
       currentQuestionOrder: 1,
       answers: {},
-      activeForm: 'zamer',
+      activeForm: 'calculate',
     };
     await this.askQuestion(ctx, 1);
     await ctx.answerCbQuery();
   }
 
   async askQuestion(ctx: MyContext, order: number) {
-    const question = await this.zamerService.getQuestion(order);
+    const question = await this.calculateService.getQuestion(order);
 
     if (!question) {
       await this.sendSummary(ctx);
@@ -55,24 +55,23 @@ export class ZamerCommand {
     }
 
     ctx.session.currentQuestionOrder = order;
-    const questionType = question.type || 'select';
 
-    if (questionType === 'select' && question.variants.length > 0) {
+    if (question.type === 'select' && question.variants.length > 0) {
       ctx.session.step = `waiting_select_${order}`;
       await ctx.reply(question.text, {
         reply_markup: {
           inline_keyboard: question.variants.map((variant) => [
             {
               text: variant.text,
-              callback_data: `zamer_answer:${order}:${variant.id}`,
+              callback_data: `calculate_answer:${order}:${variant.id}`,
             },
           ]),
         },
       });
-    } else if (questionType === 'text') {
+    } else if (question.type === 'text') {
       ctx.session.step = `waiting_text_${order}`;
       await ctx.reply(question.text);
-    } else if (questionType === 'phone') {
+    } else if (question.type === 'phone') {
       ctx.session.step = `waiting_phone_${order}`;
       await ctx.reply(question.text, {
         reply_markup: {
@@ -91,14 +90,14 @@ export class ZamerCommand {
     }
   }
 
-  @Action(/zamer_answer:(\d+):(\d+)/)
+  @Action(/calculate_answer:(\d+):(\d+)/)
   async onAnswer(@Ctx() ctx: MyContext & { match: RegExpMatchArray }) {
     const questionOrder = parseInt(ctx.match[1]);
     const variantId = parseInt(ctx.match[2]);
 
     await ctx.answerCbQuery();
 
-    const question = await this.zamerService.getQuestion(questionOrder);
+    const question = await this.calculateService.getQuestion(questionOrder);
     if (!question) return;
 
     const variant = question.variants.find((v) => v.id === variantId);
@@ -134,7 +133,7 @@ export class ZamerCommand {
   }
 
   async onContact(ctx: MyContext) {
-    if (ctx.session.activeForm !== 'zamer') {
+    if (ctx.session.activeForm !== 'calculate') {
       return;
     }
 

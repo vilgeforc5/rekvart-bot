@@ -9,7 +9,10 @@
 * 🟢 You can import this file directly.
 */
 
+export const FormType = {
+  CALCULATE: 'CALCULATE',
+  CONSULTACYA: 'CONSULTACYA',
+  ZAMER: 'ZAMER'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type FormType = (typeof FormType)[keyof typeof FormType]

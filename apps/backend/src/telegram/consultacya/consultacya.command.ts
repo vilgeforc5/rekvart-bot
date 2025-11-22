@@ -1,4 +1,5 @@
-import { Action, Command, Ctx, On, Update } from 'nestjs-telegraf';
+import { Action, Ctx, Update } from 'nestjs-telegraf';
+import { FormSubmissionService } from 'src/telegram/form-submission.service';
 import { Context } from 'telegraf';
 import { ConsultacyaService } from './consultacya.service';
 
@@ -6,6 +7,7 @@ interface SessionData {
   step?: string;
   answers?: { [key: number]: string };
   currentQuestionOrder?: number;
+  activeForm?: 'calculate' | 'zamer' | 'consultacya';
 }
 
 interface MyContext extends Context {
@@ -14,7 +16,10 @@ interface MyContext extends Context {
 
 @Update()
 export class ConsultacyaCommand {
-  constructor(private readonly consultacyaService: ConsultacyaService) {}
+  constructor(
+    private readonly consultacyaService: ConsultacyaService,
+    private readonly formSubmissionService: FormSubmissionService,
+  ) {}
 
   private async sendSummary(ctx: MyContext, includePhone: boolean = false) {
     const summaryMessage = await this.consultacyaService.getSummary();
@@ -22,31 +27,26 @@ export class ConsultacyaCommand {
       reply_markup: includePhone ? { remove_keyboard: true } : undefined,
     });
 
-    console.log(ctx.session.answers);
+    await this.formSubmissionService.handleSubmission(
+      'consultacya',
+      ctx.session.answers || {},
+    );
 
     ctx.session = {};
   }
 
-  @Command('consultacya')
-  async onConsultacya(@Ctx() ctx: MyContext) {
-    await this.start(ctx);
-  }
-
   @Action('consultacya')
   async onConsultacyaAction(@Ctx() ctx: MyContext) {
-    await this.start(ctx);
-    await ctx.answerCbQuery();
-  }
-
-  private async start(ctx: MyContext) {
     ctx.session = {
       currentQuestionOrder: 1,
       answers: {},
+      activeForm: 'consultacya',
     };
     await this.askQuestion(ctx, 1);
+    await ctx.answerCbQuery();
   }
 
-  private async askQuestion(ctx: MyContext, order: number) {
+  async askQuestion(ctx: MyContext, order: number) {
     const question = await this.consultacyaService.getQuestion(order);
 
     if (!question) {
@@ -55,8 +55,9 @@ export class ConsultacyaCommand {
     }
 
     ctx.session.currentQuestionOrder = order;
+    const questionType = question.type || 'select';
 
-    if (question.variants.length > 0) {
+    if (questionType === 'select' && question.variants.length > 0) {
       ctx.session.step = `waiting_select_${order}`;
       await ctx.reply(question.text, {
         reply_markup: {
@@ -66,6 +67,25 @@ export class ConsultacyaCommand {
               callback_data: `consultacya_answer:${order}:${variant.id}`,
             },
           ]),
+        },
+      });
+    } else if (questionType === 'text') {
+      ctx.session.step = `waiting_text_${order}`;
+      await ctx.reply(question.text);
+    } else if (questionType === 'phone') {
+      ctx.session.step = `waiting_phone_${order}`;
+      await ctx.reply(question.text, {
+        reply_markup: {
+          keyboard: [
+            [
+              {
+                text: '📱 Поделиться номером телефона',
+                request_contact: true,
+              },
+            ],
+          ],
+          resize_keyboard: true,
+          one_time_keyboard: true,
         },
       });
     }
@@ -88,7 +108,7 @@ export class ConsultacyaCommand {
     ctx.session.answers[questionOrder] = variant.text;
 
     if (variant.needsPhone) {
-      ctx.session.step = 'waiting_for_phone';
+      ctx.session.step = `waiting_for_phone_${questionOrder}`;
       await ctx.reply(
         'Отправьте свой номер телефона и мы свяжемся с вами в ближайшее время',
         {
@@ -113,18 +133,29 @@ export class ConsultacyaCommand {
     await this.askQuestion(ctx, nextOrder);
   }
 
-  @On('contact')
-  async onContact(@Ctx() ctx: MyContext) {
+  async onContact(ctx: MyContext) {
+    if (ctx.session.activeForm !== 'consultacya') {
+      return;
+    }
+
     if (!ctx.message || !('contact' in ctx.message)) return;
 
-    if (ctx.session.step === 'waiting_for_phone') {
-      const contact = ctx.message.contact;
-      const phone = contact.phone_number;
+    const contact = ctx.message.contact;
+    const phone = contact.phone_number;
 
+    if (ctx.session.step?.startsWith('waiting_for_phone_')) {
       if (!ctx.session.answers) ctx.session.answers = {};
       ctx.session.answers[-1] = phone;
 
       await this.sendSummary(ctx, true);
+    } else if (ctx.session.step?.startsWith('waiting_phone_')) {
+      const currentOrder = ctx.session.currentQuestionOrder;
+
+      if (!ctx.session.answers) ctx.session.answers = {};
+      ctx.session.answers[currentOrder!] = phone;
+
+      const nextOrder = currentOrder! + 1;
+      await this.askQuestion(ctx, nextOrder);
     }
   }
 }

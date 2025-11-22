@@ -374,10 +374,6 @@ export type PortfolioCreateimgSrcInput = {
   set: string[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type PortfolioUpdateimgSrcInput = {
   set?: string[]
   push?: string | string[]

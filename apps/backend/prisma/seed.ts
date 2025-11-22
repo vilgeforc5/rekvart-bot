@@ -16,11 +16,11 @@ const prisma = new PrismaClient({ adapter: pool });
 async function main() {
   console.log('Starting seed...');
 
-  await prisma.startContent.upsert({
+  const existingStartContent = await prisma.startContent.findUnique({
     where: { id: 1 },
-    create: {
-      id: 1,
-      content: `<strong>🏠 Добро пожаловать в бот компании Рекварт</strong>
+  });
+
+  const defaultStartContent = `<strong>🏠 Добро пожаловать в бот компании Рекварт</strong> 
 
 Ремонт квартир и домов в Москве и области.
 
@@ -32,35 +32,43 @@ async function main() {
 
 Мы знаем о ремонте не только на уровне отделки, но и изнутри.
 
-Выберите действие из меню ниже:`,
+Выберите действие из меню ниже:`;
+
+  await prisma.startContent.upsert({
+    where: { id: 1 },
+    create: {
+      id: 1,
+      content: existingStartContent?.content || defaultStartContent,
     },
     update: {},
   });
-  console.log('✓ StartContent seeded');
+  console.log(
+    `✓ StartContent ${existingStartContent ? 'preserved' : 'seeded'}`,
+  );
 
   const commands = [
-    {
-      command: 'zamer',
-      title: '✍️ Записаться на замер',
-      description: 'Записаться на замер',
-      index: 0,
-    },
     {
       command: 'portfolio',
       title: '📸 Портфолио',
       description: 'Посмотреть наши работы',
-      index: 1,
+      index: 0,
     },
     {
       command: 'calculate',
       title: '💰 Рассчитать стоимость',
       description: 'Узнать стоимость ремонта под ключ',
-      index: 2,
+      index: 1,
     },
     {
       command: 'consultacya',
       title: '💬 Получить консультацию',
       description: 'Получить консультацию',
+      index: 2,
+    },
+    {
+      command: 'zamer',
+      title: '📏 Заказать замер',
+      description: 'Заказать профессиональный замер',
       index: 3,
     },
     {
@@ -84,52 +92,75 @@ async function main() {
   }
   console.log('✓ Commands seeded');
 
-  await prisma.zamerSummary.upsert({
+  const existingCalculateSummary = await prisma.calculateSummary.findUnique({
+    where: { id: 1 },
+  });
+
+  await prisma.calculateSummary.upsert({
     where: { id: 1 },
     create: {
       id: 1,
-      message: '✅ Спасибо! Мы свяжемся с вами в ближайшее время',
+      message:
+        existingCalculateSummary?.message ||
+        '✅ Спасибо! Мы свяжемся с вами в ближайшее время',
     },
     update: {},
   });
-  console.log('✓ ZamerSummary seeded');
+  console.log(
+    `✓ CalculateSummary ${existingCalculateSummary ? 'preserved' : 'seeded'}`,
+  );
+
+  const existingConsultacyaSummary = await prisma.consultacyaSummary.findUnique(
+    {
+      where: { id: 1 },
+    },
+  );
 
   await prisma.consultacyaSummary.upsert({
     where: { id: 1 },
     create: {
       id: 1,
-      message: '✅ Спасибо! Мы свяжемся с вами в ближайшее время',
+      message:
+        existingConsultacyaSummary?.message ||
+        '✅ Спасибо! Мы свяжемся с вами в ближайшее время',
     },
     update: {},
   });
-  console.log('✓ ConsultacyaSummary seeded');
+  console.log(
+    `✓ ConsultacyaSummary ${existingConsultacyaSummary ? 'preserved' : 'seeded'}`,
+  );
 
-  const existingConsultacyaQuestions = await prisma.consultacyaQuestion.count();
+  const existingConsultacyaQuestions = await prisma.question.findMany({
+    where: { formType: 'CONSULTACYA' },
+    include: { variants: true },
+  });
 
-  if (existingConsultacyaQuestions === 0) {
-    const consultacyaQuestion = await prisma.consultacyaQuestion.create({
+  if (existingConsultacyaQuestions.length === 0) {
+    const consultacyaQuestion = await prisma.question.create({
       data: {
         text: 'Выберите предпочитаемый способ связи',
+        type: 'select',
         order: 1,
+        formType: 'CONSULTACYA',
       },
     });
 
-    await prisma.consultacyaVariant.createMany({
+    await prisma.questionVariant.createMany({
       data: [
         {
-          text: 'Telegram',
+          text: '✈️ Telegram',
           order: 1,
           needsPhone: false,
           questionId: consultacyaQuestion.id,
         },
         {
-          text: 'WhatsApp',
+          text: '💬 WhatsApp',
           order: 2,
           needsPhone: true,
           questionId: consultacyaQuestion.id,
         },
         {
-          text: 'Звонок на мобильный',
+          text: '📞 Звонок по телефону',
           order: 3,
           needsPhone: true,
           questionId: consultacyaQuestion.id,
@@ -138,12 +169,86 @@ async function main() {
     });
     console.log('✓ ConsultacyaQuestions seeded');
   } else {
-    console.log('✓ ConsultacyaQuestions already exist, skipping');
+    console.log(
+      `✓ ConsultacyaQuestions already exist (${existingConsultacyaQuestions.length} questions), preserving existing data`,
+    );
   }
 
-  const existingQuestions = await prisma.zamerQuestion.count();
+  const existingZamerSummary = await prisma.zamerSummary.findUnique({
+    where: { id: 1 },
+  });
 
-  if (existingQuestions === 0) {
+  await prisma.zamerSummary.upsert({
+    where: { id: 1 },
+    create: {
+      id: 1,
+      message:
+        existingZamerSummary?.message ||
+        '✅ Спасибо! Мы свяжемся с вами в ближайшее время',
+    },
+    update: {},
+  });
+  console.log(
+    `✓ ZamerSummary ${existingZamerSummary ? 'preserved' : 'seeded'}`,
+  );
+
+  const existingZamerQuestions = await prisma.question.findMany({
+    where: { formType: 'ZAMER' },
+    include: { variants: true },
+  });
+
+  if (existingZamerQuestions.length === 0) {
+    const locationQuestion = await prisma.question.create({
+      data: {
+        text: 'Пожалуйста введите адрес объекта',
+        type: 'text',
+        order: 1,
+        formType: 'ZAMER',
+      },
+    });
+
+    const contactQuestion = await prisma.question.create({
+      data: {
+        text: 'Выберите предпочитаемый способ связи',
+        type: 'select',
+        order: 2,
+        formType: 'ZAMER',
+      },
+    });
+
+    await prisma.questionVariant.createMany({
+      data: [
+        {
+          text: '✈️ Telegram',
+          order: 1,
+          needsPhone: false,
+          questionId: contactQuestion.id,
+        },
+        {
+          text: '💬 WhatsApp',
+          order: 2,
+          needsPhone: true,
+          questionId: contactQuestion.id,
+        },
+        {
+          text: '📞 Звонок по телефону',
+          order: 3,
+          needsPhone: true,
+          questionId: contactQuestion.id,
+        },
+      ],
+    });
+    console.log('✓ ZamerQuestions seeded');
+  } else {
+    console.log();
+  }
+
+  const existingCalculateQuestions = await prisma.question.findMany({
+    where: { formType: 'CALCULATE' },
+    include: { variants: true },
+  });
+
+  if (existingCalculateQuestions.length === 0) {
     const questions = [
       {
         text: 'Где планируется ремонт?',
@@ -187,16 +292,17 @@ async function main() {
     ];
 
     for (const question of questions) {
-      const createdQuestion = await prisma.zamerQuestion.create({
+      const createdQuestion = await prisma.question.create({
         data: {
           text: question.text,
           type: question.type,
           order: question.order,
+          formType: 'CALCULATE',
         },
       });
 
       if (question.variants.length > 0) {
-        await prisma.zamerVariant.createMany({
+        await prisma.questionVariant.createMany({
           data: question.variants.map((variant, index) => ({
             text: variant.text,
             order: index + 1,
@@ -206,9 +312,11 @@ async function main() {
         });
       }
     }
-    console.log('✓ ZamerQuestions seeded');
+    console.log('✓ CalculateQuestions seeded');
   } else {
-    console.log('✓ ZamerQuestions already exist, skipping');
+    console.log(
+      `✓ CalculateQuestions already exist (${existingCalculateQuestions.length} questions), preserving existing data`,
+    );
   }
 
   const portfolioItems = [
