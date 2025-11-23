@@ -66,7 +66,9 @@ export class TelegramController {
 
     const commands = await this.botCommandService.findAll();
 
-    const chunkedCommands = chunk(commands, 2);
+    const greetingCommands = commands.filter((cmd) => cmd.showInGreeting);
+
+    const chunkedCommands = chunk(greetingCommands, 2);
 
     const keyboard = {
       inline_keyboard: chunkedCommands.map((chunk) =>

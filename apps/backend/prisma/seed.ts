@@ -40,34 +40,46 @@ async function main() {
 
   const commands = [
     {
+      command: 'start',
+      title: '🏠 Главное меню',
+      description: 'Главное меню',
+      index: -1,
+      showInGreeting: false,
+    },
+    {
       command: 'zamer',
       title: '📏 Записаться на замер',
       description: 'Записаться на замер',
       index: 0,
+      showInGreeting: true,
     },
     {
       command: 'portfolio',
       title: '📸 Портфолио',
       description: 'Посмотреть наши работы',
       index: 1,
+      showInGreeting: true,
     },
     {
       command: 'calculate',
       title: '💰 Рассчитать стоимость',
       description: 'Узнать стоимость ремонта под ключ',
       index: 2,
+      showInGreeting: true,
     },
     {
       command: 'consultacya',
       title: '💬 Получить консультацию',
       description: 'Получить консультацию',
       index: 3,
+      showInGreeting: true,
     },
     {
       command: 'dizayn',
       title: '✨ Получить вариант дизайна бесплатно',
       description: 'Получить вариант дизайна бесплатно',
       index: 4,
+      showInGreeting: true,
     },
   ];
 

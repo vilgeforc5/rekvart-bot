@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -24,6 +25,10 @@ export class CreateCommandDto {
   @IsInt()
   @IsOptional()
   index?: number;
+
+  @IsBoolean()
+  @IsOptional()
+  showInGreeting?: boolean;
 }
 
 export class UpdateCommandDto {
@@ -42,4 +47,8 @@ export class UpdateCommandDto {
   @IsInt()
   @IsOptional()
   index?: number;
+
+  @IsBoolean()
+  @IsOptional()
+  showInGreeting?: boolean;
 }

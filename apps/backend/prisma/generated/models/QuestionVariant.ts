@@ -462,10 +462,6 @@ export type QuestionVariantUncheckedUpdateManyWithoutQuestionNestedInput = {
   deleteMany?: Prisma.QuestionVariantScalarWhereInput | Prisma.QuestionVariantScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type QuestionVariantCreateWithoutQuestionInput = {
   text: string
   order: number

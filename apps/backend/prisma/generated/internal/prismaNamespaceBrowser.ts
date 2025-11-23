@@ -86,6 +86,7 @@ export const CommandScalarFieldEnum = {
   title: 'title',
   description: 'description',
   index: 'index',
+  showInGreeting: 'showInGreeting',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
