@@ -1,4 +1,6 @@
 # Recvart Monorepo
+<img width="1595" height="957" alt="image" src="https://github.com/user-attachments/assets/9f479a7e-902e-4571-a05a-acbfe2d28eec" />
+<img width="532" height="743" alt="image" src="https://github.com/user-attachments/assets/984eb1b7-4d61-4565-8391-71bb9198518a" />
 
 A monorepo containing the backend and frontend applications for Recvart.
 
