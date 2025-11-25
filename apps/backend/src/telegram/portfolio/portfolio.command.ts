@@ -81,11 +81,11 @@ export class PortfolioCommand {
 
     const navigationButtons = [
       {
-        text: '⬅️ Назад',
+        text: 'Предыдущий проект',
         callback_data: `portfolio_nav:${prevIndex}`,
       },
       {
-        text: 'Вперёд ➡️',
+        text: 'Следующий проект',
         callback_data: `portfolio_nav:${nextIndex}`,
       },
     ];
