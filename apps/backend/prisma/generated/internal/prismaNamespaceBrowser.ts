@@ -61,7 +61,9 @@ export const ModelName = {
   ZamerSummary: 'ZamerSummary',
   DizaynContent: 'DizaynContent',
   TelegramUser: 'TelegramUser',
-  FormSubmission: 'FormSubmission'
+  FormSubmission: 'FormSubmission',
+  TopicConnection: 'TopicConnection',
+  TopicContent: 'TopicContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -209,6 +211,30 @@ export const FormSubmissionScalarFieldEnum = {
 } as const
 
 export type FormSubmissionScalarFieldEnum = (typeof FormSubmissionScalarFieldEnum)[keyof typeof FormSubmissionScalarFieldEnum]
+
+
+export const TopicConnectionScalarFieldEnum = {
+  id: 'id',
+  topicName: 'topicName',
+  userChatId: 'userChatId',
+  topicId: 'topicId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TopicConnectionScalarFieldEnum = (typeof TopicConnectionScalarFieldEnum)[keyof typeof TopicConnectionScalarFieldEnum]
+
+
+export const TopicContentScalarFieldEnum = {
+  id: 'id',
+  operatorConnectedMessage: 'operatorConnectedMessage',
+  operatorDisconnectedMessage: 'operatorDisconnectedMessage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TopicContentScalarFieldEnum = (typeof TopicContentScalarFieldEnum)[keyof typeof TopicContentScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -7,10 +7,12 @@ import { PingCommand } from 'src/telegram/ping/ping.command';
 import { PingModule } from 'src/telegram/ping/ping.module';
 import { PortfolioCommand } from 'src/telegram/portfolio/portfolio.command';
 import { PortfolioTelegramService } from 'src/telegram/portfolio/portfolio.service';
+import { TopicChatService } from 'src/telegram/topic-chat.service';
 import { session } from 'telegraf';
 import { BotCommandService } from '../command/commands.service';
 import { PrismaService } from '../prisma.service';
 import { StartContentService } from '../start-content/start-content.service';
+import { TopicContentService } from '../topic-content/topic-content.service';
 import { CalculateModule } from './calculate/calculate.module';
 import { ConsultacyaModule } from './consultacya/consultacya.module';
 import { DizaynModule } from './dizayn/dizayn.module';
@@ -40,9 +42,11 @@ import { ZamerModule } from './zamer/zamer.module';
     TelegramController,
     BotCommandService,
     StartContentService,
+    TopicContentService,
     PrismaService,
     TelegramBotService,
     FormSubmissionService,
+    TopicChatService,
     PortfolioCommand,
     PortfolioTelegramService,
     PingCommand,

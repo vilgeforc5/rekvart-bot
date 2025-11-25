@@ -55,6 +55,12 @@ export function Header() {
                 /dizayn
               </Link>
               <Link
+                to="/topic-content"
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+              >
+                Диалоги
+              </Link>
+              <Link
                 to="/telegram-users"
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
               >

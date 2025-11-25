@@ -92,3 +92,13 @@ export type TelegramUser = Prisma.TelegramUserModel
  * 
  */
 export type FormSubmission = Prisma.FormSubmissionModel
+/**
+ * Model TopicConnection
+ * 
+ */
+export type TopicConnection = Prisma.TopicConnectionModel
+/**
+ * Model TopicContent
+ * 
+ */
+export type TopicContent = Prisma.TopicContentModel

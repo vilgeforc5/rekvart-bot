@@ -394,7 +394,9 @@ export const ModelName = {
   ZamerSummary: 'ZamerSummary',
   DizaynContent: 'DizaynContent',
   TelegramUser: 'TelegramUser',
-  FormSubmission: 'FormSubmission'
+  FormSubmission: 'FormSubmission',
+  TopicConnection: 'TopicConnection',
+  TopicContent: 'TopicContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command" | "startContent" | "question" | "questionVariant" | "calculateSummary" | "portfolio" | "consultacyaSummary" | "zamerSummary" | "dizaynContent" | "telegramUser" | "formSubmission"
+    modelProps: "command" | "startContent" | "question" | "questionVariant" | "calculateSummary" | "portfolio" | "consultacyaSummary" | "zamerSummary" | "dizaynContent" | "telegramUser" | "formSubmission" | "topicConnection" | "topicContent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1228,6 +1230,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TopicConnection: {
+      payload: Prisma.$TopicConnectionPayload<ExtArgs>
+      fields: Prisma.TopicConnectionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TopicConnectionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TopicConnectionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload>
+        }
+        findFirst: {
+          args: Prisma.TopicConnectionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TopicConnectionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload>
+        }
+        findMany: {
+          args: Prisma.TopicConnectionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload>[]
+        }
+        create: {
+          args: Prisma.TopicConnectionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload>
+        }
+        createMany: {
+          args: Prisma.TopicConnectionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TopicConnectionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload>[]
+        }
+        delete: {
+          args: Prisma.TopicConnectionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload>
+        }
+        update: {
+          args: Prisma.TopicConnectionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload>
+        }
+        deleteMany: {
+          args: Prisma.TopicConnectionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TopicConnectionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TopicConnectionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload>[]
+        }
+        upsert: {
+          args: Prisma.TopicConnectionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicConnectionPayload>
+        }
+        aggregate: {
+          args: Prisma.TopicConnectionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTopicConnection>
+        }
+        groupBy: {
+          args: Prisma.TopicConnectionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TopicConnectionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TopicConnectionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TopicConnectionCountAggregateOutputType> | number
+        }
+      }
+    }
+    TopicContent: {
+      payload: Prisma.$TopicContentPayload<ExtArgs>
+      fields: Prisma.TopicContentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TopicContentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TopicContentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload>
+        }
+        findFirst: {
+          args: Prisma.TopicContentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TopicContentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload>
+        }
+        findMany: {
+          args: Prisma.TopicContentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload>[]
+        }
+        create: {
+          args: Prisma.TopicContentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload>
+        }
+        createMany: {
+          args: Prisma.TopicContentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TopicContentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload>[]
+        }
+        delete: {
+          args: Prisma.TopicContentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload>
+        }
+        update: {
+          args: Prisma.TopicContentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload>
+        }
+        deleteMany: {
+          args: Prisma.TopicContentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TopicContentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TopicContentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload>[]
+        }
+        upsert: {
+          args: Prisma.TopicContentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TopicContentPayload>
+        }
+        aggregate: {
+          args: Prisma.TopicContentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTopicContent>
+        }
+        groupBy: {
+          args: Prisma.TopicContentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TopicContentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TopicContentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TopicContentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1396,6 +1546,30 @@ export const FormSubmissionScalarFieldEnum = {
 } as const
 
 export type FormSubmissionScalarFieldEnum = (typeof FormSubmissionScalarFieldEnum)[keyof typeof FormSubmissionScalarFieldEnum]
+
+
+export const TopicConnectionScalarFieldEnum = {
+  id: 'id',
+  topicName: 'topicName',
+  userChatId: 'userChatId',
+  topicId: 'topicId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TopicConnectionScalarFieldEnum = (typeof TopicConnectionScalarFieldEnum)[keyof typeof TopicConnectionScalarFieldEnum]
+
+
+export const TopicContentScalarFieldEnum = {
+  id: 'id',
+  operatorConnectedMessage: 'operatorConnectedMessage',
+  operatorDisconnectedMessage: 'operatorDisconnectedMessage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TopicContentScalarFieldEnum = (typeof TopicContentScalarFieldEnum)[keyof typeof TopicContentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1624,6 +1798,8 @@ export type GlobalOmitConfig = {
   dizaynContent?: Prisma.DizaynContentOmit
   telegramUser?: Prisma.TelegramUserOmit
   formSubmission?: Prisma.FormSubmissionOmit
+  topicConnection?: Prisma.TopicConnectionOmit
+  topicContent?: Prisma.TopicContentOmit
 }
 
 /* Types for Logging */

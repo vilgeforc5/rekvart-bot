@@ -12,6 +12,7 @@ import { ConsultacyaService } from './consultacya/consultacya.service';
 import { DizaynCommand } from './dizayn/dizayn.command';
 import { PingCommand } from './ping/ping.command';
 import { PortfolioCommand } from './portfolio/portfolio.command';
+import { TopicChatService } from './topic-chat.service';
 import { ZamerService } from './zamer/zamer.service';
 
 interface SessionData {
@@ -40,6 +41,7 @@ export class TelegramController {
     private pingCommand: PingCommand,
     private dizaynCommand: DizaynCommand,
     private telegramUsersService: TelegramUsersService,
+    private topicChatService: TopicChatService,
   ) {}
 
   private async saveUser(ctx: Context) {
@@ -95,11 +97,30 @@ export class TelegramController {
 
   @On('text')
   async onText(@Ctx() ctx: MyContext) {
-    if (!ctx.message || !('text' in ctx.message)) return;
-
-    await this.saveUser(ctx);
+    if (!ctx.message || !('text' in ctx.message) || !ctx.chat) return;
 
     const text = ctx.message.text;
+    const chatId = String(ctx.chat.id);
+    const messageThreadId =
+      'message_thread_id' in ctx.message
+        ? ctx.message.message_thread_id
+        : undefined;
+
+    if (messageThreadId) {
+      await this.topicChatService.forwardTopicMessageToUser(
+        messageThreadId,
+        ctx.message.message_id,
+        chatId,
+      );
+      return;
+    }
+
+    await this.topicChatService.forwardUserMessageToTopic(
+      chatId,
+      ctx.message.message_id,
+    );
+
+    await this.saveUser(ctx);
 
     if (text.startsWith('/')) {
       ctx.session = {};
@@ -211,6 +232,33 @@ export class TelegramController {
 
     const nextOrder = currentOrder + 1;
     await this.consultacyaCommand.askQuestion(ctx, nextOrder);
+  }
+
+  @On(['photo', 'document', 'video', 'audio', 'voice', 'video_note', 'sticker'])
+  async onMedia(@Ctx() ctx: MyContext) {
+    if (!ctx.message || !ctx.chat) return;
+
+    const chatId = String(ctx.chat.id);
+    const messageThreadId =
+      'message_thread_id' in ctx.message
+        ? ctx.message.message_thread_id
+        : undefined;
+
+    if (messageThreadId) {
+      await this.topicChatService.forwardTopicMessageToUser(
+        messageThreadId,
+        ctx.message.message_id,
+        chatId,
+      );
+      return;
+    }
+
+    await this.topicChatService.forwardUserMessageToTopic(
+      chatId,
+      ctx.message.message_id,
+    );
+
+    await this.saveUser(ctx);
   }
 
   @On('contact')

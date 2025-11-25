@@ -125,3 +125,23 @@ model FormSubmission {
   telegramUser   TelegramUser @relation(fields: [telegramUserId], references: [id], onDelete: Cascade)
   createdAt      DateTime     @default(now())
 }
+
+model TopicConnection {
+  id         Int      @id @default(autoincrement())
+  topicName  String
+  userChatId String
+  topicId    Int      @unique
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userChatId, isActive])
+}
+
+model TopicContent {
+  id                          Int      @id @default(1)
+  operatorConnectedMessage    String
+  operatorDisconnectedMessage String
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt
+}

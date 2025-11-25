@@ -472,6 +472,18 @@ async function main() {
   });
   console.log('✓ DizaynContent seeded');
 
+  await prisma.topicContent.upsert({
+    where: { id: 1 },
+    create: {
+      id: 1,
+      operatorConnectedMessage:
+        '👋 Здравствуйте! К вам подключился оператор. Сейчас я отвечу на все ваши вопросы.',
+      operatorDisconnectedMessage: '👋 Оператор отключился от диалога.',
+    },
+    update: {},
+  });
+  console.log('✓ TopicContent seeded');
+
   console.log('Seed completed!');
 }
 

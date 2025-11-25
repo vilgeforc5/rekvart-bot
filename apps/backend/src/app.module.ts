@@ -15,12 +15,15 @@ import { StartContentService } from './start-content/start-content.service';
 import { TelegramUsersController } from './telegram-users/telegram-users.controller';
 import { TelegramUsersService } from './telegram-users/telegram-users.service';
 import { TelegramModule } from './telegram/telegram.module';
+import { TopicContentController } from './topic-content/topic-content.controller';
+import { TopicContentService } from './topic-content/topic-content.service';
 
 @Module({
   imports: [AuthModule, TelegramModule, HealthModule],
   controllers: [
     CommandController,
     StartContentController,
+    TopicContentController,
     PortfolioController,
     DizaynController,
     TelegramUsersController,
@@ -29,6 +32,7 @@ import { TelegramModule } from './telegram/telegram.module';
     PrismaService,
     BotCommandService,
     StartContentService,
+    TopicContentService,
     PortfolioService,
     DizaynService,
     TelegramUsersService,
