@@ -1,5 +1,6 @@
 import { chunk } from 'es-toolkit';
 import { Command, Ctx, On, Update } from 'nestjs-telegraf';
+import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { BotCommandService } from 'src/command/commands.service';
 import { StartContentService } from 'src/start-content/start-content.service';
 import { TelegramUsersService } from 'src/telegram-users/telegram-users.service';
@@ -29,6 +30,8 @@ interface MyContext extends Context {
 @Update()
 export class TelegramController {
   constructor(
+    @InjectPinoLogger(TelegramController.name)
+    private readonly logger: PinoLogger,
     private botCommandService: BotCommandService,
     private startContentService: StartContentService,
     private calculateCommand: CalculateCommand,
@@ -90,8 +93,9 @@ export class TelegramController {
       await ctx.pinChatMessage(message.message_id, {
         disable_notification: true,
       });
+      this.logger.debug({ messageId: message.message_id }, 'Start message pinned');
     } catch (error) {
-      console.error('Failed to pin message:', error);
+      this.logger.error({ error, messageId: message.message_id }, 'Failed to pin message');
     }
   }
 

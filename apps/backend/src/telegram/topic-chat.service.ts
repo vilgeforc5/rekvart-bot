@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectBot } from 'nestjs-telegraf';
+import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { PrismaService } from 'src/prisma.service';
 import { TopicContentService } from 'src/topic-content/topic-content.service';
 import { Telegraf } from 'telegraf';
@@ -10,6 +11,8 @@ export class TopicChatService {
     process.env.TELEGRAM_NOTIFICATION_GROUP_ID;
 
   constructor(
+    @InjectPinoLogger(TopicChatService.name)
+    private readonly logger: PinoLogger,
     private prisma: PrismaService,
     private topicContentService: TopicContentService,
     @InjectBot() private readonly bot: Telegraf,
@@ -25,6 +28,10 @@ export class TopicChatService {
     });
 
     if (!connection || !this.NOTIFICATION_GROUP_CHAT_ID) {
+      this.logger.debug(
+        { userChatId, hasConnection: !!connection },
+        'No active topic connection found for user message forwarding',
+      );
       return false;
     }
 
@@ -37,9 +44,16 @@ export class TopicChatService {
           message_thread_id: connection.topicId,
         },
       );
+      this.logger.debug(
+        { userChatId, messageId, topicId: connection.topicId },
+        'User message forwarded to topic',
+      );
       return true;
     } catch (error) {
-      console.error('Failed to forward user message to topic:', error);
+      this.logger.error(
+        { error, userChatId, messageId, topicId: connection.topicId },
+        'Failed to forward user message to topic',
+      );
       return false;
     }
   }
@@ -54,6 +68,10 @@ export class TopicChatService {
     });
 
     if (!connection) {
+      this.logger.debug(
+        { topicId },
+        'No active connection found for topic message forwarding',
+      );
       return;
     }
 
@@ -63,8 +81,15 @@ export class TopicChatService {
         sourceChatId,
         messageId,
       );
+      this.logger.debug(
+        { topicId, messageId, userChatId: connection.userChatId },
+        'Topic message forwarded to user',
+      );
     } catch (error) {
-      console.error('Failed to forward topic message to user:', error);
+      this.logger.error(
+        { error, topicId, messageId, userChatId: connection.userChatId },
+        'Failed to forward topic message to user',
+      );
     }
   }
 
@@ -74,8 +99,14 @@ export class TopicChatService {
     });
 
     if (!connection || !this.NOTIFICATION_GROUP_CHAT_ID) {
+      this.logger.warn({ topicId }, 'Cannot start dialog: connection not found or group ID not configured');
       return;
     }
+
+    this.logger.info(
+      { topicId, userChatId: connection.userChatId },
+      'Starting dialog with user',
+    );
 
     const otherActiveTopics = await this.prisma.topicConnection.findMany({
       where: {
@@ -88,8 +119,15 @@ export class TopicChatService {
     for (const topic of otherActiveTopics) {
       try {
         await this.stopDialogInternal(topic.topicId);
+        this.logger.debug(
+          { topicId: topic.topicId },
+          'Stopped other active topic for user',
+        );
       } catch (error) {
-        console.error('Failed to stop dialog:', error);
+        this.logger.error(
+          { error, topicId: topic.topicId },
+          'Failed to stop other dialog',
+        );
       }
     }
 
@@ -97,6 +135,11 @@ export class TopicChatService {
       where: { id: connection.id },
       data: { isActive: true, updatedAt: new Date() },
     });
+
+    this.logger.info(
+      { connectionId: connection.id, topicId },
+      'Dialog connection activated in database',
+    );
 
     try {
       await this.bot.telegram.editForumTopic(
@@ -106,8 +149,9 @@ export class TopicChatService {
           name: `🟢 ${connection.topicName}`,
         },
       );
+      this.logger.debug({ topicId }, 'Topic name updated with active indicator');
     } catch (error) {
-      console.error('Failed to update topic name:', error);
+      this.logger.error({ error, topicId }, 'Failed to update topic name');
     }
 
     const topicContent = await this.topicContentService.get();
@@ -117,8 +161,15 @@ export class TopicChatService {
 
     try {
       await this.bot.telegram.sendMessage(connection.userChatId, message);
+      this.logger.info(
+        { userChatId: connection.userChatId, topicId },
+        'Operator connected message sent to user',
+      );
     } catch (error) {
-      console.error('Failed to send start dialog message to user:', error);
+      this.logger.error(
+        { error, userChatId: connection.userChatId, topicId },
+        'Failed to send start dialog message to user',
+      );
     }
   }
 
@@ -136,6 +187,11 @@ export class TopicChatService {
       data: { isActive: false, updatedAt: new Date() },
     });
 
+    this.logger.debug(
+      { connectionId: connection.id, topicId },
+      'Dialog connection deactivated in database',
+    );
+
     try {
       await this.bot.telegram.editForumTopic(
         this.NOTIFICATION_GROUP_CHAT_ID,
@@ -145,11 +201,13 @@ export class TopicChatService {
         },
       );
     } catch (error) {
-      console.error('Failed to update topic name:', error);
+      this.logger.error({ error, topicId }, 'Failed to update topic name');
     }
   }
 
   async stopDialog(topicId: number) {
+    this.logger.info({ topicId }, 'Stopping dialog');
+    
     await this.stopDialogInternal(topicId);
 
     const connection = await this.prisma.topicConnection.findUnique({
@@ -157,6 +215,7 @@ export class TopicChatService {
     });
 
     if (!connection) {
+      this.logger.warn({ topicId }, 'Connection not found when stopping dialog');
       return;
     }
 
@@ -167,8 +226,15 @@ export class TopicChatService {
 
     try {
       await this.bot.telegram.sendMessage(connection.userChatId, message);
+      this.logger.info(
+        { userChatId: connection.userChatId, topicId },
+        'Operator disconnected message sent to user',
+      );
     } catch (error) {
-      console.error('Failed to send stop dialog message to user:', error);
+      this.logger.error(
+        { error, userChatId: connection.userChatId, topicId },
+        'Failed to send stop dialog message to user',
+      );
     }
   }
 }

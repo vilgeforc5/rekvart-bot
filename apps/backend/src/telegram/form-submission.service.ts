@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectBot } from 'nestjs-telegraf';
+import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { TelegramUser } from 'prisma/generated/client';
 import { PrismaService } from 'src/prisma.service';
 import { Markup, Telegraf } from 'telegraf';
@@ -10,6 +11,8 @@ export class FormSubmissionService {
     process.env.TELEGRAM_NOTIFICATION_GROUP_ID;
 
   constructor(
+    @InjectPinoLogger(FormSubmissionService.name)
+    private readonly logger: PinoLogger,
     private prisma: PrismaService,
     @InjectBot() private readonly bot: Telegraf,
   ) {}
@@ -18,15 +21,19 @@ export class FormSubmissionService {
     const entries = Object.entries(data);
 
     if (!chatId) {
-      console.warn('No chatId provided', { commandName, data });
+      this.logger.warn({ commandName, data }, 'No chatId provided for form submission');
       return;
     }
 
     if (entries.length === 0) {
-      console.warn('Empty form submitted', { commandName, data, chatId });
-
+      this.logger.warn({ commandName, data, chatId }, 'Empty form submitted');
       return;
     }
+
+    this.logger.info(
+      { commandName, chatId, dataKeys: Object.keys(data) },
+      'Processing form submission',
+    );
 
     try {
       const user = await this.prisma.telegramUser.findUnique({
@@ -34,7 +41,7 @@ export class FormSubmissionService {
       });
 
       if (user) {
-        await this.prisma.formSubmission.create({
+        const submission = await this.prisma.formSubmission.create({
           data: {
             commandName,
             data,
@@ -42,10 +49,20 @@ export class FormSubmissionService {
           },
         });
 
+        this.logger.info(
+          { submissionId: submission.id, userId: user.id, commandName },
+          'Form submission saved to database',
+        );
+
         await this.createTopicAndNotify(commandName, data, chatId, user);
+      } else {
+        this.logger.warn({ chatId, commandName }, 'User not found for form submission');
       }
     } catch (error) {
-      console.error(' Failed to save form submission:', error);
+      this.logger.error(
+        { error, commandName, chatId },
+        'Failed to save form submission',
+      );
     }
   }
 
@@ -56,19 +73,24 @@ export class FormSubmissionService {
     user: TelegramUser,
   ) {
     if (!this.NOTIFICATION_GROUP_CHAT_ID) {
-      console.log('⚠️  TELEGRAM_NOTIFICATION_GROUP_ID not configured');
+      this.logger.warn('TELEGRAM_NOTIFICATION_GROUP_ID not configured');
       return;
     }
 
     try {
       const topicName = this.generateTopicName(user);
 
+      this.logger.debug(
+        { topicName, chatId, commandName },
+        'Creating forum topic for notification',
+      );
+
       const topic = await this.bot.telegram.createForumTopic(
         this.NOTIFICATION_GROUP_CHAT_ID,
         topicName,
       );
 
-      await this.prisma.topicConnection.create({
+      const connection = await this.prisma.topicConnection.create({
         data: {
           topicName,
           userChatId: chatId,
@@ -76,6 +98,11 @@ export class FormSubmissionService {
           isActive: false,
         },
       });
+
+      this.logger.info(
+        { connectionId: connection.id, topicId: topic.message_thread_id, chatId },
+        'Topic connection created in database',
+      );
 
       const message = this.buildNotificationMessage(
         commandName,
@@ -106,8 +133,16 @@ export class FormSubmissionService {
           },
         },
       );
+
+      this.logger.info(
+        { topicId: topic.message_thread_id, commandName },
+        'Notification sent to forum topic',
+      );
     } catch (error) {
-      console.error('Failed to create topic and send notification:', error);
+      this.logger.error(
+        { error, commandName, chatId },
+        'Failed to create topic and send notification',
+      );
     }
   }
 

@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Action, InjectBot, Update } from 'nestjs-telegraf';
+import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { Context, Telegraf } from 'telegraf';
 import { BotCommandService } from '../command/commands.service';
 import { TopicChatService } from './topic-chat.service';
@@ -8,6 +9,8 @@ import { TopicChatService } from './topic-chat.service';
 @Injectable()
 export class TelegramBotService implements OnModuleInit {
   constructor(
+    @InjectPinoLogger(TelegramBotService.name)
+    private readonly logger: PinoLogger,
     @InjectBot() private readonly bot: Telegraf,
     private readonly botCommandService: BotCommandService,
     private readonly topicChatService: TopicChatService,
@@ -29,6 +32,10 @@ export class TelegramBotService implements OnModuleInit {
       }));
 
     await this.bot.telegram.setMyCommands(botCommands);
+    this.logger.info(
+      { commandCount: botCommands.length },
+      'Bot commands set successfully',
+    );
   }
 
   @Action(/start_dialog:(.+)/)
@@ -36,6 +43,8 @@ export class TelegramBotService implements OnModuleInit {
     if (!ctx.callbackQuery || !('data' in ctx.callbackQuery)) return;
 
     const topicId = parseInt(ctx.callbackQuery.data.split(':')[1]);
+
+    this.logger.info({ topicId, userId: ctx.from?.id }, 'Operator starting dialog');
 
     await this.topicChatService.startDialog(topicId);
 
@@ -57,6 +66,8 @@ export class TelegramBotService implements OnModuleInit {
     if (!ctx.callbackQuery || !('data' in ctx.callbackQuery)) return;
 
     const topicId = parseInt(ctx.callbackQuery.data.split(':')[1]);
+
+    this.logger.info({ topicId, userId: ctx.from?.id }, 'Operator stopping dialog');
 
     await this.topicChatService.stopDialog(topicId);
 

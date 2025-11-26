@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
+import { LoggerModule } from 'nestjs-pino';
+import { join } from 'path';
 import { PrismaService } from 'src/prisma.service';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
@@ -18,8 +20,73 @@ import { TelegramModule } from './telegram/telegram.module';
 import { TopicContentController } from './topic-content/topic-content.controller';
 import { TopicContentService } from './topic-content/topic-content.service';
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const logLevel = process.env.LOG_LEVEL || 'info';
+const enableFileLogging = process.env.LOG_TO_FILE === 'true';
+
+const getTransportConfig = () => {
+  if (isDevelopment) {
+    return {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+        translateTime: 'SYS:standard',
+        ignore: 'pid,hostname',
+        singleLine: false,
+      },
+    };
+  }
+
+  if (enableFileLogging) {
+    return {
+      target: 'pino-roll',
+      options: {
+        file: join(process.cwd(), 'logs', 'app.log'),
+        frequency: 'daily',
+        mkdir: true,
+      },
+    };
+  }
+
+  return undefined;
+};
+
 @Module({
-  imports: [AuthModule, TelegramModule, HealthModule],
+  imports: [
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: logLevel,
+        transport: getTransportConfig(),
+        redact: {
+          paths: [
+            'req.headers.authorization',
+            'req.headers.cookie',
+            '*.password',
+            '*.token',
+          ],
+          remove: true,
+        },
+        serializers: {
+          req: (req) => ({
+            id: req.id,
+            method: req.method,
+            url: req.url,
+            params: req.params,
+            query: req.query,
+          }),
+          res: (res) => ({
+            statusCode: res.statusCode,
+          }),
+        },
+        autoLogging: {
+          ignore: (req) => req.url === '/health',
+        },
+      },
+    }),
+    AuthModule,
+    TelegramModule,
+    HealthModule,
+  ],
   controllers: [
     CommandController,
     StartContentController,
