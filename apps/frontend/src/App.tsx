@@ -5,6 +5,7 @@ import { Header } from "./components/Header";
 import { HealthBadge } from "./components/HealthBadge";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./lib/auth-context";
+import { AutoMessage } from "./pages/AutoMessage";
 import { Calculate } from "./pages/Calculate";
 import { Commands } from "./pages/Commands";
 import { Consultacya } from "./pages/Consultacya";
@@ -50,6 +51,7 @@ function App() {
                           path="/telegram-users"
                           element={<TelegramUsers />}
                         />
+                        <Route path="/auto-message" element={<AutoMessage />} />
                       </Routes>
                     </main>
                     <HealthBadge />

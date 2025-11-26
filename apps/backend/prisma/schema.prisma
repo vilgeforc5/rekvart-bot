@@ -106,15 +106,18 @@ model DizaynContent {
 }
 
 model TelegramUser {
-  id              Int              @id @default(autoincrement())
-  chatId          String           @unique
-  username        String?
-  firstName       String?
-  lastName        String?
-  phone           String?
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  formSubmissions FormSubmission[]
+  id                        Int               @id @default(autoincrement())
+  chatId                    String            @unique
+  username                  String?
+  firstName                 String?
+  lastName                  String?
+  phone                     String?
+  autoMessageCount          Int               @default(0)
+  isSubscribedToAutomessage Boolean           @default(true)
+  createdAt                 DateTime          @default(now())
+  updatedAt                 DateTime          @updatedAt
+  formSubmissions           FormSubmission[]
+  topicConnections          TopicConnection[]
 }
 
 model FormSubmission {
@@ -127,13 +130,16 @@ model FormSubmission {
 }
 
 model TopicConnection {
-  id         Int      @id @default(autoincrement())
-  topicName  String
-  userChatId String
-  topicId    Int      @unique
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                   Int           @id @default(autoincrement())
+  topicName            String
+  userChatId           String
+  telegramUserId       Int?
+  telegramUser         TelegramUser? @relation(fields: [telegramUserId], references: [id], onDelete: Cascade)
+  topicId              Int           @unique
+  isActive             Boolean       @default(true)
+  lastAdminMessageText String?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
 
   @@index([userChatId, isActive])
 }
@@ -144,4 +150,22 @@ model TopicContent {
   operatorDisconnectedMessage String
   createdAt                   DateTime @default(now())
   updatedAt                   DateTime @updatedAt
+}
+
+model AutoMessageConfig {
+  id             Int       @id @default(1)
+  scheduleHour   Int       @default(9)
+  scheduleMinute Int       @default(0)
+  lastSentAt     DateTime?
+
+  notificationText       String @default("✉️ Вы получаете автоматические сообщения. Если хотите отписаться, нажмите кнопку ниже.")
+  unsubscribeButtonText  String @default("🔕 Отписаться от рассылки")
+  unsubscribeSuccessText String @default("✅ Вы отписались от автоматических сообщений.")
+  resubscribeSuccessText String @default("✅ Вы снова подписаны на автоматические сообщения.")
+  resubscribeButtonText  String @default("🔔 Подписаться снова")
+  unsubscribeToggleText  String @default("🔕 Отписаться")
+  errorText              String @default("❌ Произошла ошибка. Попробуйте позже.")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -1,7 +1,8 @@
 import { chunk } from 'es-toolkit';
-import { Command, Ctx, On, Update } from 'nestjs-telegraf';
-import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
+import { Action, Command, Ctx, On, Update } from 'nestjs-telegraf';
 import { BotCommandService } from 'src/command/commands.service';
+import { PrismaService } from 'src/prisma.service';
 import { StartContentService } from 'src/start-content/start-content.service';
 import { TelegramUsersService } from 'src/telegram-users/telegram-users.service';
 import { CalculateCommand } from 'src/telegram/calculate/calculate.command';
@@ -45,6 +46,7 @@ export class TelegramController {
     private dizaynCommand: DizaynCommand,
     private telegramUsersService: TelegramUsersService,
     private topicChatService: TopicChatService,
+    private prisma: PrismaService,
   ) {}
 
   private async saveUser(ctx: Context) {
@@ -93,9 +95,15 @@ export class TelegramController {
       await ctx.pinChatMessage(message.message_id, {
         disable_notification: true,
       });
-      this.logger.debug({ messageId: message.message_id }, 'Start message pinned');
+      this.logger.debug(
+        { messageId: message.message_id },
+        'Start message pinned',
+      );
     } catch (error) {
-      this.logger.error({ error, messageId: message.message_id }, 'Failed to pin message');
+      this.logger.error(
+        { error, messageId: message.message_id },
+        'Failed to pin message',
+      );
     }
   }
 
@@ -115,6 +123,7 @@ export class TelegramController {
         messageThreadId,
         ctx.message.message_id,
         chatId,
+        text,
       );
       return;
     }
@@ -295,6 +304,80 @@ export class TelegramController {
       case 'consultacya':
         await this.consultacyaCommand.onContact(ctx);
         break;
+    }
+  }
+
+  @Action('unsubscribe_automessage')
+  async onUnsubscribeAutomessage(@Ctx() ctx: Context) {
+    if (!ctx.from) return;
+
+    try {
+      const config = await this.prisma.autoMessageConfig.findUnique({
+        where: { id: 1 },
+      });
+
+      if (!config) {
+        this.logger.warn('No auto message config found');
+        return;
+      }
+
+      const user = await this.telegramUsersService.upsertUser({
+        chatId: ctx.from.id.toString(),
+        username: ctx.from.username,
+        firstName: ctx.from.first_name,
+        lastName: ctx.from.last_name,
+      });
+
+      const isCurrentlySubscribed = user.isSubscribedToAutomessage;
+
+      await this.telegramUsersService.updateSubscription(
+        user.chatId,
+        !isCurrentlySubscribed,
+      );
+
+      if (ctx.callbackQuery && 'message' in ctx.callbackQuery) {
+        await ctx.editMessageText(
+          isCurrentlySubscribed
+            ? config.unsubscribeSuccessText
+            : config.resubscribeSuccessText,
+          {
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  {
+                    text: isCurrentlySubscribed
+                      ? config.resubscribeButtonText
+                      : config.unsubscribeToggleText,
+                    callback_data: 'unsubscribe_automessage',
+                  },
+                ],
+              ],
+            },
+          },
+        );
+      }
+
+      await ctx.answerCbQuery();
+
+      this.logger.info(
+        {
+          userId: user.id,
+          chatId: user.chatId,
+          isSubscribed: !isCurrentlySubscribed,
+        },
+        'User toggled automessage subscription',
+      );
+    } catch (error) {
+      this.logger.error(
+        { error, userId: ctx.from.id },
+        'Failed to toggle automessage subscription',
+      );
+      const errorConfig = await this.prisma.autoMessageConfig.findUnique({
+        where: { id: 1 },
+      });
+      await ctx.answerCbQuery(
+        errorConfig?.errorText || '❌ Произошла ошибка. Попробуйте позже.',
+      );
     }
   }
 }

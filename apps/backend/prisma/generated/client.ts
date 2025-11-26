@@ -102,3 +102,8 @@ export type TopicConnection = Prisma.TopicConnectionModel
  * 
  */
 export type TopicContent = Prisma.TopicContentModel
+/**
+ * Model AutoMessageConfig
+ * 
+ */
+export type AutoMessageConfig = Prisma.AutoMessageConfigModel

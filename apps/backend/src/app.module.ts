@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 import { LoggerModule } from 'nestjs-pino';
 import { join } from 'path';
 import { PrismaService } from 'src/prisma.service';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { AutoMessageModule } from './auto-message/auto-message.module';
 import { CommandController } from './command/command.controller';
 import { BotCommandService } from './command/commands.service';
 import { DizaynController } from './dizayn/dizayn.controller';
@@ -53,6 +55,7 @@ const getTransportConfig = () => {
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
         level: logLevel,
@@ -86,6 +89,7 @@ const getTransportConfig = () => {
     AuthModule,
     TelegramModule,
     HealthModule,
+    AutoMessageModule,
   ],
   controllers: [
     CommandController,

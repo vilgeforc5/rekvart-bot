@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { InjectBot } from 'nestjs-telegraf';
-import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { TelegramUser } from 'prisma/generated/client';
 import { PrismaService } from 'src/prisma.service';
 import { Markup, Telegraf } from 'telegraf';
@@ -21,7 +21,10 @@ export class FormSubmissionService {
     const entries = Object.entries(data);
 
     if (!chatId) {
-      this.logger.warn({ commandName, data }, 'No chatId provided for form submission');
+      this.logger.warn(
+        { commandName, data },
+        'No chatId provided for form submission',
+      );
       return;
     }
 
@@ -56,7 +59,10 @@ export class FormSubmissionService {
 
         await this.createTopicAndNotify(commandName, data, chatId, user);
       } else {
-        this.logger.warn({ chatId, commandName }, 'User not found for form submission');
+        this.logger.warn(
+          { chatId, commandName },
+          'User not found for form submission',
+        );
       }
     } catch (error) {
       this.logger.error(
@@ -96,11 +102,16 @@ export class FormSubmissionService {
           userChatId: chatId,
           topicId: topic.message_thread_id,
           isActive: false,
+          telegramUserId: user.id,
         },
       });
 
       this.logger.info(
-        { connectionId: connection.id, topicId: topic.message_thread_id, chatId },
+        {
+          connectionId: connection.id,
+          topicId: topic.message_thread_id,
+          chatId,
+        },
         'Topic connection created in database',
       );
 
@@ -124,10 +135,10 @@ export class FormSubmissionService {
                   '✅ Начать диалог',
                   `start_dialog:${topic.message_thread_id}`,
                 ),
-                Markup.button.callback(
-                  '❌ Прервать диалог',
-                  `stop_dialog:${topic.message_thread_id}`,
-                ),
+                // Markup.button.callback(
+                //   '❌ Прервать диалог',
+                //   `stop_dialog:${topic.message_thread_id}`,
+                // ),
               ],
             ],
           },
@@ -148,12 +159,20 @@ export class FormSubmissionService {
 
   private generateTopicName(user: TelegramUser): string {
     const now = new Date();
-    const day = now.getDate();
-    const month = now.toLocaleString('en', { month: 'short' });
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const moscowTime = now.toLocaleString('en-GB', {
+      timeZone: 'Europe/Moscow',
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+
+    const [datePart, timePart] = moscowTime.split(', ');
+    const [day, month] = datePart.split(' ');
     const userName = user.firstName || 'User';
-    return `${userName} - ${day} ${month} - ${hours}:${minutes}`;
+
+    return `${userName} - ${day} ${month} - ${timePart}`;
   }
 
   private buildNotificationMessage(

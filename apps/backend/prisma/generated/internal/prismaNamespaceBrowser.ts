@@ -63,7 +63,8 @@ export const ModelName = {
   TelegramUser: 'TelegramUser',
   FormSubmission: 'FormSubmission',
   TopicConnection: 'TopicConnection',
-  TopicContent: 'TopicContent'
+  TopicContent: 'TopicContent',
+  AutoMessageConfig: 'AutoMessageConfig'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -195,6 +196,8 @@ export const TelegramUserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   phone: 'phone',
+  autoMessageCount: 'autoMessageCount',
+  isSubscribedToAutomessage: 'isSubscribedToAutomessage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -217,8 +220,10 @@ export const TopicConnectionScalarFieldEnum = {
   id: 'id',
   topicName: 'topicName',
   userChatId: 'userChatId',
+  telegramUserId: 'telegramUserId',
   topicId: 'topicId',
   isActive: 'isActive',
+  lastAdminMessageText: 'lastAdminMessageText',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -235,6 +240,25 @@ export const TopicContentScalarFieldEnum = {
 } as const
 
 export type TopicContentScalarFieldEnum = (typeof TopicContentScalarFieldEnum)[keyof typeof TopicContentScalarFieldEnum]
+
+
+export const AutoMessageConfigScalarFieldEnum = {
+  id: 'id',
+  scheduleHour: 'scheduleHour',
+  scheduleMinute: 'scheduleMinute',
+  lastSentAt: 'lastSentAt',
+  notificationText: 'notificationText',
+  unsubscribeButtonText: 'unsubscribeButtonText',
+  unsubscribeSuccessText: 'unsubscribeSuccessText',
+  resubscribeSuccessText: 'resubscribeSuccessText',
+  resubscribeButtonText: 'resubscribeButtonText',
+  unsubscribeToggleText: 'unsubscribeToggleText',
+  errorText: 'errorText',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AutoMessageConfigScalarFieldEnum = (typeof AutoMessageConfigScalarFieldEnum)[keyof typeof AutoMessageConfigScalarFieldEnum]
 
 
 export const SortOrder = {

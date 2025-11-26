@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { InjectBot } from 'nestjs-telegraf';
-import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { PrismaService } from 'src/prisma.service';
 import { TopicContentService } from 'src/topic-content/topic-content.service';
 import { Telegraf } from 'telegraf';
@@ -62,6 +62,7 @@ export class TopicChatService {
     topicId: number,
     messageId: number,
     sourceChatId: string,
+    messageText?: string,
   ) {
     const connection = await this.prisma.topicConnection.findFirst({
       where: { topicId, isActive: true },
@@ -81,6 +82,18 @@ export class TopicChatService {
         sourceChatId,
         messageId,
       );
+
+      if (messageText) {
+        await this.prisma.topicConnection.update({
+          where: { id: connection.id },
+          data: { lastAdminMessageText: messageText },
+        });
+        this.logger.debug(
+          { topicId, messageText: messageText.substring(0, 50) },
+          'Admin message text saved',
+        );
+      }
+
       this.logger.debug(
         { topicId, messageId, userChatId: connection.userChatId },
         'Topic message forwarded to user',
@@ -99,7 +112,10 @@ export class TopicChatService {
     });
 
     if (!connection || !this.NOTIFICATION_GROUP_CHAT_ID) {
-      this.logger.warn({ topicId }, 'Cannot start dialog: connection not found or group ID not configured');
+      this.logger.warn(
+        { topicId },
+        'Cannot start dialog: connection not found or group ID not configured',
+      );
       return;
     }
 
@@ -149,7 +165,10 @@ export class TopicChatService {
           name: `🟢 ${connection.topicName}`,
         },
       );
-      this.logger.debug({ topicId }, 'Topic name updated with active indicator');
+      this.logger.debug(
+        { topicId },
+        'Topic name updated with active indicator',
+      );
     } catch (error) {
       this.logger.error({ error, topicId }, 'Failed to update topic name');
     }
@@ -207,7 +226,7 @@ export class TopicChatService {
 
   async stopDialog(topicId: number) {
     this.logger.info({ topicId }, 'Stopping dialog');
-    
+
     await this.stopDialogInternal(topicId);
 
     const connection = await this.prisma.topicConnection.findUnique({
@@ -215,7 +234,10 @@ export class TopicChatService {
     });
 
     if (!connection) {
-      this.logger.warn({ topicId }, 'Connection not found when stopping dialog');
+      this.logger.warn(
+        { topicId },
+        'Connection not found when stopping dialog',
+      );
       return;
     }
 

@@ -7,6 +7,8 @@ export interface TelegramUser {
   firstName?: string;
   lastName?: string;
   phone?: string;
+  autoMessageCount: number;
+  isSubscribedToAutomessage: boolean;
   createdAt: string;
   updatedAt: string;
   _count?: {

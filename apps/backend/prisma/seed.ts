@@ -484,6 +484,26 @@ async function main() {
   });
   console.log('✓ TopicContent seeded');
 
+  await prisma.autoMessageConfig.upsert({
+    where: { id: 1 },
+    create: {
+      id: 1,
+      scheduleHour: 9,
+      scheduleMinute: 0,
+      notificationText:
+        '✉️ Вы получаете автоматические сообщения. Если хотите отписаться, нажмите кнопку ниже.',
+      unsubscribeButtonText: '🔕 Отписаться от рассылки',
+      unsubscribeSuccessText: '✅ Вы отписались от автоматических сообщений.',
+      resubscribeSuccessText:
+        '✅ Вы снова подписаны на автоматические сообщения.',
+      resubscribeButtonText: '🔔 Подписаться снова',
+      unsubscribeToggleText: '🔕 Отписаться',
+      errorText: '❌ Произошла ошибка. Попробуйте позже.',
+    },
+    update: {},
+  });
+  console.log('✓ AutoMessageConfig seeded');
+
   console.log('Seed completed!');
 }
 

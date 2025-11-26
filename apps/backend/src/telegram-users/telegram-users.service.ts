@@ -68,4 +68,11 @@ export class TelegramUsersService {
       orderBy: { createdAt: 'desc' },
     });
   }
+
+  async updateSubscription(chatId: string, isSubscribed: boolean) {
+    return this.prisma.telegramUser.update({
+      where: { chatId },
+      data: { isSubscribedToAutomessage: isSubscribed },
+    });
+  }
 }

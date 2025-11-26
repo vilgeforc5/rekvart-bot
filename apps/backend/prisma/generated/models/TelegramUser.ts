@@ -28,10 +28,12 @@ export type AggregateTelegramUser = {
 
 export type TelegramUserAvgAggregateOutputType = {
   id: number | null
+  autoMessageCount: number | null
 }
 
 export type TelegramUserSumAggregateOutputType = {
   id: number | null
+  autoMessageCount: number | null
 }
 
 export type TelegramUserMinAggregateOutputType = {
@@ -41,6 +43,8 @@ export type TelegramUserMinAggregateOutputType = {
   firstName: string | null
   lastName: string | null
   phone: string | null
+  autoMessageCount: number | null
+  isSubscribedToAutomessage: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +56,8 @@ export type TelegramUserMaxAggregateOutputType = {
   firstName: string | null
   lastName: string | null
   phone: string | null
+  autoMessageCount: number | null
+  isSubscribedToAutomessage: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -63,6 +69,8 @@ export type TelegramUserCountAggregateOutputType = {
   firstName: number
   lastName: number
   phone: number
+  autoMessageCount: number
+  isSubscribedToAutomessage: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -71,10 +79,12 @@ export type TelegramUserCountAggregateOutputType = {
 
 export type TelegramUserAvgAggregateInputType = {
   id?: true
+  autoMessageCount?: true
 }
 
 export type TelegramUserSumAggregateInputType = {
   id?: true
+  autoMessageCount?: true
 }
 
 export type TelegramUserMinAggregateInputType = {
@@ -84,6 +94,8 @@ export type TelegramUserMinAggregateInputType = {
   firstName?: true
   lastName?: true
   phone?: true
+  autoMessageCount?: true
+  isSubscribedToAutomessage?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -95,6 +107,8 @@ export type TelegramUserMaxAggregateInputType = {
   firstName?: true
   lastName?: true
   phone?: true
+  autoMessageCount?: true
+  isSubscribedToAutomessage?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +120,8 @@ export type TelegramUserCountAggregateInputType = {
   firstName?: true
   lastName?: true
   phone?: true
+  autoMessageCount?: true
+  isSubscribedToAutomessage?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -204,6 +220,8 @@ export type TelegramUserGroupByOutputType = {
   firstName: string | null
   lastName: string | null
   phone: string | null
+  autoMessageCount: number
+  isSubscribedToAutomessage: boolean
   createdAt: Date
   updatedAt: Date
   _count: TelegramUserCountAggregateOutputType | null
@@ -238,9 +256,12 @@ export type TelegramUserWhereInput = {
   firstName?: Prisma.StringNullableFilter<"TelegramUser"> | string | null
   lastName?: Prisma.StringNullableFilter<"TelegramUser"> | string | null
   phone?: Prisma.StringNullableFilter<"TelegramUser"> | string | null
+  autoMessageCount?: Prisma.IntFilter<"TelegramUser"> | number
+  isSubscribedToAutomessage?: Prisma.BoolFilter<"TelegramUser"> | boolean
   createdAt?: Prisma.DateTimeFilter<"TelegramUser"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TelegramUser"> | Date | string
   formSubmissions?: Prisma.FormSubmissionListRelationFilter
+  topicConnections?: Prisma.TopicConnectionListRelationFilter
 }
 
 export type TelegramUserOrderByWithRelationInput = {
@@ -250,9 +271,12 @@ export type TelegramUserOrderByWithRelationInput = {
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  autoMessageCount?: Prisma.SortOrder
+  isSubscribedToAutomessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   formSubmissions?: Prisma.FormSubmissionOrderByRelationAggregateInput
+  topicConnections?: Prisma.TopicConnectionOrderByRelationAggregateInput
 }
 
 export type TelegramUserWhereUniqueInput = Prisma.AtLeast<{
@@ -265,9 +289,12 @@ export type TelegramUserWhereUniqueInput = Prisma.AtLeast<{
   firstName?: Prisma.StringNullableFilter<"TelegramUser"> | string | null
   lastName?: Prisma.StringNullableFilter<"TelegramUser"> | string | null
   phone?: Prisma.StringNullableFilter<"TelegramUser"> | string | null
+  autoMessageCount?: Prisma.IntFilter<"TelegramUser"> | number
+  isSubscribedToAutomessage?: Prisma.BoolFilter<"TelegramUser"> | boolean
   createdAt?: Prisma.DateTimeFilter<"TelegramUser"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TelegramUser"> | Date | string
   formSubmissions?: Prisma.FormSubmissionListRelationFilter
+  topicConnections?: Prisma.TopicConnectionListRelationFilter
 }, "id" | "chatId">
 
 export type TelegramUserOrderByWithAggregationInput = {
@@ -277,6 +304,8 @@ export type TelegramUserOrderByWithAggregationInput = {
   firstName?: Prisma.SortOrderInput | Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  autoMessageCount?: Prisma.SortOrder
+  isSubscribedToAutomessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TelegramUserCountOrderByAggregateInput
@@ -296,6 +325,8 @@ export type TelegramUserScalarWhereWithAggregatesInput = {
   firstName?: Prisma.StringNullableWithAggregatesFilter<"TelegramUser"> | string | null
   lastName?: Prisma.StringNullableWithAggregatesFilter<"TelegramUser"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"TelegramUser"> | string | null
+  autoMessageCount?: Prisma.IntWithAggregatesFilter<"TelegramUser"> | number
+  isSubscribedToAutomessage?: Prisma.BoolWithAggregatesFilter<"TelegramUser"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TelegramUser"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TelegramUser"> | Date | string
 }
@@ -306,9 +337,12 @@ export type TelegramUserCreateInput = {
   firstName?: string | null
   lastName?: string | null
   phone?: string | null
+  autoMessageCount?: number
+  isSubscribedToAutomessage?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   formSubmissions?: Prisma.FormSubmissionCreateNestedManyWithoutTelegramUserInput
+  topicConnections?: Prisma.TopicConnectionCreateNestedManyWithoutTelegramUserInput
 }
 
 export type TelegramUserUncheckedCreateInput = {
@@ -318,9 +352,12 @@ export type TelegramUserUncheckedCreateInput = {
   firstName?: string | null
   lastName?: string | null
   phone?: string | null
+  autoMessageCount?: number
+  isSubscribedToAutomessage?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   formSubmissions?: Prisma.FormSubmissionUncheckedCreateNestedManyWithoutTelegramUserInput
+  topicConnections?: Prisma.TopicConnectionUncheckedCreateNestedManyWithoutTelegramUserInput
 }
 
 export type TelegramUserUpdateInput = {
@@ -329,9 +366,12 @@ export type TelegramUserUpdateInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoMessageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isSubscribedToAutomessage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   formSubmissions?: Prisma.FormSubmissionUpdateManyWithoutTelegramUserNestedInput
+  topicConnections?: Prisma.TopicConnectionUpdateManyWithoutTelegramUserNestedInput
 }
 
 export type TelegramUserUncheckedUpdateInput = {
@@ -341,9 +381,12 @@ export type TelegramUserUncheckedUpdateInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoMessageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isSubscribedToAutomessage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   formSubmissions?: Prisma.FormSubmissionUncheckedUpdateManyWithoutTelegramUserNestedInput
+  topicConnections?: Prisma.TopicConnectionUncheckedUpdateManyWithoutTelegramUserNestedInput
 }
 
 export type TelegramUserCreateManyInput = {
@@ -353,6 +396,8 @@ export type TelegramUserCreateManyInput = {
   firstName?: string | null
   lastName?: string | null
   phone?: string | null
+  autoMessageCount?: number
+  isSubscribedToAutomessage?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -363,6 +408,8 @@ export type TelegramUserUpdateManyMutationInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoMessageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isSubscribedToAutomessage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -374,6 +421,8 @@ export type TelegramUserUncheckedUpdateManyInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoMessageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isSubscribedToAutomessage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -385,12 +434,15 @@ export type TelegramUserCountOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  autoMessageCount?: Prisma.SortOrder
+  isSubscribedToAutomessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type TelegramUserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  autoMessageCount?: Prisma.SortOrder
 }
 
 export type TelegramUserMaxOrderByAggregateInput = {
@@ -400,6 +452,8 @@ export type TelegramUserMaxOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  autoMessageCount?: Prisma.SortOrder
+  isSubscribedToAutomessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -411,17 +465,25 @@ export type TelegramUserMinOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  autoMessageCount?: Prisma.SortOrder
+  isSubscribedToAutomessage?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type TelegramUserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  autoMessageCount?: Prisma.SortOrder
 }
 
 export type TelegramUserScalarRelationFilter = {
   is?: Prisma.TelegramUserWhereInput
   isNot?: Prisma.TelegramUserWhereInput
+}
+
+export type TelegramUserNullableScalarRelationFilter = {
+  is?: Prisma.TelegramUserWhereInput | null
+  isNot?: Prisma.TelegramUserWhereInput | null
 }
 
 export type TelegramUserCreateNestedOneWithoutFormSubmissionsInput = {
@@ -438,14 +500,33 @@ export type TelegramUserUpdateOneRequiredWithoutFormSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TelegramUserUpdateToOneWithWhereWithoutFormSubmissionsInput, Prisma.TelegramUserUpdateWithoutFormSubmissionsInput>, Prisma.TelegramUserUncheckedUpdateWithoutFormSubmissionsInput>
 }
 
+export type TelegramUserCreateNestedOneWithoutTopicConnectionsInput = {
+  create?: Prisma.XOR<Prisma.TelegramUserCreateWithoutTopicConnectionsInput, Prisma.TelegramUserUncheckedCreateWithoutTopicConnectionsInput>
+  connectOrCreate?: Prisma.TelegramUserCreateOrConnectWithoutTopicConnectionsInput
+  connect?: Prisma.TelegramUserWhereUniqueInput
+}
+
+export type TelegramUserUpdateOneWithoutTopicConnectionsNestedInput = {
+  create?: Prisma.XOR<Prisma.TelegramUserCreateWithoutTopicConnectionsInput, Prisma.TelegramUserUncheckedCreateWithoutTopicConnectionsInput>
+  connectOrCreate?: Prisma.TelegramUserCreateOrConnectWithoutTopicConnectionsInput
+  upsert?: Prisma.TelegramUserUpsertWithoutTopicConnectionsInput
+  disconnect?: Prisma.TelegramUserWhereInput | boolean
+  delete?: Prisma.TelegramUserWhereInput | boolean
+  connect?: Prisma.TelegramUserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TelegramUserUpdateToOneWithWhereWithoutTopicConnectionsInput, Prisma.TelegramUserUpdateWithoutTopicConnectionsInput>, Prisma.TelegramUserUncheckedUpdateWithoutTopicConnectionsInput>
+}
+
 export type TelegramUserCreateWithoutFormSubmissionsInput = {
   chatId: string
   username?: string | null
   firstName?: string | null
   lastName?: string | null
   phone?: string | null
+  autoMessageCount?: number
+  isSubscribedToAutomessage?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  topicConnections?: Prisma.TopicConnectionCreateNestedManyWithoutTelegramUserInput
 }
 
 export type TelegramUserUncheckedCreateWithoutFormSubmissionsInput = {
@@ -455,8 +536,11 @@ export type TelegramUserUncheckedCreateWithoutFormSubmissionsInput = {
   firstName?: string | null
   lastName?: string | null
   phone?: string | null
+  autoMessageCount?: number
+  isSubscribedToAutomessage?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  topicConnections?: Prisma.TopicConnectionUncheckedCreateNestedManyWithoutTelegramUserInput
 }
 
 export type TelegramUserCreateOrConnectWithoutFormSubmissionsInput = {
@@ -481,8 +565,11 @@ export type TelegramUserUpdateWithoutFormSubmissionsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoMessageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isSubscribedToAutomessage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  topicConnections?: Prisma.TopicConnectionUpdateManyWithoutTelegramUserNestedInput
 }
 
 export type TelegramUserUncheckedUpdateWithoutFormSubmissionsInput = {
@@ -492,8 +579,81 @@ export type TelegramUserUncheckedUpdateWithoutFormSubmissionsInput = {
   firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoMessageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isSubscribedToAutomessage?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  topicConnections?: Prisma.TopicConnectionUncheckedUpdateManyWithoutTelegramUserNestedInput
+}
+
+export type TelegramUserCreateWithoutTopicConnectionsInput = {
+  chatId: string
+  username?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  autoMessageCount?: number
+  isSubscribedToAutomessage?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  formSubmissions?: Prisma.FormSubmissionCreateNestedManyWithoutTelegramUserInput
+}
+
+export type TelegramUserUncheckedCreateWithoutTopicConnectionsInput = {
+  id?: number
+  chatId: string
+  username?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  phone?: string | null
+  autoMessageCount?: number
+  isSubscribedToAutomessage?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  formSubmissions?: Prisma.FormSubmissionUncheckedCreateNestedManyWithoutTelegramUserInput
+}
+
+export type TelegramUserCreateOrConnectWithoutTopicConnectionsInput = {
+  where: Prisma.TelegramUserWhereUniqueInput
+  create: Prisma.XOR<Prisma.TelegramUserCreateWithoutTopicConnectionsInput, Prisma.TelegramUserUncheckedCreateWithoutTopicConnectionsInput>
+}
+
+export type TelegramUserUpsertWithoutTopicConnectionsInput = {
+  update: Prisma.XOR<Prisma.TelegramUserUpdateWithoutTopicConnectionsInput, Prisma.TelegramUserUncheckedUpdateWithoutTopicConnectionsInput>
+  create: Prisma.XOR<Prisma.TelegramUserCreateWithoutTopicConnectionsInput, Prisma.TelegramUserUncheckedCreateWithoutTopicConnectionsInput>
+  where?: Prisma.TelegramUserWhereInput
+}
+
+export type TelegramUserUpdateToOneWithWhereWithoutTopicConnectionsInput = {
+  where?: Prisma.TelegramUserWhereInput
+  data: Prisma.XOR<Prisma.TelegramUserUpdateWithoutTopicConnectionsInput, Prisma.TelegramUserUncheckedUpdateWithoutTopicConnectionsInput>
+}
+
+export type TelegramUserUpdateWithoutTopicConnectionsInput = {
+  chatId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoMessageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isSubscribedToAutomessage?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  formSubmissions?: Prisma.FormSubmissionUpdateManyWithoutTelegramUserNestedInput
+}
+
+export type TelegramUserUncheckedUpdateWithoutTopicConnectionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  chatId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoMessageCount?: Prisma.IntFieldUpdateOperationsInput | number
+  isSubscribedToAutomessage?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  formSubmissions?: Prisma.FormSubmissionUncheckedUpdateManyWithoutTelegramUserNestedInput
 }
 
 
@@ -503,10 +663,12 @@ export type TelegramUserUncheckedUpdateWithoutFormSubmissionsInput = {
 
 export type TelegramUserCountOutputType = {
   formSubmissions: number
+  topicConnections: number
 }
 
 export type TelegramUserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   formSubmissions?: boolean | TelegramUserCountOutputTypeCountFormSubmissionsArgs
+  topicConnections?: boolean | TelegramUserCountOutputTypeCountTopicConnectionsArgs
 }
 
 /**
@@ -526,6 +688,13 @@ export type TelegramUserCountOutputTypeCountFormSubmissionsArgs<ExtArgs extends 
   where?: Prisma.FormSubmissionWhereInput
 }
 
+/**
+ * TelegramUserCountOutputType without action
+ */
+export type TelegramUserCountOutputTypeCountTopicConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TopicConnectionWhereInput
+}
+
 
 export type TelegramUserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -534,9 +703,12 @@ export type TelegramUserSelect<ExtArgs extends runtime.Types.Extensions.Internal
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
+  autoMessageCount?: boolean
+  isSubscribedToAutomessage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   formSubmissions?: boolean | Prisma.TelegramUser$formSubmissionsArgs<ExtArgs>
+  topicConnections?: boolean | Prisma.TelegramUser$topicConnectionsArgs<ExtArgs>
   _count?: boolean | Prisma.TelegramUserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["telegramUser"]>
 
@@ -547,6 +719,8 @@ export type TelegramUserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
+  autoMessageCount?: boolean
+  isSubscribedToAutomessage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["telegramUser"]>
@@ -558,6 +732,8 @@ export type TelegramUserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
+  autoMessageCount?: boolean
+  isSubscribedToAutomessage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["telegramUser"]>
@@ -569,13 +745,16 @@ export type TelegramUserSelectScalar = {
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
+  autoMessageCount?: boolean
+  isSubscribedToAutomessage?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TelegramUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chatId" | "username" | "firstName" | "lastName" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["telegramUser"]>
+export type TelegramUserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "chatId" | "username" | "firstName" | "lastName" | "phone" | "autoMessageCount" | "isSubscribedToAutomessage" | "createdAt" | "updatedAt", ExtArgs["result"]["telegramUser"]>
 export type TelegramUserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   formSubmissions?: boolean | Prisma.TelegramUser$formSubmissionsArgs<ExtArgs>
+  topicConnections?: boolean | Prisma.TelegramUser$topicConnectionsArgs<ExtArgs>
   _count?: boolean | Prisma.TelegramUserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TelegramUserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -585,6 +764,7 @@ export type $TelegramUserPayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "TelegramUser"
   objects: {
     formSubmissions: Prisma.$FormSubmissionPayload<ExtArgs>[]
+    topicConnections: Prisma.$TopicConnectionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -593,6 +773,8 @@ export type $TelegramUserPayload<ExtArgs extends runtime.Types.Extensions.Intern
     firstName: string | null
     lastName: string | null
     phone: string | null
+    autoMessageCount: number
+    isSubscribedToAutomessage: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["telegramUser"]>
@@ -990,6 +1172,7 @@ readonly fields: TelegramUserFieldRefs;
 export interface Prisma__TelegramUserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   formSubmissions<T extends Prisma.TelegramUser$formSubmissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TelegramUser$formSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FormSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  topicConnections<T extends Prisma.TelegramUser$topicConnectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TelegramUser$topicConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TopicConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1025,6 +1208,8 @@ export interface TelegramUserFieldRefs {
   readonly firstName: Prisma.FieldRef<"TelegramUser", 'String'>
   readonly lastName: Prisma.FieldRef<"TelegramUser", 'String'>
   readonly phone: Prisma.FieldRef<"TelegramUser", 'String'>
+  readonly autoMessageCount: Prisma.FieldRef<"TelegramUser", 'Int'>
+  readonly isSubscribedToAutomessage: Prisma.FieldRef<"TelegramUser", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"TelegramUser", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TelegramUser", 'DateTime'>
 }
@@ -1436,6 +1621,30 @@ export type TelegramUser$formSubmissionsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.FormSubmissionScalarFieldEnum | Prisma.FormSubmissionScalarFieldEnum[]
+}
+
+/**
+ * TelegramUser.topicConnections
+ */
+export type TelegramUser$topicConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TopicConnection
+   */
+  select?: Prisma.TopicConnectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TopicConnection
+   */
+  omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
+  where?: Prisma.TopicConnectionWhereInput
+  orderBy?: Prisma.TopicConnectionOrderByWithRelationInput | Prisma.TopicConnectionOrderByWithRelationInput[]
+  cursor?: Prisma.TopicConnectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TopicConnectionScalarFieldEnum | Prisma.TopicConnectionScalarFieldEnum[]
 }
 
 /**

@@ -28,11 +28,13 @@ export type AggregateTopicConnection = {
 
 export type TopicConnectionAvgAggregateOutputType = {
   id: number | null
+  telegramUserId: number | null
   topicId: number | null
 }
 
 export type TopicConnectionSumAggregateOutputType = {
   id: number | null
+  telegramUserId: number | null
   topicId: number | null
 }
 
@@ -40,8 +42,10 @@ export type TopicConnectionMinAggregateOutputType = {
   id: number | null
   topicName: string | null
   userChatId: string | null
+  telegramUserId: number | null
   topicId: number | null
   isActive: boolean | null
+  lastAdminMessageText: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,8 +54,10 @@ export type TopicConnectionMaxAggregateOutputType = {
   id: number | null
   topicName: string | null
   userChatId: string | null
+  telegramUserId: number | null
   topicId: number | null
   isActive: boolean | null
+  lastAdminMessageText: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,8 +66,10 @@ export type TopicConnectionCountAggregateOutputType = {
   id: number
   topicName: number
   userChatId: number
+  telegramUserId: number
   topicId: number
   isActive: number
+  lastAdminMessageText: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,11 +78,13 @@ export type TopicConnectionCountAggregateOutputType = {
 
 export type TopicConnectionAvgAggregateInputType = {
   id?: true
+  telegramUserId?: true
   topicId?: true
 }
 
 export type TopicConnectionSumAggregateInputType = {
   id?: true
+  telegramUserId?: true
   topicId?: true
 }
 
@@ -82,8 +92,10 @@ export type TopicConnectionMinAggregateInputType = {
   id?: true
   topicName?: true
   userChatId?: true
+  telegramUserId?: true
   topicId?: true
   isActive?: true
+  lastAdminMessageText?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -92,8 +104,10 @@ export type TopicConnectionMaxAggregateInputType = {
   id?: true
   topicName?: true
   userChatId?: true
+  telegramUserId?: true
   topicId?: true
   isActive?: true
+  lastAdminMessageText?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -102,8 +116,10 @@ export type TopicConnectionCountAggregateInputType = {
   id?: true
   topicName?: true
   userChatId?: true
+  telegramUserId?: true
   topicId?: true
   isActive?: true
+  lastAdminMessageText?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -199,8 +215,10 @@ export type TopicConnectionGroupByOutputType = {
   id: number
   topicName: string
   userChatId: string
+  telegramUserId: number | null
   topicId: number
   isActive: boolean
+  lastAdminMessageText: string | null
   createdAt: Date
   updatedAt: Date
   _count: TopicConnectionCountAggregateOutputType | null
@@ -232,20 +250,26 @@ export type TopicConnectionWhereInput = {
   id?: Prisma.IntFilter<"TopicConnection"> | number
   topicName?: Prisma.StringFilter<"TopicConnection"> | string
   userChatId?: Prisma.StringFilter<"TopicConnection"> | string
+  telegramUserId?: Prisma.IntNullableFilter<"TopicConnection"> | number | null
   topicId?: Prisma.IntFilter<"TopicConnection"> | number
   isActive?: Prisma.BoolFilter<"TopicConnection"> | boolean
+  lastAdminMessageText?: Prisma.StringNullableFilter<"TopicConnection"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TopicConnection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TopicConnection"> | Date | string
+  telegramUser?: Prisma.XOR<Prisma.TelegramUserNullableScalarRelationFilter, Prisma.TelegramUserWhereInput> | null
 }
 
 export type TopicConnectionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   topicName?: Prisma.SortOrder
   userChatId?: Prisma.SortOrder
+  telegramUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastAdminMessageText?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  telegramUser?: Prisma.TelegramUserOrderByWithRelationInput
 }
 
 export type TopicConnectionWhereUniqueInput = Prisma.AtLeast<{
@@ -256,17 +280,22 @@ export type TopicConnectionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TopicConnectionWhereInput | Prisma.TopicConnectionWhereInput[]
   topicName?: Prisma.StringFilter<"TopicConnection"> | string
   userChatId?: Prisma.StringFilter<"TopicConnection"> | string
+  telegramUserId?: Prisma.IntNullableFilter<"TopicConnection"> | number | null
   isActive?: Prisma.BoolFilter<"TopicConnection"> | boolean
+  lastAdminMessageText?: Prisma.StringNullableFilter<"TopicConnection"> | string | null
   createdAt?: Prisma.DateTimeFilter<"TopicConnection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TopicConnection"> | Date | string
+  telegramUser?: Prisma.XOR<Prisma.TelegramUserNullableScalarRelationFilter, Prisma.TelegramUserWhereInput> | null
 }, "id" | "topicId">
 
 export type TopicConnectionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   topicName?: Prisma.SortOrder
   userChatId?: Prisma.SortOrder
+  telegramUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastAdminMessageText?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.TopicConnectionCountOrderByAggregateInput
@@ -283,8 +312,10 @@ export type TopicConnectionScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"TopicConnection"> | number
   topicName?: Prisma.StringWithAggregatesFilter<"TopicConnection"> | string
   userChatId?: Prisma.StringWithAggregatesFilter<"TopicConnection"> | string
+  telegramUserId?: Prisma.IntNullableWithAggregatesFilter<"TopicConnection"> | number | null
   topicId?: Prisma.IntWithAggregatesFilter<"TopicConnection"> | number
   isActive?: Prisma.BoolWithAggregatesFilter<"TopicConnection"> | boolean
+  lastAdminMessageText?: Prisma.StringNullableWithAggregatesFilter<"TopicConnection"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TopicConnection"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"TopicConnection"> | Date | string
 }
@@ -294,16 +325,20 @@ export type TopicConnectionCreateInput = {
   userChatId: string
   topicId: number
   isActive?: boolean
+  lastAdminMessageText?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  telegramUser?: Prisma.TelegramUserCreateNestedOneWithoutTopicConnectionsInput
 }
 
 export type TopicConnectionUncheckedCreateInput = {
   id?: number
   topicName: string
   userChatId: string
+  telegramUserId?: number | null
   topicId: number
   isActive?: boolean
+  lastAdminMessageText?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -313,16 +348,20 @@ export type TopicConnectionUpdateInput = {
   userChatId?: Prisma.StringFieldUpdateOperationsInput | string
   topicId?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastAdminMessageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  telegramUser?: Prisma.TelegramUserUpdateOneWithoutTopicConnectionsNestedInput
 }
 
 export type TopicConnectionUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   topicName?: Prisma.StringFieldUpdateOperationsInput | string
   userChatId?: Prisma.StringFieldUpdateOperationsInput | string
+  telegramUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topicId?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastAdminMessageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -331,8 +370,10 @@ export type TopicConnectionCreateManyInput = {
   id?: number
   topicName: string
   userChatId: string
+  telegramUserId?: number | null
   topicId: number
   isActive?: boolean
+  lastAdminMessageText?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -342,6 +383,7 @@ export type TopicConnectionUpdateManyMutationInput = {
   userChatId?: Prisma.StringFieldUpdateOperationsInput | string
   topicId?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastAdminMessageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -350,24 +392,39 @@ export type TopicConnectionUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   topicName?: Prisma.StringFieldUpdateOperationsInput | string
   userChatId?: Prisma.StringFieldUpdateOperationsInput | string
+  telegramUserId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   topicId?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastAdminMessageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TopicConnectionListRelationFilter = {
+  every?: Prisma.TopicConnectionWhereInput
+  some?: Prisma.TopicConnectionWhereInput
+  none?: Prisma.TopicConnectionWhereInput
+}
+
+export type TopicConnectionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type TopicConnectionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   topicName?: Prisma.SortOrder
   userChatId?: Prisma.SortOrder
+  telegramUserId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastAdminMessageText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type TopicConnectionAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  telegramUserId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
 }
 
@@ -375,8 +432,10 @@ export type TopicConnectionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   topicName?: Prisma.SortOrder
   userChatId?: Prisma.SortOrder
+  telegramUserId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastAdminMessageText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -385,15 +444,173 @@ export type TopicConnectionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   topicName?: Prisma.SortOrder
   userChatId?: Prisma.SortOrder
+  telegramUserId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  lastAdminMessageText?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type TopicConnectionSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  telegramUserId?: Prisma.SortOrder
   topicId?: Prisma.SortOrder
+}
+
+export type TopicConnectionCreateNestedManyWithoutTelegramUserInput = {
+  create?: Prisma.XOR<Prisma.TopicConnectionCreateWithoutTelegramUserInput, Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput> | Prisma.TopicConnectionCreateWithoutTelegramUserInput[] | Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput[]
+  connectOrCreate?: Prisma.TopicConnectionCreateOrConnectWithoutTelegramUserInput | Prisma.TopicConnectionCreateOrConnectWithoutTelegramUserInput[]
+  createMany?: Prisma.TopicConnectionCreateManyTelegramUserInputEnvelope
+  connect?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+}
+
+export type TopicConnectionUncheckedCreateNestedManyWithoutTelegramUserInput = {
+  create?: Prisma.XOR<Prisma.TopicConnectionCreateWithoutTelegramUserInput, Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput> | Prisma.TopicConnectionCreateWithoutTelegramUserInput[] | Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput[]
+  connectOrCreate?: Prisma.TopicConnectionCreateOrConnectWithoutTelegramUserInput | Prisma.TopicConnectionCreateOrConnectWithoutTelegramUserInput[]
+  createMany?: Prisma.TopicConnectionCreateManyTelegramUserInputEnvelope
+  connect?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+}
+
+export type TopicConnectionUpdateManyWithoutTelegramUserNestedInput = {
+  create?: Prisma.XOR<Prisma.TopicConnectionCreateWithoutTelegramUserInput, Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput> | Prisma.TopicConnectionCreateWithoutTelegramUserInput[] | Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput[]
+  connectOrCreate?: Prisma.TopicConnectionCreateOrConnectWithoutTelegramUserInput | Prisma.TopicConnectionCreateOrConnectWithoutTelegramUserInput[]
+  upsert?: Prisma.TopicConnectionUpsertWithWhereUniqueWithoutTelegramUserInput | Prisma.TopicConnectionUpsertWithWhereUniqueWithoutTelegramUserInput[]
+  createMany?: Prisma.TopicConnectionCreateManyTelegramUserInputEnvelope
+  set?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+  disconnect?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+  delete?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+  connect?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+  update?: Prisma.TopicConnectionUpdateWithWhereUniqueWithoutTelegramUserInput | Prisma.TopicConnectionUpdateWithWhereUniqueWithoutTelegramUserInput[]
+  updateMany?: Prisma.TopicConnectionUpdateManyWithWhereWithoutTelegramUserInput | Prisma.TopicConnectionUpdateManyWithWhereWithoutTelegramUserInput[]
+  deleteMany?: Prisma.TopicConnectionScalarWhereInput | Prisma.TopicConnectionScalarWhereInput[]
+}
+
+export type TopicConnectionUncheckedUpdateManyWithoutTelegramUserNestedInput = {
+  create?: Prisma.XOR<Prisma.TopicConnectionCreateWithoutTelegramUserInput, Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput> | Prisma.TopicConnectionCreateWithoutTelegramUserInput[] | Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput[]
+  connectOrCreate?: Prisma.TopicConnectionCreateOrConnectWithoutTelegramUserInput | Prisma.TopicConnectionCreateOrConnectWithoutTelegramUserInput[]
+  upsert?: Prisma.TopicConnectionUpsertWithWhereUniqueWithoutTelegramUserInput | Prisma.TopicConnectionUpsertWithWhereUniqueWithoutTelegramUserInput[]
+  createMany?: Prisma.TopicConnectionCreateManyTelegramUserInputEnvelope
+  set?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+  disconnect?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+  delete?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+  connect?: Prisma.TopicConnectionWhereUniqueInput | Prisma.TopicConnectionWhereUniqueInput[]
+  update?: Prisma.TopicConnectionUpdateWithWhereUniqueWithoutTelegramUserInput | Prisma.TopicConnectionUpdateWithWhereUniqueWithoutTelegramUserInput[]
+  updateMany?: Prisma.TopicConnectionUpdateManyWithWhereWithoutTelegramUserInput | Prisma.TopicConnectionUpdateManyWithWhereWithoutTelegramUserInput[]
+  deleteMany?: Prisma.TopicConnectionScalarWhereInput | Prisma.TopicConnectionScalarWhereInput[]
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type TopicConnectionCreateWithoutTelegramUserInput = {
+  topicName: string
+  userChatId: string
+  topicId: number
+  isActive?: boolean
+  lastAdminMessageText?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TopicConnectionUncheckedCreateWithoutTelegramUserInput = {
+  id?: number
+  topicName: string
+  userChatId: string
+  topicId: number
+  isActive?: boolean
+  lastAdminMessageText?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TopicConnectionCreateOrConnectWithoutTelegramUserInput = {
+  where: Prisma.TopicConnectionWhereUniqueInput
+  create: Prisma.XOR<Prisma.TopicConnectionCreateWithoutTelegramUserInput, Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput>
+}
+
+export type TopicConnectionCreateManyTelegramUserInputEnvelope = {
+  data: Prisma.TopicConnectionCreateManyTelegramUserInput | Prisma.TopicConnectionCreateManyTelegramUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type TopicConnectionUpsertWithWhereUniqueWithoutTelegramUserInput = {
+  where: Prisma.TopicConnectionWhereUniqueInput
+  update: Prisma.XOR<Prisma.TopicConnectionUpdateWithoutTelegramUserInput, Prisma.TopicConnectionUncheckedUpdateWithoutTelegramUserInput>
+  create: Prisma.XOR<Prisma.TopicConnectionCreateWithoutTelegramUserInput, Prisma.TopicConnectionUncheckedCreateWithoutTelegramUserInput>
+}
+
+export type TopicConnectionUpdateWithWhereUniqueWithoutTelegramUserInput = {
+  where: Prisma.TopicConnectionWhereUniqueInput
+  data: Prisma.XOR<Prisma.TopicConnectionUpdateWithoutTelegramUserInput, Prisma.TopicConnectionUncheckedUpdateWithoutTelegramUserInput>
+}
+
+export type TopicConnectionUpdateManyWithWhereWithoutTelegramUserInput = {
+  where: Prisma.TopicConnectionScalarWhereInput
+  data: Prisma.XOR<Prisma.TopicConnectionUpdateManyMutationInput, Prisma.TopicConnectionUncheckedUpdateManyWithoutTelegramUserInput>
+}
+
+export type TopicConnectionScalarWhereInput = {
+  AND?: Prisma.TopicConnectionScalarWhereInput | Prisma.TopicConnectionScalarWhereInput[]
+  OR?: Prisma.TopicConnectionScalarWhereInput[]
+  NOT?: Prisma.TopicConnectionScalarWhereInput | Prisma.TopicConnectionScalarWhereInput[]
+  id?: Prisma.IntFilter<"TopicConnection"> | number
+  topicName?: Prisma.StringFilter<"TopicConnection"> | string
+  userChatId?: Prisma.StringFilter<"TopicConnection"> | string
+  telegramUserId?: Prisma.IntNullableFilter<"TopicConnection"> | number | null
+  topicId?: Prisma.IntFilter<"TopicConnection"> | number
+  isActive?: Prisma.BoolFilter<"TopicConnection"> | boolean
+  lastAdminMessageText?: Prisma.StringNullableFilter<"TopicConnection"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"TopicConnection"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"TopicConnection"> | Date | string
+}
+
+export type TopicConnectionCreateManyTelegramUserInput = {
+  id?: number
+  topicName: string
+  userChatId: string
+  topicId: number
+  isActive?: boolean
+  lastAdminMessageText?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TopicConnectionUpdateWithoutTelegramUserInput = {
+  topicName?: Prisma.StringFieldUpdateOperationsInput | string
+  userChatId?: Prisma.StringFieldUpdateOperationsInput | string
+  topicId?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastAdminMessageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TopicConnectionUncheckedUpdateWithoutTelegramUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  topicName?: Prisma.StringFieldUpdateOperationsInput | string
+  userChatId?: Prisma.StringFieldUpdateOperationsInput | string
+  topicId?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastAdminMessageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TopicConnectionUncheckedUpdateManyWithoutTelegramUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  topicName?: Prisma.StringFieldUpdateOperationsInput | string
+  userChatId?: Prisma.StringFieldUpdateOperationsInput | string
+  topicId?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastAdminMessageText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -402,53 +619,77 @@ export type TopicConnectionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   id?: boolean
   topicName?: boolean
   userChatId?: boolean
+  telegramUserId?: boolean
   topicId?: boolean
   isActive?: boolean
+  lastAdminMessageText?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  telegramUser?: boolean | Prisma.TopicConnection$telegramUserArgs<ExtArgs>
 }, ExtArgs["result"]["topicConnection"]>
 
 export type TopicConnectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   topicName?: boolean
   userChatId?: boolean
+  telegramUserId?: boolean
   topicId?: boolean
   isActive?: boolean
+  lastAdminMessageText?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  telegramUser?: boolean | Prisma.TopicConnection$telegramUserArgs<ExtArgs>
 }, ExtArgs["result"]["topicConnection"]>
 
 export type TopicConnectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   topicName?: boolean
   userChatId?: boolean
+  telegramUserId?: boolean
   topicId?: boolean
   isActive?: boolean
+  lastAdminMessageText?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  telegramUser?: boolean | Prisma.TopicConnection$telegramUserArgs<ExtArgs>
 }, ExtArgs["result"]["topicConnection"]>
 
 export type TopicConnectionSelectScalar = {
   id?: boolean
   topicName?: boolean
   userChatId?: boolean
+  telegramUserId?: boolean
   topicId?: boolean
   isActive?: boolean
+  lastAdminMessageText?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type TopicConnectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "topicName" | "userChatId" | "topicId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["topicConnection"]>
+export type TopicConnectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "topicName" | "userChatId" | "telegramUserId" | "topicId" | "isActive" | "lastAdminMessageText" | "createdAt" | "updatedAt", ExtArgs["result"]["topicConnection"]>
+export type TopicConnectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  telegramUser?: boolean | Prisma.TopicConnection$telegramUserArgs<ExtArgs>
+}
+export type TopicConnectionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  telegramUser?: boolean | Prisma.TopicConnection$telegramUserArgs<ExtArgs>
+}
+export type TopicConnectionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  telegramUser?: boolean | Prisma.TopicConnection$telegramUserArgs<ExtArgs>
+}
 
 export type $TopicConnectionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TopicConnection"
-  objects: {}
+  objects: {
+    telegramUser: Prisma.$TelegramUserPayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     topicName: string
     userChatId: string
+    telegramUserId: number | null
     topicId: number
     isActive: boolean
+    lastAdminMessageText: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["topicConnection"]>
@@ -845,6 +1086,7 @@ readonly fields: TopicConnectionFieldRefs;
  */
 export interface Prisma__TopicConnectionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  telegramUser<T extends Prisma.TopicConnection$telegramUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TopicConnection$telegramUserArgs<ExtArgs>>): Prisma.Prisma__TelegramUserClient<runtime.Types.Result.GetResult<Prisma.$TelegramUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -877,8 +1119,10 @@ export interface TopicConnectionFieldRefs {
   readonly id: Prisma.FieldRef<"TopicConnection", 'Int'>
   readonly topicName: Prisma.FieldRef<"TopicConnection", 'String'>
   readonly userChatId: Prisma.FieldRef<"TopicConnection", 'String'>
+  readonly telegramUserId: Prisma.FieldRef<"TopicConnection", 'Int'>
   readonly topicId: Prisma.FieldRef<"TopicConnection", 'Int'>
   readonly isActive: Prisma.FieldRef<"TopicConnection", 'Boolean'>
+  readonly lastAdminMessageText: Prisma.FieldRef<"TopicConnection", 'String'>
   readonly createdAt: Prisma.FieldRef<"TopicConnection", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"TopicConnection", 'DateTime'>
 }
@@ -898,6 +1142,10 @@ export type TopicConnectionFindUniqueArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
+  /**
    * Filter, which TopicConnection to fetch.
    */
   where: Prisma.TopicConnectionWhereUniqueInput
@@ -916,6 +1164,10 @@ export type TopicConnectionFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.E
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
+  /**
    * Filter, which TopicConnection to fetch.
    */
   where: Prisma.TopicConnectionWhereUniqueInput
@@ -933,6 +1185,10 @@ export type TopicConnectionFindFirstArgs<ExtArgs extends runtime.Types.Extension
    * Omit specific fields from the TopicConnection
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
   /**
    * Filter, which TopicConnection to fetch.
    */
@@ -982,6 +1238,10 @@ export type TopicConnectionFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Ex
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
+  /**
    * Filter, which TopicConnection to fetch.
    */
   where?: Prisma.TopicConnectionWhereInput
@@ -1030,6 +1290,10 @@ export type TopicConnectionFindManyArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
+  /**
    * Filter, which TopicConnections to fetch.
    */
   where?: Prisma.TopicConnectionWhereInput
@@ -1073,6 +1337,10 @@ export type TopicConnectionCreateArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
+  /**
    * The data needed to create a TopicConnection.
    */
   data: Prisma.XOR<Prisma.TopicConnectionCreateInput, Prisma.TopicConnectionUncheckedCreateInput>
@@ -1106,6 +1374,10 @@ export type TopicConnectionCreateManyAndReturnArgs<ExtArgs extends runtime.Types
    */
   data: Prisma.TopicConnectionCreateManyInput | Prisma.TopicConnectionCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1120,6 +1392,10 @@ export type TopicConnectionUpdateArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the TopicConnection
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
   /**
    * The data needed to update a TopicConnection.
    */
@@ -1172,6 +1448,10 @@ export type TopicConnectionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types
    * Limit how many TopicConnections to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1186,6 +1466,10 @@ export type TopicConnectionUpsertArgs<ExtArgs extends runtime.Types.Extensions.I
    * Omit specific fields from the TopicConnection
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
   /**
    * The filter to search for the TopicConnection to update in case it exists.
    */
@@ -1213,6 +1497,10 @@ export type TopicConnectionDeleteArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
+  /**
    * Filter which TopicConnection to delete.
    */
   where: Prisma.TopicConnectionWhereUniqueInput
@@ -1233,6 +1521,25 @@ export type TopicConnectionDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
+ * TopicConnection.telegramUser
+ */
+export type TopicConnection$telegramUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TelegramUser
+   */
+  select?: Prisma.TelegramUserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TelegramUser
+   */
+  omit?: Prisma.TelegramUserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TelegramUserInclude<ExtArgs> | null
+  where?: Prisma.TelegramUserWhereInput
+}
+
+/**
  * TopicConnection without action
  */
 export type TopicConnectionDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1244,4 +1551,8 @@ export type TopicConnectionDefaultArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the TopicConnection
    */
   omit?: Prisma.TopicConnectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TopicConnectionInclude<ExtArgs> | null
 }

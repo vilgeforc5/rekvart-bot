@@ -58,6 +58,24 @@ const columns = [
     header: "Телефон",
     cell: (info) => info.getValue() || "-",
   }),
+  columnHelper.accessor("autoMessageCount", {
+    header: "Авто-сообщения",
+    cell: (info) => info.getValue(),
+  }),
+  columnHelper.accessor("isSubscribedToAutomessage", {
+    header: "Подписка",
+    cell: (info) => (
+      <span
+        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+          info.getValue()
+            ? "bg-green-100 text-green-800"
+            : "bg-red-100 text-red-800"
+        }`}
+      >
+        {info.getValue() ? "✓ Подписан" : "✗ Отписан"}
+      </span>
+    ),
+  }),
   columnHelper.accessor("_count.formSubmissions", {
     header: "Заявки",
     cell: (info) => info.getValue() || 0,

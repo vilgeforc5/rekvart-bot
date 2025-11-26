@@ -396,7 +396,8 @@ export const ModelName = {
   TelegramUser: 'TelegramUser',
   FormSubmission: 'FormSubmission',
   TopicConnection: 'TopicConnection',
-  TopicContent: 'TopicContent'
+  TopicContent: 'TopicContent',
+  AutoMessageConfig: 'AutoMessageConfig'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command" | "startContent" | "question" | "questionVariant" | "calculateSummary" | "portfolio" | "consultacyaSummary" | "zamerSummary" | "dizaynContent" | "telegramUser" | "formSubmission" | "topicConnection" | "topicContent"
+    modelProps: "command" | "startContent" | "question" | "questionVariant" | "calculateSummary" | "portfolio" | "consultacyaSummary" | "zamerSummary" | "dizaynContent" | "telegramUser" | "formSubmission" | "topicConnection" | "topicContent" | "autoMessageConfig"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1378,6 +1379,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AutoMessageConfig: {
+      payload: Prisma.$AutoMessageConfigPayload<ExtArgs>
+      fields: Prisma.AutoMessageConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AutoMessageConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AutoMessageConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.AutoMessageConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AutoMessageConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload>
+        }
+        findMany: {
+          args: Prisma.AutoMessageConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload>[]
+        }
+        create: {
+          args: Prisma.AutoMessageConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload>
+        }
+        createMany: {
+          args: Prisma.AutoMessageConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AutoMessageConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.AutoMessageConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload>
+        }
+        update: {
+          args: Prisma.AutoMessageConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.AutoMessageConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AutoMessageConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AutoMessageConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.AutoMessageConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AutoMessageConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.AutoMessageConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAutoMessageConfig>
+        }
+        groupBy: {
+          args: Prisma.AutoMessageConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutoMessageConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AutoMessageConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AutoMessageConfigCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1530,6 +1605,8 @@ export const TelegramUserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   phone: 'phone',
+  autoMessageCount: 'autoMessageCount',
+  isSubscribedToAutomessage: 'isSubscribedToAutomessage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1552,8 +1629,10 @@ export const TopicConnectionScalarFieldEnum = {
   id: 'id',
   topicName: 'topicName',
   userChatId: 'userChatId',
+  telegramUserId: 'telegramUserId',
   topicId: 'topicId',
   isActive: 'isActive',
+  lastAdminMessageText: 'lastAdminMessageText',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1570,6 +1649,25 @@ export const TopicContentScalarFieldEnum = {
 } as const
 
 export type TopicContentScalarFieldEnum = (typeof TopicContentScalarFieldEnum)[keyof typeof TopicContentScalarFieldEnum]
+
+
+export const AutoMessageConfigScalarFieldEnum = {
+  id: 'id',
+  scheduleHour: 'scheduleHour',
+  scheduleMinute: 'scheduleMinute',
+  lastSentAt: 'lastSentAt',
+  notificationText: 'notificationText',
+  unsubscribeButtonText: 'unsubscribeButtonText',
+  unsubscribeSuccessText: 'unsubscribeSuccessText',
+  resubscribeSuccessText: 'resubscribeSuccessText',
+  resubscribeButtonText: 'resubscribeButtonText',
+  unsubscribeToggleText: 'unsubscribeToggleText',
+  errorText: 'errorText',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AutoMessageConfigScalarFieldEnum = (typeof AutoMessageConfigScalarFieldEnum)[keyof typeof AutoMessageConfigScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1800,6 +1898,7 @@ export type GlobalOmitConfig = {
   formSubmission?: Prisma.FormSubmissionOmit
   topicConnection?: Prisma.TopicConnectionOmit
   topicContent?: Prisma.TopicContentOmit
+  autoMessageConfig?: Prisma.AutoMessageConfigOmit
 }
 
 /* Types for Logging */
