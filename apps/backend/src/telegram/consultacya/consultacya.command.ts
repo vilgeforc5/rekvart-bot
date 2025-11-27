@@ -1,4 +1,5 @@
 import { Action, Ctx, Update } from 'nestjs-telegraf';
+import { TelegramUsersService } from 'src/telegram-users/telegram-users.service';
 import { FormSubmissionService } from 'src/telegram/form-submission.service';
 import { Context } from 'telegraf';
 import { ConsultacyaService } from './consultacya.service';
@@ -19,7 +20,18 @@ export class ConsultacyaCommand {
   constructor(
     private readonly consultacyaService: ConsultacyaService,
     private readonly formSubmissionService: FormSubmissionService,
+    private readonly telegramUsersService: TelegramUsersService,
   ) {}
+
+  private async savePhoneToUser(ctx: MyContext, phone: string) {
+    await this.telegramUsersService.upsertUser({
+      chatId: ctx.from!.id.toString(),
+      username: ctx.from?.username,
+      firstName: ctx.from?.first_name,
+      lastName: ctx.from?.last_name,
+      phone,
+    });
+  }
 
   private async sendSummary(ctx: MyContext, includePhone: boolean = false) {
     const summaryMessage = await this.consultacyaService.getSummary();
@@ -181,12 +193,15 @@ export class ConsultacyaCommand {
       if (!ctx.session.answers) ctx.session.answers = {};
       ctx.session.answers[-1] = text;
 
+      await this.savePhoneToUser(ctx, text);
       await this.sendSummary(ctx, true);
     } else if (ctx.session.step?.startsWith('waiting_phone_')) {
       const currentOrder = ctx.session.currentQuestionOrder;
 
       if (!ctx.session.answers) ctx.session.answers = {};
       ctx.session.answers[currentOrder!] = text;
+
+      await this.savePhoneToUser(ctx, text);
 
       const nextOrder = currentOrder! + 1;
       await this.askQuestion(ctx, nextOrder);
