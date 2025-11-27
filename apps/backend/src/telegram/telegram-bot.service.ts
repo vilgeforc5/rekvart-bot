@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { Action, InjectBot, Update } from 'nestjs-telegraf';
-import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
 import { Context, Telegraf } from 'telegraf';
 import { BotCommandService } from '../command/commands.service';
 import { TopicChatService } from './topic-chat.service';
@@ -44,7 +44,10 @@ export class TelegramBotService implements OnModuleInit {
 
     const topicId = parseInt(ctx.callbackQuery.data.split(':')[1]);
 
-    this.logger.info({ topicId, userId: ctx.from?.id }, 'Operator starting dialog');
+    this.logger.info(
+      { topicId, userId: ctx.from?.id },
+      'Operator starting dialog',
+    );
 
     await this.topicChatService.startDialog(topicId);
 
@@ -57,6 +60,12 @@ export class TelegramBotService implements OnModuleInit {
             callback_data: `stop_dialog:${topicId}`,
           },
         ],
+        [
+          {
+            text: '🔇 Прервать диалог (тихо)',
+            callback_data: `stop_dialog_silent:${topicId}`,
+          },
+        ],
       ],
     });
   }
@@ -67,11 +76,40 @@ export class TelegramBotService implements OnModuleInit {
 
     const topicId = parseInt(ctx.callbackQuery.data.split(':')[1]);
 
-    this.logger.info({ topicId, userId: ctx.from?.id }, 'Operator stopping dialog');
+    this.logger.info(
+      { topicId, userId: ctx.from?.id },
+      'Operator stopping dialog',
+    );
 
     await this.topicChatService.stopDialog(topicId);
 
     await ctx.answerCbQuery('❌ Диалог прерван');
+    await ctx.editMessageReplyMarkup({
+      inline_keyboard: [
+        [
+          {
+            text: '✅ Начать диалог',
+            callback_data: `start_dialog:${topicId}`,
+          },
+        ],
+      ],
+    });
+  }
+
+  @Action(/stop_dialog_silent:(.+)/)
+  async onStopDialogSilent(ctx: Context) {
+    if (!ctx.callbackQuery || !('data' in ctx.callbackQuery)) return;
+
+    const topicId = parseInt(ctx.callbackQuery.data.split(':')[1]);
+
+    this.logger.info(
+      { topicId, userId: ctx.from?.id },
+      'Operator stopping dialog silently',
+    );
+
+    await this.topicChatService.stopDialogSilent(topicId);
+
+    await ctx.answerCbQuery('🔇 Диалог прерван (без уведомления)');
     await ctx.editMessageReplyMarkup({
       inline_keyboard: [
         [

@@ -224,9 +224,10 @@ export class TopicChatService {
     }
   }
 
-  async stopDialog(topicId: number) {
-    this.logger.info({ topicId }, 'Stopping dialog');
-
+  private async stopDialogWithNotification(
+    topicId: number,
+    sendNotification: boolean,
+  ) {
     await this.stopDialogInternal(topicId);
 
     const connection = await this.prisma.topicConnection.findUnique({
@@ -241,22 +242,39 @@ export class TopicChatService {
       return;
     }
 
-    const topicContent = await this.topicContentService.get();
-    const message =
-      topicContent?.operatorDisconnectedMessage ||
-      '👋 Оператор отключился от диалога.';
+    if (sendNotification) {
+      const topicContent = await this.topicContentService.get();
+      const message =
+        topicContent?.operatorDisconnectedMessage ||
+        '👋 Оператор отключился от диалога.';
 
-    try {
-      await this.bot.telegram.sendMessage(connection.userChatId, message);
+      try {
+        await this.bot.telegram.sendMessage(connection.userChatId, message);
+        this.logger.info(
+          { userChatId: connection.userChatId, topicId },
+          'Operator disconnected message sent to user',
+        );
+      } catch (error) {
+        this.logger.error(
+          { error, userChatId: connection.userChatId, topicId },
+          'Failed to send stop dialog message to user',
+        );
+      }
+    } else {
       this.logger.info(
         { userChatId: connection.userChatId, topicId },
-        'Operator disconnected message sent to user',
-      );
-    } catch (error) {
-      this.logger.error(
-        { error, userChatId: connection.userChatId, topicId },
-        'Failed to send stop dialog message to user',
+        'Dialog stopped silently (no message sent to user)',
       );
     }
+  }
+
+  async stopDialog(topicId: number) {
+    this.logger.info({ topicId }, 'Stopping dialog');
+    await this.stopDialogWithNotification(topicId, true);
+  }
+
+  async stopDialogSilent(topicId: number) {
+    this.logger.info({ topicId }, 'Stopping dialog silently');
+    await this.stopDialogWithNotification(topicId, false);
   }
 }
