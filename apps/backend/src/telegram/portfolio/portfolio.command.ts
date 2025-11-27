@@ -1,4 +1,5 @@
 import { Action, Command, Ctx, Update } from 'nestjs-telegraf';
+import { FormSubmissionService } from 'src/telegram/form-submission.service';
 import { Context } from 'telegraf';
 import { PortfolioTelegramService } from './portfolio.service';
 
@@ -12,7 +13,10 @@ interface MyContext extends Context {
 
 @Update()
 export class PortfolioCommand {
-  constructor(private readonly portfolioService: PortfolioTelegramService) {}
+  constructor(
+    private readonly portfolioService: PortfolioTelegramService,
+    private readonly formSubmissionService: FormSubmissionService,
+  ) {}
 
   @Command('portfolio')
   async onPortfolio(@Ctx() ctx: MyContext) {
@@ -25,6 +29,12 @@ export class PortfolioCommand {
 
     ctx.session.currentPortfolioIndex = 0;
     await this.showPortfolioItem(ctx, portfolioItems, 0, false);
+
+    await this.formSubmissionService.handleSubmission(
+      'portfolio',
+      {},
+      ctx.from?.id.toString(),
+    );
   }
 
   @Action('portfolio')
@@ -40,6 +50,12 @@ export class PortfolioCommand {
 
     ctx.session.currentPortfolioIndex = 0;
     await this.showPortfolioItem(ctx, portfolioItems, 0, false);
+
+    await this.formSubmissionService.handleSubmission(
+      'portfolio',
+      {},
+      ctx.from?.id.toString(),
+    );
   }
 
   @Action(/portfolio_nav:(\d+)/)
