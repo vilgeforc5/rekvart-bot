@@ -31,6 +31,7 @@ interface Question {
   id: number;
   text: string;
   type?: string | null;
+  name?: string | null;
   order: number;
   variants: Variant[];
 }
@@ -43,6 +44,7 @@ interface Config {
 interface QuestionFormData {
   text: string;
   type: "select" | "text" | "phone" | "location";
+  name?: string;
 }
 
 interface VariantFormData {
@@ -94,6 +96,7 @@ export function QuestionFormManager({
     defaultValues: {
       text: "",
       type: "select",
+      name: "",
     },
   });
 
@@ -121,6 +124,7 @@ export function QuestionFormManager({
       const questionData = {
         text: formData.text,
         type: formData.type,
+        name: formData.name || undefined,
         variants:
           formData.type === "select"
             ? editingVariants.map((v, idx) => ({
@@ -147,6 +151,7 @@ export function QuestionFormManager({
       "type",
       (question.type || "select") as "select" | "text" | "phone" | "location"
     );
+    setQuestionValue("name", question.name || "");
     setEditingVariants(
       question.variants.map((v) => ({
         id: v.id,
@@ -313,6 +318,26 @@ export function QuestionFormManager({
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 resize-none"
                 placeholder="Введите текст вопроса"
               />
+            </div>
+
+            <div>
+              <label
+                htmlFor="question-name"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Имя поля (для API)
+              </label>
+              <input
+                {...registerQuestion("name")}
+                id="question-name"
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Например: razmer, phone, address"
+              />
+              <p className="mt-1 text-xs text-gray-500">
+                Опционально. Если указано, данные будут возвращаться с этим
+                именем вместо номера вопроса.
+              </p>
             </div>
 
             {questionType === "select" && (

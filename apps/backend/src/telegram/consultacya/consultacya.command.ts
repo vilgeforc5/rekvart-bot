@@ -27,9 +27,14 @@ export class ConsultacyaCommand {
       reply_markup: includePhone ? { remove_keyboard: true } : undefined,
     });
 
+    const transformedAnswers =
+      await this.consultacyaService.transformAnswersToNamedKeys(
+        ctx.session.answers || {},
+      );
+
     await this.formSubmissionService.handleSubmission(
       'consultacya',
-      ctx.session.answers || {},
+      transformedAnswers,
       ctx.from?.id.toString(),
     );
 

@@ -12,6 +12,7 @@ export interface CalculateQuestion {
   id: number;
   text: string;
   type: "select" | "text" | "phone";
+  name?: string | null;
   order: number;
   variants: CalculateVariant[];
 }
@@ -37,6 +38,7 @@ export interface UpdateCalculateVariantDto {
 export interface CreateCalculateQuestionDto {
   text: string;
   type: string;
+  name?: string;
   order: number;
   variants?: CreateCalculateVariantDto[];
 }
@@ -44,6 +46,7 @@ export interface CreateCalculateQuestionDto {
 export interface UpdateCalculateQuestionDto {
   text?: string;
   type?: string;
+  name?: string;
   order?: number;
   variants?: UpdateCalculateVariantDto[];
 }

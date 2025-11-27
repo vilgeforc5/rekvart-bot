@@ -27,9 +27,14 @@ export class CalculateCommand {
       reply_markup: includePhone ? { remove_keyboard: true } : undefined,
     });
 
+    const transformedAnswers =
+      await this.calculateService.transformAnswersToNamedKeys(
+        ctx.session.answers || {},
+      );
+
     await this.formSubmissionService.handleSubmission(
       'calculate',
-      ctx.session.answers || {},
+      transformedAnswers,
       ctx.from?.id.toString(),
     );
 

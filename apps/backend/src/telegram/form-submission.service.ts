@@ -206,11 +206,12 @@ export class FormSubmissionService {
   }
 
   private getFieldLabel(key: string): string {
+    if (key === 'phone') return '📞 Телефон';
     if (key === '-1') return '📞 Телефон';
     const questionNum = parseInt(key);
     if (!isNaN(questionNum) && questionNum > 0) {
       return `❓ Вопрос ${questionNum}`;
     }
-    return `🔹 ${key}`;
+    return `🔹 ${key.charAt(0).toUpperCase() + key.slice(1)}`;
   }
 }

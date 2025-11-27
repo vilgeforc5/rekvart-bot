@@ -12,6 +12,7 @@ export interface ConsultacyaQuestion {
   id: number;
   text: string;
   type?: string | null;
+  name?: string | null;
   order: number;
   variants: ConsultacyaVariant[];
 }
@@ -37,6 +38,7 @@ export interface UpdateConsultacyaVariantDto {
 export interface CreateConsultacyaQuestionDto {
   text: string;
   type?: string;
+  name?: string;
   order: number;
   variants?: CreateConsultacyaVariantDto[];
 }
@@ -44,6 +46,7 @@ export interface CreateConsultacyaQuestionDto {
 export interface UpdateConsultacyaQuestionDto {
   text?: string;
   type?: string;
+  name?: string;
   order?: number;
   variants?: UpdateConsultacyaVariantDto[];
 }

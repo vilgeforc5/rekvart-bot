@@ -19,18 +19,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GripVertical, Plus, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { getQuestionTypeLabel } from "../lib/question-utils";
 import {
   calculateApi,
-  type CreateCalculateQuestionDto,
-  type UpdateCalculateQuestionDto,
   type CalculateQuestion,
   type CalculateVariant,
+  type CreateCalculateQuestionDto,
+  type UpdateCalculateQuestionDto,
 } from "../lib/calculate.api";
+import { getQuestionTypeLabel } from "../lib/question-utils";
 
 interface QuestionFormData {
   text: string;
   type: "select" | "text" | "phone";
+  name?: string;
 }
 
 interface VariantFormData {
@@ -57,6 +58,7 @@ export function Calculate() {
     defaultValues: {
       text: "",
       type: "select",
+      name: "",
     },
   });
 
@@ -85,7 +87,8 @@ export function Calculate() {
   });
 
   const createQuestionMutation = useMutation({
-    mutationFn: (data: CreateCalculateQuestionDto) => calculateApi.createQuestion(data),
+    mutationFn: (data: CreateCalculateQuestionDto) =>
+      calculateApi.createQuestion(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["calculate-config"] });
       resetQuestion();
@@ -95,8 +98,13 @@ export function Calculate() {
   });
 
   const updateQuestionMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: UpdateCalculateQuestionDto }) =>
-      calculateApi.updateQuestion(id, data),
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: number;
+      data: UpdateCalculateQuestionDto;
+    }) => calculateApi.updateQuestion(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["calculate-config"] });
       resetQuestion();
@@ -123,9 +131,12 @@ export function Calculate() {
     const maxOrder =
       config?.questions.reduce((max, q) => Math.max(max, q.order), 0) || 0;
 
-    const questionData: CreateCalculateQuestionDto | UpdateCalculateQuestionDto = {
+    const questionData:
+      | CreateCalculateQuestionDto
+      | UpdateCalculateQuestionDto = {
       text: formData.text,
       type: formData.type,
+      name: formData.name || undefined,
       order: editingQuestionId !== null ? undefined : maxOrder + 1,
       variants:
         formData.type === "select"
@@ -152,6 +163,7 @@ export function Calculate() {
     setEditingQuestionId(question.id);
     setQuestionValue("text", question.text);
     setQuestionValue("type", question.type as "select" | "text" | "phone");
+    setQuestionValue("name", question.name || "");
     setEditingVariants(
       question.variants.map((v) => ({
         id: v.id,
@@ -350,6 +362,26 @@ export function Calculate() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 resize-none"
                 placeholder="Введите текст вопроса"
               />
+            </div>
+
+            <div>
+              <label
+                htmlFor="question-name"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Имя поля (для API)
+              </label>
+              <input
+                {...registerQuestion("name")}
+                id="question-name"
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Например: razmer, phone, address"
+              />
+              <p className="mt-1 text-xs text-gray-500">
+                Опционально. Если указано, данные будут возвращаться с этим
+                именем вместо номера вопроса.
+              </p>
             </div>
 
             <div>

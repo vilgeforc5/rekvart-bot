@@ -42,6 +42,7 @@ model Question {
   id        Int               @id @default(autoincrement())
   text      String
   type      String?
+  name      String?
   order     Int
   formType  FormType
   variants  QuestionVariant[]

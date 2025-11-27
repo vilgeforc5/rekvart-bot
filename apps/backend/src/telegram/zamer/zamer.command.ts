@@ -27,9 +27,14 @@ export class ZamerCommand {
       reply_markup: includePhone ? { remove_keyboard: true } : undefined,
     });
 
+    const transformedAnswers =
+      await this.zamerService.transformAnswersToNamedKeys(
+        ctx.session.answers || {},
+      );
+
     await this.formSubmissionService.handleSubmission(
       'zamer',
-      ctx.session.answers || {},
+      transformedAnswers,
       ctx.from?.id.toString(),
     );
 

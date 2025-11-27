@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
+import { transformAnswersToNamedKeys } from '../utils/form.utils';
 
 export interface CalculateQuestionWithVariants {
   id: number;
   text: string;
   type: string;
+  name: string | null;
   order: number;
   variants: {
     id: number;
@@ -51,6 +53,7 @@ export class CalculateService {
   async createQuestion(data: {
     text: string;
     type: string;
+    name?: string;
     order: number;
     variants?: { text: string; order: number; needsPhone?: boolean }[];
   }): Promise<CalculateQuestionWithVariants> {
@@ -58,6 +61,7 @@ export class CalculateService {
       data: {
         text: data.text,
         type: data.type,
+        name: data.name,
         order: data.order,
         formType: 'CALCULATE',
         variants: data.variants
@@ -79,6 +83,7 @@ export class CalculateService {
     data: {
       text?: string;
       type?: string;
+      name?: string;
       order?: number;
       variants?: {
         id?: number;
@@ -150,6 +155,7 @@ export class CalculateService {
         data: {
           text: data.text,
           type: data.type,
+          name: data.name,
           order: data.order,
           variants: data.variants
             ? {
@@ -211,5 +217,12 @@ export class CalculateService {
       create: { message },
       update: { message },
     });
+  }
+
+  async transformAnswersToNamedKeys(answers: {
+    [key: number]: string;
+  }): Promise<{ [key: string]: string }> {
+    const questions = await this.getAllQuestions();
+    return transformAnswersToNamedKeys(answers, questions);
   }
 }

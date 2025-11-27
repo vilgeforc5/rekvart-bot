@@ -169,7 +169,7 @@ async function main() {
       variants: [
         { text: 'Telegram', order: 1, needsPhone: false },
         { text: 'WhatsApp', order: 2, needsPhone: true },
-        { text: 'Звонок по телефону', order: 3, needsPhone: true },
+        { text: '📞 Звонок по телефону', order: 3, needsPhone: true },
       ],
     },
   ];

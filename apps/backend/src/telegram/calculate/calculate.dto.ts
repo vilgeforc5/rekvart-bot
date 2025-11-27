@@ -43,6 +43,10 @@ export class CreateCalculateQuestionDto {
   @IsString()
   type: string;
 
+  @IsOptional()
+  @IsString()
+  name?: string;
+
   @IsInt()
   order: number;
 
@@ -61,6 +65,10 @@ export class UpdateCalculateQuestionDto {
   @IsOptional()
   @IsString()
   type?: string;
+
+  @IsOptional()
+  @IsString()
+  name?: string;
 
   @IsOptional()
   @IsInt()
@@ -83,6 +91,7 @@ export class CalculateConfigDto {
     id: number;
     text: string;
     type: string;
+    name?: string | null;
     order: number;
     variants: {
       id: number;

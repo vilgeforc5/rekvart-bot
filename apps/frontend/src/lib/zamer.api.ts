@@ -12,6 +12,7 @@ export interface ZamerQuestion {
   id: number;
   text: string;
   type?: string | null;
+  name?: string | null;
   order: number;
   variants: ZamerVariant[];
 }
@@ -37,6 +38,7 @@ export interface UpdateZamerVariantDto {
 export interface CreateZamerQuestionDto {
   text: string;
   type?: string;
+  name?: string;
   order: number;
   variants?: CreateZamerVariantDto[];
 }
@@ -44,6 +46,7 @@ export interface CreateZamerQuestionDto {
 export interface UpdateZamerQuestionDto {
   text?: string;
   type?: string;
+  name?: string;
   order?: number;
   variants?: UpdateZamerVariantDto[];
 }

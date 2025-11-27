@@ -44,6 +44,10 @@ export class CreateConsultacyaQuestionDto {
   @IsString()
   type?: string;
 
+  @IsOptional()
+  @IsString()
+  name?: string;
+
   @IsInt()
   order: number;
 
@@ -62,6 +66,10 @@ export class UpdateConsultacyaQuestionDto {
   @IsOptional()
   @IsString()
   type?: string;
+
+  @IsOptional()
+  @IsString()
+  name?: string;
 
   @IsOptional()
   @IsInt()
@@ -84,6 +92,7 @@ export class ConsultacyaConfigDto {
     id: number;
     text: string;
     type?: string | null;
+    name?: string | null;
     order: number;
     variants: {
       id: number;

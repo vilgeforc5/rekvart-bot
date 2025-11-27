@@ -1520,6 +1520,7 @@ export const QuestionScalarFieldEnum = {
   id: 'id',
   text: 'text',
   type: 'type',
+  name: 'name',
   order: 'order',
   formType: 'formType',
   createdAt: 'createdAt',

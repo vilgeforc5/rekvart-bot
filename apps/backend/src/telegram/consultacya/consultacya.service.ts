@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
+import { transformAnswersToNamedKeys } from '../utils/form.utils';
 
 export interface ConsultacyaQuestionWithVariants {
   id: number;
   text: string;
   type?: string | null;
+  name: string | null;
   order: number;
   variants: {
     id: number;
@@ -50,12 +52,14 @@ export class ConsultacyaService {
 
   async createQuestion(data: {
     text: string;
+    name?: string;
     order: number;
     variants?: { text: string; order: number; needsPhone?: boolean }[];
   }): Promise<ConsultacyaQuestionWithVariants> {
     return this.prisma.question.create({
       data: {
         text: data.text,
+        name: data.name,
         order: data.order,
         formType: 'CONSULTACYA',
         variants: data.variants
@@ -76,6 +80,7 @@ export class ConsultacyaService {
     id: number,
     data: {
       text?: string;
+      name?: string;
       order?: number;
       variants?: {
         id?: number;
@@ -146,6 +151,7 @@ export class ConsultacyaService {
         where: { id },
         data: {
           text: data.text,
+          name: data.name,
           order: data.order,
           variants: data.variants
             ? {
@@ -207,5 +213,12 @@ export class ConsultacyaService {
       create: { message },
       update: { message },
     });
+  }
+
+  async transformAnswersToNamedKeys(answers: {
+    [key: number]: string;
+  }): Promise<{ [key: string]: string }> {
+    const questions = await this.getAllQuestions();
+    return transformAnswersToNamedKeys(answers, questions);
   }
 }
