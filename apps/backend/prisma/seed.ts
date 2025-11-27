@@ -504,6 +504,17 @@ async function main() {
   });
   console.log('✓ AutoMessageConfig seeded');
 
+  await prisma.proektPriceContent.upsert({
+    where: { id: 1 },
+    create: {
+      id: 1,
+      message:
+        '💰 <b>Прайс на проект</b>\n\nЗдесь будет информация о прайсе на проект.\n\nМы свяжемся с вами в ближайшее время для обсуждения деталей.',
+    },
+    update: {},
+  });
+  console.log('✓ ProektPriceContent seeded');
+
   console.log('Seed completed!');
 }
 

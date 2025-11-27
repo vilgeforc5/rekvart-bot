@@ -107,3 +107,8 @@ export type TopicContent = Prisma.TopicContentModel
  * 
  */
 export type AutoMessageConfig = Prisma.AutoMessageConfigModel
+/**
+ * Model ProektPriceContent
+ * 
+ */
+export type ProektPriceContent = Prisma.ProektPriceContentModel

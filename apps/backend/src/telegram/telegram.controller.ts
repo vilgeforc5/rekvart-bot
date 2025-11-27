@@ -1,4 +1,3 @@
-import { chunk } from 'es-toolkit';
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino';
 import { Action, Command, Ctx, On, Update } from 'nestjs-telegraf';
 import { BotCommandService } from 'src/command/commands.service';
@@ -7,6 +6,7 @@ import { StartContentService } from 'src/start-content/start-content.service';
 import { TelegramUsersService } from 'src/telegram-users/telegram-users.service';
 import { CalculateCommand } from 'src/telegram/calculate/calculate.command';
 import { ConsultacyaCommand } from 'src/telegram/consultacya/consultacya.command';
+import { ProektPriceCommand } from 'src/telegram/proekt-price/proekt-price.command';
 import { ZamerCommand } from 'src/telegram/zamer/zamer.command';
 import { Context } from 'telegraf';
 import { DizaynCommand } from './dizayn/dizayn.command';
@@ -38,6 +38,7 @@ export class TelegramController {
     private portfolioCommand: PortfolioCommand,
     private pingCommand: PingCommand,
     private dizaynCommand: DizaynCommand,
+    private proektPriceCommand: ProektPriceCommand,
     private telegramUsersService: TelegramUsersService,
     private topicChatService: TopicChatService,
     private prisma: PrismaService,
@@ -69,7 +70,28 @@ export class TelegramController {
 
     const greetingCommands = commands.filter((cmd) => cmd.showInGreeting);
 
-    const chunkedCommands = chunk(greetingCommands, 2);
+    const chunkedCommands: any[][] = [];
+    let currentChunk: any[] = [];
+
+    for (const cmd of greetingCommands) {
+      if (cmd.isFullLine) {
+        if (currentChunk.length > 0) {
+          chunkedCommands.push(currentChunk);
+          currentChunk = [];
+        }
+        chunkedCommands.push([cmd]);
+      } else {
+        currentChunk.push(cmd);
+        if (currentChunk.length === 2) {
+          chunkedCommands.push(currentChunk);
+          currentChunk = [];
+        }
+      }
+    }
+
+    if (currentChunk.length > 0) {
+      chunkedCommands.push(currentChunk);
+    }
 
     const keyboard = {
       inline_keyboard: chunkedCommands.map((chunk) =>
@@ -167,6 +189,9 @@ export class TelegramController {
           break;
         case 'dizayn':
           await this.dizaynCommand.onDizayn(ctx);
+          break;
+        case 'proekt_price':
+          await this.proektPriceCommand.onProektPrice(ctx);
           break;
       }
       return;

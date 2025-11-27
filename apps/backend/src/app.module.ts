@@ -14,6 +14,8 @@ import { DizaynService } from './dizayn/dizayn.service';
 import { HealthModule } from './health/health.module';
 import { PortfolioController } from './portfolio/portfolio.controller';
 import { PortfolioService } from './portfolio/portfolio.service';
+import { ProektPriceController } from './proekt-price/proekt-price.controller';
+import { ProektPriceService } from './proekt-price/proekt-price.service';
 import { StartContentController } from './start-content/start-content.controller';
 import { StartContentService } from './start-content/start-content.service';
 import { TelegramUsersController } from './telegram-users/telegram-users.controller';
@@ -97,6 +99,7 @@ const getTransportConfig = () => {
     TopicContentController,
     PortfolioController,
     DizaynController,
+    ProektPriceController,
     TelegramUsersController,
   ],
   providers: [
@@ -106,6 +109,7 @@ const getTransportConfig = () => {
     TopicContentService,
     PortfolioService,
     DizaynService,
+    ProektPriceService,
     TelegramUsersService,
     {
       provide: APP_GUARD,

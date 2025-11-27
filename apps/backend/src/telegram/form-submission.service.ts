@@ -28,13 +28,13 @@ export class FormSubmissionService {
       return;
     }
 
-    if (entries.length === 0) {
-      this.logger.warn({ commandName, data, chatId }, 'Empty form submitted');
-      return;
-    }
-
     this.logger.info(
-      { commandName, chatId, dataKeys: Object.keys(data) },
+      {
+        commandName,
+        chatId,
+        dataKeys: Object.keys(data),
+        isEmpty: entries.length === 0,
+      },
       'Processing form submission',
     );
 
@@ -53,7 +53,12 @@ export class FormSubmissionService {
         });
 
         this.logger.info(
-          { submissionId: submission.id, userId: user.id, commandName },
+          {
+            submissionId: submission.id,
+            userId: user.id,
+            commandName,
+            isEmpty: entries.length === 0,
+          },
           'Form submission saved to database',
         );
 
@@ -190,16 +195,14 @@ export class FormSubmissionService {
     if (user.lastName) message += ` ${user.lastName}`;
     if (user.firstName || user.lastName) message += '\n';
     if (user.username) message += `  • Username: @${user.username}\n`;
-    message += '\n';
 
-    message += `📝 <b>Данные заявки:</b>\n`;
     if (entries.length > 0) {
+      message += '\n';
+      message += `📝 <b>Данные заявки:</b>\n`;
       entries.forEach(([key, value]) => {
         const label = this.getFieldLabel(key);
         message += `  ${label}: ${value}\n`;
       });
-    } else {
-      message += '  (нет данных)\n';
     }
 
     return message;

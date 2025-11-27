@@ -39,6 +39,7 @@ export function Commands() {
       description: "",
       index: 0,
       showInGreeting: true,
+      isFullLine: false,
     },
   });
 
@@ -122,6 +123,7 @@ export function Commands() {
     setValue("description", command.description ?? "");
     setValue("index", command.index ?? 0);
     setValue("showInGreeting", command.showInGreeting ?? true);
+    setValue("isFullLine", command.isFullLine ?? false);
     const form = document.getElementById("command-form");
     form?.scrollIntoView({ behavior: "smooth" });
   };
@@ -297,6 +299,21 @@ export function Commands() {
               </label>
             </div>
 
+            <div className="flex items-center">
+              <input
+                {...register("isFullLine")}
+                type="checkbox"
+                id="isFullLine"
+                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <label
+                htmlFor="isFullLine"
+                className="ml-2 block text-sm text-gray-700"
+              >
+                Кнопка на всю ширину
+              </label>
+            </div>
+
             <div className="flex gap-2">
               <button
                 type="submit"
@@ -416,6 +433,11 @@ function SortableCommandItem({
                 {!command.showInGreeting && (
                   <span className="text-xs bg-gray-200 text-gray-700 px-2 py-0.5 rounded">
                     Только в меню бота
+                  </span>
+                )}
+                {command.isFullLine && (
+                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
+                    На всю ширину
                   </span>
                 )}
               </div>

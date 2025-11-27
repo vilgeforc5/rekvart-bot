@@ -397,7 +397,8 @@ export const ModelName = {
   FormSubmission: 'FormSubmission',
   TopicConnection: 'TopicConnection',
   TopicContent: 'TopicContent',
-  AutoMessageConfig: 'AutoMessageConfig'
+  AutoMessageConfig: 'AutoMessageConfig',
+  ProektPriceContent: 'ProektPriceContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "command" | "startContent" | "question" | "questionVariant" | "calculateSummary" | "portfolio" | "consultacyaSummary" | "zamerSummary" | "dizaynContent" | "telegramUser" | "formSubmission" | "topicConnection" | "topicContent" | "autoMessageConfig"
+    modelProps: "command" | "startContent" | "question" | "questionVariant" | "calculateSummary" | "portfolio" | "consultacyaSummary" | "zamerSummary" | "dizaynContent" | "telegramUser" | "formSubmission" | "topicConnection" | "topicContent" | "autoMessageConfig" | "proektPriceContent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1453,6 +1454,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProektPriceContent: {
+      payload: Prisma.$ProektPriceContentPayload<ExtArgs>
+      fields: Prisma.ProektPriceContentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProektPriceContentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProektPriceContentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload>
+        }
+        findFirst: {
+          args: Prisma.ProektPriceContentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProektPriceContentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload>
+        }
+        findMany: {
+          args: Prisma.ProektPriceContentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload>[]
+        }
+        create: {
+          args: Prisma.ProektPriceContentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload>
+        }
+        createMany: {
+          args: Prisma.ProektPriceContentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProektPriceContentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload>[]
+        }
+        delete: {
+          args: Prisma.ProektPriceContentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload>
+        }
+        update: {
+          args: Prisma.ProektPriceContentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProektPriceContentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProektPriceContentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProektPriceContentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProektPriceContentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProektPriceContentPayload>
+        }
+        aggregate: {
+          args: Prisma.ProektPriceContentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProektPriceContent>
+        }
+        groupBy: {
+          args: Prisma.ProektPriceContentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProektPriceContentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProektPriceContentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProektPriceContentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1497,6 +1572,7 @@ export const CommandScalarFieldEnum = {
   command: 'command',
   title: 'title',
   description: 'description',
+  isFullLine: 'isFullLine',
   index: 'index',
   showInGreeting: 'showInGreeting',
   createdAt: 'createdAt',
@@ -1669,6 +1745,16 @@ export const AutoMessageConfigScalarFieldEnum = {
 } as const
 
 export type AutoMessageConfigScalarFieldEnum = (typeof AutoMessageConfigScalarFieldEnum)[keyof typeof AutoMessageConfigScalarFieldEnum]
+
+
+export const ProektPriceContentScalarFieldEnum = {
+  id: 'id',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProektPriceContentScalarFieldEnum = (typeof ProektPriceContentScalarFieldEnum)[keyof typeof ProektPriceContentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1900,6 +1986,7 @@ export type GlobalOmitConfig = {
   topicConnection?: Prisma.TopicConnectionOmit
   topicContent?: Prisma.TopicContentOmit
   autoMessageConfig?: Prisma.AutoMessageConfigOmit
+  proektPriceContent?: Prisma.ProektPriceContentOmit
 }
 
 /* Types for Logging */

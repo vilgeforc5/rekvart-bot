@@ -12,6 +12,7 @@ import { Consultacya } from "./pages/Consultacya";
 import { Dizayn } from "./pages/Dizayn";
 import { Login } from "./pages/Login";
 import { PortfolioPage } from "./pages/Portfolio";
+import { ProektPrice } from "./pages/ProektPrice";
 import { TelegramUsers } from "./pages/TelegramUsers";
 import { TopicContent } from "./pages/TopicContent";
 import { Zamer } from "./pages/Zamer";
@@ -43,6 +44,7 @@ function App() {
                         <Route path="/consultacya" element={<Consultacya />} />
                         <Route path="/zamer" element={<Zamer />} />
                         <Route path="/dizayn" element={<Dizayn />} />
+                        <Route path="/proekt-price" element={<ProektPrice />} />
                         <Route
                           path="/topic-content"
                           element={<TopicContent />}

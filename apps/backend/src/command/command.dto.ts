@@ -29,6 +29,10 @@ export class CreateCommandDto {
   @IsBoolean()
   @IsOptional()
   showInGreeting?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isFullLine?: boolean;
 }
 
 export class UpdateCommandDto {
@@ -51,4 +55,8 @@ export class UpdateCommandDto {
   @IsBoolean()
   @IsOptional()
   showInGreeting?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isFullLine?: boolean;
 }

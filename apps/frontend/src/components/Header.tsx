@@ -35,6 +35,7 @@ export function Header() {
     { path: "/consultacya", label: "/consultacya" },
     { path: "/zamer", label: "/zamer" },
     { path: "/dizayn", label: "/dizayn" },
+    { path: "/proekt-price", label: "/proekt_price" },
   ];
 
   return (

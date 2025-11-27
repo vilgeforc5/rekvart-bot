@@ -64,7 +64,8 @@ export const ModelName = {
   FormSubmission: 'FormSubmission',
   TopicConnection: 'TopicConnection',
   TopicContent: 'TopicContent',
-  AutoMessageConfig: 'AutoMessageConfig'
+  AutoMessageConfig: 'AutoMessageConfig',
+  ProektPriceContent: 'ProektPriceContent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -88,6 +89,7 @@ export const CommandScalarFieldEnum = {
   command: 'command',
   title: 'title',
   description: 'description',
+  isFullLine: 'isFullLine',
   index: 'index',
   showInGreeting: 'showInGreeting',
   createdAt: 'createdAt',
@@ -260,6 +262,16 @@ export const AutoMessageConfigScalarFieldEnum = {
 } as const
 
 export type AutoMessageConfigScalarFieldEnum = (typeof AutoMessageConfigScalarFieldEnum)[keyof typeof AutoMessageConfigScalarFieldEnum]
+
+
+export const ProektPriceContentScalarFieldEnum = {
+  id: 'id',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProektPriceContentScalarFieldEnum = (typeof ProektPriceContentScalarFieldEnum)[keyof typeof ProektPriceContentScalarFieldEnum]
 
 
 export const SortOrder = {

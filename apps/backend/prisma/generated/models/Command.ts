@@ -41,6 +41,7 @@ export type CommandMinAggregateOutputType = {
   command: string | null
   title: string | null
   description: string | null
+  isFullLine: boolean | null
   index: number | null
   showInGreeting: boolean | null
   createdAt: Date | null
@@ -52,6 +53,7 @@ export type CommandMaxAggregateOutputType = {
   command: string | null
   title: string | null
   description: string | null
+  isFullLine: boolean | null
   index: number | null
   showInGreeting: boolean | null
   createdAt: Date | null
@@ -63,6 +65,7 @@ export type CommandCountAggregateOutputType = {
   command: number
   title: number
   description: number
+  isFullLine: number
   index: number
   showInGreeting: number
   createdAt: number
@@ -86,6 +89,7 @@ export type CommandMinAggregateInputType = {
   command?: true
   title?: true
   description?: true
+  isFullLine?: true
   index?: true
   showInGreeting?: true
   createdAt?: true
@@ -97,6 +101,7 @@ export type CommandMaxAggregateInputType = {
   command?: true
   title?: true
   description?: true
+  isFullLine?: true
   index?: true
   showInGreeting?: true
   createdAt?: true
@@ -108,6 +113,7 @@ export type CommandCountAggregateInputType = {
   command?: true
   title?: true
   description?: true
+  isFullLine?: true
   index?: true
   showInGreeting?: true
   createdAt?: true
@@ -206,6 +212,7 @@ export type CommandGroupByOutputType = {
   command: string
   title: string
   description: string
+  isFullLine: boolean
   index: number
   showInGreeting: boolean
   createdAt: Date
@@ -240,6 +247,7 @@ export type CommandWhereInput = {
   command?: Prisma.StringFilter<"Command"> | string
   title?: Prisma.StringFilter<"Command"> | string
   description?: Prisma.StringFilter<"Command"> | string
+  isFullLine?: Prisma.BoolFilter<"Command"> | boolean
   index?: Prisma.IntFilter<"Command"> | number
   showInGreeting?: Prisma.BoolFilter<"Command"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Command"> | Date | string
@@ -251,6 +259,7 @@ export type CommandOrderByWithRelationInput = {
   command?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  isFullLine?: Prisma.SortOrder
   index?: Prisma.SortOrder
   showInGreeting?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -265,6 +274,7 @@ export type CommandWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CommandWhereInput | Prisma.CommandWhereInput[]
   title?: Prisma.StringFilter<"Command"> | string
   description?: Prisma.StringFilter<"Command"> | string
+  isFullLine?: Prisma.BoolFilter<"Command"> | boolean
   index?: Prisma.IntFilter<"Command"> | number
   showInGreeting?: Prisma.BoolFilter<"Command"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Command"> | Date | string
@@ -276,6 +286,7 @@ export type CommandOrderByWithAggregationInput = {
   command?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  isFullLine?: Prisma.SortOrder
   index?: Prisma.SortOrder
   showInGreeting?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -295,6 +306,7 @@ export type CommandScalarWhereWithAggregatesInput = {
   command?: Prisma.StringWithAggregatesFilter<"Command"> | string
   title?: Prisma.StringWithAggregatesFilter<"Command"> | string
   description?: Prisma.StringWithAggregatesFilter<"Command"> | string
+  isFullLine?: Prisma.BoolWithAggregatesFilter<"Command"> | boolean
   index?: Prisma.IntWithAggregatesFilter<"Command"> | number
   showInGreeting?: Prisma.BoolWithAggregatesFilter<"Command"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Command"> | Date | string
@@ -305,6 +317,7 @@ export type CommandCreateInput = {
   command: string
   title: string
   description: string
+  isFullLine?: boolean
   index?: number
   showInGreeting?: boolean
   createdAt?: Date | string
@@ -316,6 +329,7 @@ export type CommandUncheckedCreateInput = {
   command: string
   title: string
   description: string
+  isFullLine?: boolean
   index?: number
   showInGreeting?: boolean
   createdAt?: Date | string
@@ -326,6 +340,7 @@ export type CommandUpdateInput = {
   command?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  isFullLine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   index?: Prisma.IntFieldUpdateOperationsInput | number
   showInGreeting?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -337,6 +352,7 @@ export type CommandUncheckedUpdateInput = {
   command?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  isFullLine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   index?: Prisma.IntFieldUpdateOperationsInput | number
   showInGreeting?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -348,6 +364,7 @@ export type CommandCreateManyInput = {
   command: string
   title: string
   description: string
+  isFullLine?: boolean
   index?: number
   showInGreeting?: boolean
   createdAt?: Date | string
@@ -358,6 +375,7 @@ export type CommandUpdateManyMutationInput = {
   command?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  isFullLine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   index?: Prisma.IntFieldUpdateOperationsInput | number
   showInGreeting?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -369,6 +387,7 @@ export type CommandUncheckedUpdateManyInput = {
   command?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  isFullLine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   index?: Prisma.IntFieldUpdateOperationsInput | number
   showInGreeting?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -380,6 +399,7 @@ export type CommandCountOrderByAggregateInput = {
   command?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  isFullLine?: Prisma.SortOrder
   index?: Prisma.SortOrder
   showInGreeting?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -396,6 +416,7 @@ export type CommandMaxOrderByAggregateInput = {
   command?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  isFullLine?: Prisma.SortOrder
   index?: Prisma.SortOrder
   showInGreeting?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -407,6 +428,7 @@ export type CommandMinOrderByAggregateInput = {
   command?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  isFullLine?: Prisma.SortOrder
   index?: Prisma.SortOrder
   showInGreeting?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -422,16 +444,16 @@ export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -445,6 +467,7 @@ export type CommandSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   command?: boolean
   title?: boolean
   description?: boolean
+  isFullLine?: boolean
   index?: boolean
   showInGreeting?: boolean
   createdAt?: boolean
@@ -456,6 +479,7 @@ export type CommandSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   command?: boolean
   title?: boolean
   description?: boolean
+  isFullLine?: boolean
   index?: boolean
   showInGreeting?: boolean
   createdAt?: boolean
@@ -467,6 +491,7 @@ export type CommandSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   command?: boolean
   title?: boolean
   description?: boolean
+  isFullLine?: boolean
   index?: boolean
   showInGreeting?: boolean
   createdAt?: boolean
@@ -478,13 +503,14 @@ export type CommandSelectScalar = {
   command?: boolean
   title?: boolean
   description?: boolean
+  isFullLine?: boolean
   index?: boolean
   showInGreeting?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CommandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "command" | "title" | "description" | "index" | "showInGreeting" | "createdAt" | "updatedAt", ExtArgs["result"]["command"]>
+export type CommandOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "command" | "title" | "description" | "isFullLine" | "index" | "showInGreeting" | "createdAt" | "updatedAt", ExtArgs["result"]["command"]>
 
 export type $CommandPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Command"
@@ -494,6 +520,7 @@ export type $CommandPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     command: string
     title: string
     description: string
+    isFullLine: boolean
     index: number
     showInGreeting: boolean
     createdAt: Date
@@ -925,6 +952,7 @@ export interface CommandFieldRefs {
   readonly command: Prisma.FieldRef<"Command", 'String'>
   readonly title: Prisma.FieldRef<"Command", 'String'>
   readonly description: Prisma.FieldRef<"Command", 'String'>
+  readonly isFullLine: Prisma.FieldRef<"Command", 'Boolean'>
   readonly index: Prisma.FieldRef<"Command", 'Int'>
   readonly showInGreeting: Prisma.FieldRef<"Command", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Command", 'DateTime'>

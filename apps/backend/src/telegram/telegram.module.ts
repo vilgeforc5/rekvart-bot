@@ -17,6 +17,7 @@ import { CalculateModule } from './calculate/calculate.module';
 import { ConsultacyaModule } from './consultacya/consultacya.module';
 import { DizaynModule } from './dizayn/dizayn.module';
 import { PortfolioModule } from './portfolio/portfolio.module';
+import { ProektPriceModule } from './proekt-price/proekt-price.module';
 import { TelegramBotService } from './telegram-bot.service';
 import { TelegramController } from './telegram.controller';
 import { ZamerModule } from './zamer/zamer.module';
@@ -37,6 +38,7 @@ import { ZamerModule } from './zamer/zamer.module';
     ZamerModule,
     CalculateModule,
     DizaynModule,
+    ProektPriceModule,
   ],
   providers: [
     TelegramController,
