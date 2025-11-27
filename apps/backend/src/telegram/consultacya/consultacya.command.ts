@@ -75,20 +75,23 @@ export class ConsultacyaCommand {
       await ctx.reply(question.text);
     } else if (questionType === 'phone') {
       ctx.session.step = `waiting_phone_${order}`;
-      await ctx.reply(question.text, {
-        reply_markup: {
-          keyboard: [
-            [
-              {
-                text: '📱 Поделиться номером телефона',
-                request_contact: true,
-              },
+      await ctx.reply(
+        `${question.text}\n\nВы можете ввести номер текстом или поделиться контактом`,
+        {
+          reply_markup: {
+            keyboard: [
+              [
+                {
+                  text: '📱 Поделиться номером телефона',
+                  request_contact: true,
+                },
+              ],
             ],
-          ],
-          resize_keyboard: true,
-          one_time_keyboard: true,
+            resize_keyboard: true,
+            one_time_keyboard: true,
+          },
         },
-      });
+      );
     }
   }
 
@@ -111,7 +114,7 @@ export class ConsultacyaCommand {
     if (variant.needsPhone) {
       ctx.session.step = `waiting_for_phone_${questionOrder}`;
       await ctx.reply(
-        'Отправьте свой номер телефона и мы свяжемся с вами в ближайшее время',
+        'Отправьте свой номер телефона или поделитесь контактом, и мы свяжемся с вами в ближайшее время',
         {
           reply_markup: {
             keyboard: [
@@ -154,6 +157,39 @@ export class ConsultacyaCommand {
 
       if (!ctx.session.answers) ctx.session.answers = {};
       ctx.session.answers[currentOrder!] = phone;
+
+      const nextOrder = currentOrder! + 1;
+      await this.askQuestion(ctx, nextOrder);
+    }
+  }
+
+  async onText(ctx: MyContext) {
+    if (ctx.session.activeForm !== 'consultacya') {
+      return;
+    }
+
+    if (!ctx.message || !('text' in ctx.message)) return;
+
+    const text = ctx.message.text;
+
+    if (ctx.session.step?.startsWith('waiting_for_phone_')) {
+      if (!ctx.session.answers) ctx.session.answers = {};
+      ctx.session.answers[-1] = text;
+
+      await this.sendSummary(ctx, true);
+    } else if (ctx.session.step?.startsWith('waiting_phone_')) {
+      const currentOrder = ctx.session.currentQuestionOrder;
+
+      if (!ctx.session.answers) ctx.session.answers = {};
+      ctx.session.answers[currentOrder!] = text;
+
+      const nextOrder = currentOrder! + 1;
+      await this.askQuestion(ctx, nextOrder);
+    } else if (ctx.session.step?.startsWith('waiting_text_')) {
+      const currentOrder = ctx.session.currentQuestionOrder;
+
+      if (!ctx.session.answers) ctx.session.answers = {};
+      ctx.session.answers[currentOrder!] = text;
 
       const nextOrder = currentOrder! + 1;
       await this.askQuestion(ctx, nextOrder);

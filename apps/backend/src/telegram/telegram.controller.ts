@@ -9,13 +9,10 @@ import { CalculateCommand } from 'src/telegram/calculate/calculate.command';
 import { ConsultacyaCommand } from 'src/telegram/consultacya/consultacya.command';
 import { ZamerCommand } from 'src/telegram/zamer/zamer.command';
 import { Context } from 'telegraf';
-import { CalculateService } from './calculate/calculate.service';
-import { ConsultacyaService } from './consultacya/consultacya.service';
 import { DizaynCommand } from './dizayn/dizayn.command';
 import { PingCommand } from './ping/ping.command';
 import { PortfolioCommand } from './portfolio/portfolio.command';
 import { TopicChatService } from './topic-chat.service';
-import { ZamerService } from './zamer/zamer.service';
 
 interface SessionData {
   step?: string;
@@ -36,11 +33,8 @@ export class TelegramController {
     private botCommandService: BotCommandService,
     private startContentService: StartContentService,
     private calculateCommand: CalculateCommand,
-    private calculateService: CalculateService,
     private zamerCommand: ZamerCommand,
-    private zamerService: ZamerService,
     private consultacyaCommand: ConsultacyaCommand,
-    private consultacyaService: ConsultacyaService,
     private portfolioCommand: PortfolioCommand,
     private pingCommand: PingCommand,
     private dizaynCommand: DizaynCommand,
@@ -186,65 +180,15 @@ export class TelegramController {
 
     switch (activeForm) {
       case 'calculate':
-        await this.handleCalculateText(ctx, text);
+        await this.calculateCommand.onText(ctx);
         break;
       case 'zamer':
-        await this.handleZamerText(ctx, text);
+        await this.zamerCommand.onText(ctx);
         break;
       case 'consultacya':
-        await this.handleConsultacyaText(ctx, text);
+        await this.consultacyaCommand.onText(ctx);
         break;
     }
-  }
-
-  private async handleCalculateText(ctx: MyContext, text: string) {
-    const currentOrder = ctx.session.currentQuestionOrder;
-
-    if (!currentOrder || !ctx.session.step?.startsWith('waiting_text_')) {
-      return;
-    }
-
-    const question = await this.calculateService.getQuestion(currentOrder);
-    if (!question || question.type !== 'text') {
-      return;
-    }
-
-    if (!ctx.session.answers) ctx.session.answers = {};
-    ctx.session.answers[currentOrder] = text;
-
-    const nextOrder = currentOrder + 1;
-    await this.calculateCommand.askQuestion(ctx, nextOrder);
-  }
-
-  private async handleZamerText(ctx: MyContext, text: string) {
-    if (ctx.session.step?.startsWith('waiting_text_')) {
-      const currentOrder = ctx.session.currentQuestionOrder;
-
-      if (!ctx.session.answers) ctx.session.answers = {};
-      ctx.session.answers[currentOrder!] = text;
-
-      const nextOrder = currentOrder! + 1;
-      await this.zamerCommand.askQuestion(ctx, nextOrder);
-    }
-  }
-
-  private async handleConsultacyaText(ctx: MyContext, text: string) {
-    const currentOrder = ctx.session.currentQuestionOrder;
-
-    if (!currentOrder || !ctx.session.step?.startsWith('waiting_text_')) {
-      return;
-    }
-
-    const question = await this.consultacyaService.getQuestion(currentOrder);
-    if (!question || question.type !== 'text') {
-      return;
-    }
-
-    if (!ctx.session.answers) ctx.session.answers = {};
-    ctx.session.answers[currentOrder] = text;
-
-    const nextOrder = currentOrder + 1;
-    await this.consultacyaCommand.askQuestion(ctx, nextOrder);
   }
 
   @On(['photo', 'document', 'video', 'audio', 'voice', 'video_note', 'sticker'])
