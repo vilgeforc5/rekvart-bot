@@ -142,13 +142,22 @@ export function TelegramUsers() {
   const [limit] = useState(10);
   const [expanded, setExpanded] = useState<ExpandedState>({});
   const [searchText, setSearchText] = useState("");
+  const [debouncedSearchText, setDebouncedSearchText] = useState("");
   const [hasPhone, setHasPhone] = useState<boolean | null>(null);
   const [hasFormSubmissions, setHasFormSubmissions] = useState<boolean | null>(
     null
   );
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [searchText]);
+
   const filters = {
-    search: searchText || undefined,
+    search: debouncedSearchText || undefined,
     hasPhone: hasPhone !== null ? hasPhone : undefined,
     hasFormSubmissions:
       hasFormSubmissions !== null ? hasFormSubmissions : undefined,
@@ -156,7 +165,7 @@ export function TelegramUsers() {
 
   useEffect(() => {
     setPage(1);
-  }, [searchText, hasPhone, hasFormSubmissions]);
+  }, [debouncedSearchText, hasPhone, hasFormSubmissions]);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["telegram-users", page, limit, filters],
