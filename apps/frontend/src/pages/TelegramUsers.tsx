@@ -6,8 +6,8 @@ import {
   useReactTable,
   type ExpandedState,
 } from "@tanstack/react-table";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { ChevronDown, ChevronRight, Search, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { telegramUsersApi, type TelegramUser } from "../lib/telegram-users.api";
 
 const columnHelper = createColumnHelper<TelegramUser>();
@@ -141,10 +141,26 @@ export function TelegramUsers() {
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [expanded, setExpanded] = useState<ExpandedState>({});
+  const [searchText, setSearchText] = useState("");
+  const [hasPhone, setHasPhone] = useState<boolean | null>(null);
+  const [hasFormSubmissions, setHasFormSubmissions] = useState<boolean | null>(
+    null
+  );
+
+  const filters = {
+    search: searchText || undefined,
+    hasPhone: hasPhone !== null ? hasPhone : undefined,
+    hasFormSubmissions:
+      hasFormSubmissions !== null ? hasFormSubmissions : undefined,
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchText, hasPhone, hasFormSubmissions]);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["telegram-users", page, limit],
-    queryFn: () => telegramUsersApi.getAll(page, limit),
+    queryKey: ["telegram-users", page, limit, filters],
+    queryFn: () => telegramUsersApi.getAll(page, limit, filters),
   });
 
   const table = useReactTable({
@@ -187,6 +203,71 @@ export function TelegramUsers() {
         </div>
       ) : (
         <>
+          <div className="bg-white shadow-md rounded-lg p-4 mb-4">
+            <div className="flex flex-col gap-4">
+              <div className="relative">
+                <Search
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
+                <input
+                  type="text"
+                  placeholder="Поиск по имени пользователя или имени..."
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                {searchText && (
+                  <button
+                    onClick={() => setSearchText("")}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <X size={18} />
+                  </button>
+                )}
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                <button
+                  onClick={() => setHasPhone(hasPhone === true ? null : true)}
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                    hasPhone === true
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  С телефоном
+                </button>
+                <button
+                  onClick={() =>
+                    setHasFormSubmissions(
+                      hasFormSubmissions === true ? null : true
+                    )
+                  }
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                    hasFormSubmissions === true
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  С заявками
+                </button>
+                {(hasPhone !== null ||
+                  hasFormSubmissions !== null ||
+                  searchText) && (
+                  <button
+                    onClick={() => {
+                      setHasPhone(null);
+                      setHasFormSubmissions(null);
+                      setSearchText("");
+                    }}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+                  >
+                    Сбросить фильтры
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
           <div className="bg-white shadow-md rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">

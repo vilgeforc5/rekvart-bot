@@ -8,10 +8,28 @@ export class TelegramUsersController {
   constructor(private telegramUsersService: TelegramUsersService) {}
 
   @Get()
-  async findAll(@Query('page') page?: string, @Query('limit') limit?: string) {
+  async findAll(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('search') search?: string,
+    @Query('hasPhone') hasPhone?: string,
+    @Query('hasFormSubmissions') hasFormSubmissions?: string,
+  ) {
     const pageNum = page ? parseInt(page, 10) : 1;
     const limitNum = limit ? parseInt(limit, 10) : 10;
-    return this.telegramUsersService.findAll(pageNum, limitNum);
+    const hasPhoneBool =
+      hasPhone !== undefined ? hasPhone === 'true' : undefined;
+    const hasFormSubmissionsBool =
+      hasFormSubmissions !== undefined
+        ? hasFormSubmissions === 'true'
+        : undefined;
+    return this.telegramUsersService.findAll(
+      pageNum,
+      limitNum,
+      search,
+      hasPhoneBool,
+      hasFormSubmissionsBool,
+    );
   }
 
   @Get(':id')

@@ -33,11 +33,37 @@ export interface PaginatedTelegramUsers {
 }
 
 export const telegramUsersApi = {
-  getAll: (page: number = 1, limit: number = 10, options?: FetchOptions) =>
-    fetcher<PaginatedTelegramUsers>(
-      `/telegram-users?page=${page}&limit=${limit}`,
+  getAll: (
+    page: number = 1,
+    limit: number = 10,
+    filters?: {
+      search?: string;
+      hasPhone?: boolean;
+      hasFormSubmissions?: boolean;
+    },
+    options?: FetchOptions
+  ) => {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+    });
+    if (filters?.search) {
+      params.append("search", filters.search);
+    }
+    if (filters?.hasPhone !== undefined) {
+      params.append("hasPhone", filters.hasPhone.toString());
+    }
+    if (filters?.hasFormSubmissions !== undefined) {
+      params.append(
+        "hasFormSubmissions",
+        filters.hasFormSubmissions.toString()
+      );
+    }
+    return fetcher<PaginatedTelegramUsers>(
+      `/telegram-users?${params.toString()}`,
       { ...options, method: "GET" }
-    ),
+    );
+  },
 
   getOne: (id: number, options?: FetchOptions) =>
     fetcher<TelegramUser>(`/telegram-users/${id}`, {
